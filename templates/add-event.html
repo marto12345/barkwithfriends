@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+
+{% block body_block %}
+   <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
+   <h1>Add an Event</h1>
+   <div>
+   <form action="/index">
+    <label for="etitle">Event title:</label>
+    <input type="text" id="etitle" name="eventtitle" placeholder="Title...">
+    <br>
+    <label for="theme">Theme:</label>
+    <input type="text" id="etheme" name="eventtheme" placeholder="Theme..">
+   
+  
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+
+</body>
+</html> 
+
+{% endblock %}	
+ 
