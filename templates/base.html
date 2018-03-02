@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 {% block title_block %}
+{% load static %}
 <title>Bark with Friends</title>
+<link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}">
 {% endblock %}
 <head>Bark with Friends
-<link rel="stylesheet" type="text/css" href="sidebar.css">
 </head>
 <br>
 <body>
 {% block body_block %}
 {% endblock %}
 <div class = "sidenav">
+
 <a href = "/index">Home</a></br>
 <a href = "/about">About us</a><br>
 <a href = "/food-menu">Food menu</a><br>
