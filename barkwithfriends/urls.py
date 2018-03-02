@@ -1,3 +1,4 @@
+
 """barkwithfriends URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -21,4 +22,13 @@ urlpatterns = [
     url(r'^$',views.index,name='index'),
     url(r'^about$',views.about,name='about'),
     url(r'^index$',views.index,name='index'),
+    url(r'^food-menu$',views.food_menu,name='food-menu'),
+    url(r'^contact$',views.contact,name='contact'),
+    url(r'^events$',views.events,name='events'),
+    url(r'^add-event$',views.add_event,name='add-event'),
+    url(r'^ratings$',views.ratings,name='ratings'),
+    url(r'^add-rating$',views.add_rating,name='add-rating'),
+    url(r'^register$',views.register,name='register'),
+    url(r'^login$',views.login,name='login'),
+    url(r'^myaccount$',views.myaccount,name='myaccount'),
 ]
