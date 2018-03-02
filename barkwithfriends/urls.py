@@ -19,4 +19,6 @@ from bark import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.index,name='index'),
+    url(r'^about$',views.about,name='about'),
+    url(r'^index$',views.index,name='index'),
 ]
