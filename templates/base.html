@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
-{% block title_block %}
 {% load static %}
+{% block title_block %}
 <title>Bark with Friends</title>
-<link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}">
 {% endblock %}
 
-    <div class="topnav" id="myTopnav">
+<link rel="stylesheet" type="text/css" href="{% static 'topbar.css' %}">
+    <div class="topnav">
       <a href="/login">Login</a>
         <a href="/register">Register</a>
         <span> Bark with Friends </span>
     </div>
 
+<link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}">
     <div class="sidenav">
         <a href = "/index">Home</a><br>
         <a href = "/about">About us</a><br>
@@ -22,6 +23,8 @@
         {% endblock %}
         <a href = "/ratings">Ratings</a><br>
     </div>
+
+<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
     <div class= "main">
         <br>
         <body style = "margin-left : 15%">
@@ -29,7 +32,5 @@
         {% endblock %}
         </body>
     </div>
-
-
 
 </html>
