@@ -6,7 +6,6 @@ def index(request):
 def about(request):
     return render(request,'about.html')
 
-
 def food_menu(request):
     return render(request,'food-menu.html')
 
