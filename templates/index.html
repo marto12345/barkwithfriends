@@ -3,3 +3,20 @@
 {% block event_block %}
 <a href = "/add-event">Add an event</a><br>
 {% endblock %}
+
+{% block body_block %}
+    <h1>Welcome to BarkWithFriends!</h1>
+    <div>
+    {% if events %}
+    <ul>
+        {% for event in events %}
+            <li>
+                 {{ event.title}}
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+    </div>
+{% endblock %}
