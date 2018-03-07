@@ -1,10 +1,14 @@
 /* Style page content */
 .main {
 
-    padding: 0px 10px;
+    padding: 5px 10px;
     position: fixed;
     top: 75px;
     right: 0;
     left: 162px;
+    float:left;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
 }
 
