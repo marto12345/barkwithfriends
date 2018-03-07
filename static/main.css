@@ -2,5 +2,9 @@
 .main {
 
     padding: 0px 10px;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    left: 160px;
 }
 
