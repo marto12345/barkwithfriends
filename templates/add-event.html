@@ -1,63 +1,82 @@
-
 {% extends 'base.html' %}
 {% load staticfiles %}
 {%load  scripts % }
 
-
-  
-
-
-{% block body_block %}
+{% block head_block %}
    <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
 
    <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Datepicker - Restrict date range</title>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>jQuery UI Datepicker - Restrict date range</title>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script>
   $( function() {
     $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2M +0D" });
   } );
   </script>
   
-   <h1>Add an Event</h1>
-   <div>
-   <form action="/index">
-    <label for="etitle">Event title:</label>
-    <input type="text" id="etitle" name="eventtitle" placeholder="Title...">
-    <br>
+{% endblock %}
 
-    <label for="theme">Theme:</label>
-    <input type="text" id="etheme" name="eventtheme" placeholder="Theme..">
+{% block body_block %}
+<div class="row">
 
-    <label for="Date">Event Date:</label>
-    <input type="text" id="datepicker">
-
-    <label for="Start time">Start time:</label>
-    <input type="time" id="start" min="17:00" max="21:00" step=1800 required>
-
-    <label for="End time">End time:</label>
-    <input type="time" id="end" min="19:00" max="23:00" step=1800 required>
+    <div class="col-sm-1">
+    </div>
 
 
+    <div class="col">
+        <h1>Add an Event</h1>
+            <div>
+                <form action="/index">
+                    <label for="etitle">Event title:</label>
+                    <input type="text" id="etitle" name="eventtitle" placeholder="Title...">
+                    <br>
+    
+                    <label for="theme">Theme:</label>
+                    <input type="text" id="etheme" name="eventtheme"     placeholder="Theme..">
+
+                    <label for="Date">Event Date:</label>
+                    <input type="text" id="datepicker">
+    
+                    <label for="Start time">Start time:</label>
+                    <input type="time" id="start" min="17:00" max="21:00" step=1800 required>
+    
+                    <label for="End time">End time:</label>
+                <input type="time" id="end" min="19:00" max="23:00" step=1800 required>    
 
 
-<script type="text/javascript" src="static/startendtime1.js"></script> 
-<script type="text/javascript">
-function go()
-{
-	alertfunction();
-}
-</script>
- <input type="submit" value="Submit" onclick="go()">
-  </form>
+                    <script type="text/javascript" src="static/startendtime1.js"></script> 
+                    <script type="text/javascript">
+                        function go()
+                        {
+                           alertfunction();
+                        }
+                    </script>
+                    <input type="submit" value="Submit" onclick="go()">
+                </form>
+            </div>
+        </div>
+
+
+
+    <div class="col-sm-1">
+    </div>
+
+
+
+    <div class="col">
+    </div>
+
+
+
+    <div class="col-sm-1">
+    </div>
+
+
 </div>
-
-
-</body>
 </html> 
 
 {% endblock %}	
