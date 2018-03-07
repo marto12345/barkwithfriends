@@ -18,12 +18,27 @@ class DogOwner(User):
 
 class Event(models.Model):
     title = models.CharField(max_length=128,unique=True)
-    date = models.DateField()
-    time = models.TimeField()
-    capacity = models.IntegerField(validators = [MinValueValidator(1),
-                                       MaxValueValidator(30)])
     theme = models.CharField(max_length=128)
+    capacity = models.IntegerField(validators=[MinValueValidator(1),
+                                               MaxValueValidator(25)])
+    date = models.DateField()
+    start = models.TimeField()
+    end = models.TimeField()
+
+
     organizerusername = models.ForeignKey(Organizer)
+
+    class Meta:
+        verbose_name_plural = 'Events'
+
+    def save(self, *args, **kwargs):
+
+
+        super(Event, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
 
 class FoodMenu(models.Model):
     starter = models.CharField(max_length=128)

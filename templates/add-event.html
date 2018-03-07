@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{%load  scripts % }
+
 
 {% block head_block %}
    <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
@@ -30,7 +30,8 @@
     <div class="col">
         <h1>Add an Event</h1>
             <div>
-                <form action="/index">
+                <form id="category_form" method="post" action="/index">
+                    {% csrf_token %}
                     <label for="etitle">Event title:</label>
                     <input type="text" id="etitle" name="eventtitle" placeholder="Title...">
                     <br>

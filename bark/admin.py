@@ -9,3 +9,4 @@ admin.site.register(Event)
 admin.site.register(FoodMenu)
 admin.site.register(Rating)
 admin.site.register(ChooseAnEvent)
+
