@@ -1,20 +1,32 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
-class User(models.Model):
-    username = models.CharField(max_length=20,unique=True)
-    password = models.CharField(max_length=12)
-    firstname = models.CharField(max_length=128)
-    lastname = models.CharField(max_length=128)
+
+class User(AbstractUser):
     description = models.CharField(max_length=128)
-    email = models.CharField(max_length=128)
-    picture = models.ImageField()
+    profile_picture = models.ImageField(upload_to='profile_images', blank=True)
+    is_organizer = models.BooleanField(default=False)
+    is_owner = models.BooleanField(default=False)
 
 class Organizer(User):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     avgrating = models.IntegerField(validators = [MinValueValidator(0),
                                        MaxValueValidator(5)])
+
+    class Meta:
+        verbose_name_plural = 'Users/Organizers'
+
+
 class DogOwner(User):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     dogname = models.CharField(max_length=128)
+    dog_picture= models.ImageField(upload_to='profile_images', blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Users/DogOwners'
+
 
 class Event(models.Model):
     title = models.CharField(max_length=128,unique=True)

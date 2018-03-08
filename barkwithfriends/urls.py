@@ -31,4 +31,7 @@ urlpatterns = [
     url(r'^register$',views.register,name='register'),
     url(r'^login$',views.login,name='login'),
     url(r'^myaccount$',views.myaccount,name='myaccount'),
+    url(r'^dogowner/$', views.register_owner, name='register_owner'),
+    url(r'^organizer/$', views.register_organizer, name='register_organizer'),
+
 ]

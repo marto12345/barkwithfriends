@@ -1,2 +1,22 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+
+{% block head_block %}
+
+
+{% endblock %}
+
+
+
+{% block body_block %}
+    <h1>Register for free here! Choose one of the options below:</h1>
+
+   <form action="/dogowner">
+    <input type="submit" value="Dog owner" />
+   </form>
+    <form action="/organizer">
+    <input type="submit" value="Event organizer" />
+   </form>
+
+
+{% endblock %}
