@@ -19,7 +19,7 @@ def about(request):
     return render(request,'about.html')
 
 def food_menu(request):
-    return render(request,'food-menu.html')
+    return render(request,'food-menu.xml')
 
 def contact(request):
     return render(request,'contact.html')

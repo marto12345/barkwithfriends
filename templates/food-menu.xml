@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<?xml version="1.0" encoding="UTF-8"?>
+{% block head_block %}
+<?xml-stylesheet type="text/xsl" href="{% static 'menu.xsl' %}"?>
+{% endblock %}
+{% block body_block %}
+<menu>
+<h1>For the owners</h1>
+<h2>Starters</h2>
+<food>
+<name>Tomato soup</note>
+<price>£2.20</price>
+<description>Vegan</description>
+<br>
+</food>
+<food>
+<name>Greenveg Soup</name>
+<price>£2.50</price>
+<description>Vegan</description>
+<br>
+</food>
+<food>
+<name>Falafel and Hummus</name>
+<price>£2.00</price>
+<description>Vegan</description>
+<br>
+</food>
+<food>
+<name>Olive sun dried tomato baguette</name>
+<price>£2.00</price>
+<description>Vegan</description>
+<br>
+</food>
+<food>
+<name>Cheese selection</name>
+<price>£3.00</price>
+<description>Contains milk</description>
+<br>
+</food>
+<h2>Mains</h2>
+<food>
+<name>Toastie with Cheese and Ham</name>
+<price>£2.30</price>
+<description>Contains milk</description>
+<br>
+</food>
+<food>
+<name>Roast Chicken Baguette</name>
+<price>£2.30</price>
+<description>Gluten free</description>
+<br>
+</food>
+<food>
+<name>Pasta bolognese</name>
+<price>£3.00</price>
+<description>(contains egg,milk)</description>
+<br>
+</food>
+<food>
+<name>Tofu katsu curry</name>
+<price>£2.00</price>
+<description>Vegan</description>
+<br>
+</food>
+<h2>Desserts</h2>
+<food>
+<name>Oatmeal blueberry porridge</name>
+<price>£e.00</price>
+<description>Dairy free option available</description>
+<br>
+</food>
+<food>
+<name>Chocolate cake</name>
+<price>£3.30</price>
+<description>Vegan option available</description>
+<br>
+</food>
+<food>
+<name>Banana nutella crepe</name>
+<price>£2.50</price>
+<description>Vegan option available</description>
+<br>
+</food>
+<h2>Drinks</h2>
+<food>
+<name>Espresso</name>
+<price>£2.20</price>
+<br>
+</food>
+<food>
+<name>Cappuccino</name>
+<price>£3.00</price>
+<br>
+</food>
+<food>
+<name>Chai latte</name>
+<price>£4.00</price>
+<br>
+</food>
+<h1>For the doggos</h1>
+<food>
+<name>Beef stew</name>
+<price>£2.50</price>
+<br>
+</food>
+<food>
+<name>Chicken soup</name>
+<price>£2.00</price>
+<br>
+</food>
+<food>
+<name>Beef & Veggie Crockpot</name>
+<price>£2.00</price>
+<br>
+</food>
+<food>
+<name>Cookies</name>
+<price>£1.50</price>
+<description>Sugar-free option available</p>
+<br>
+</food>
+</menu>
+{% endblock %}
