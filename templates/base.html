@@ -22,20 +22,20 @@
 <body>
 
     <div class="sidenav">
-        <a href = "/index">Home</a><br>
-        <a href = "/about">About us</a><br>
-        <a href = "/food-menu">Food menu</a><br>
-        <a href = "/contact">Contact us</a><br>
-        <a href = "/events">Events</a><br>
+        <a href = "{% url 'index' %}">Home</a><br>
+        <a href = "{% url 'about' %}">About us</a><br>
+        <a href = "{% url 'food-menu' %}">Food menu</a><br>
+        <a href = "{% url 'contact' %}">Contact us</a><br>
+        <a href = "{% url 'events' %}">Events</a><br>
         {% block event_block %}
         {% endblock %}
-        <a href = "/ratings">Ratings</a><br>
+        <a href = "{% url 'ratings' %}">Ratings</a><br>
     </div>
 
 
     <div class="topnav">
-      <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
         <span> Bark with Friends </span>
     </div>
 
