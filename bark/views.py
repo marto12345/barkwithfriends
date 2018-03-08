@@ -1,6 +1,11 @@
 from bark.forms import addEventForm
 from django.shortcuts import render
-from bark.models import Event
+from bark.models import Event,User,Organizer,DogOwner
+from django.contrib.auth import login
+from django.shortcuts import redirect
+from django.views.generic import CreateView
+
+from bark.forms import OwnerRegisterForm
 
 
 def index(request):
@@ -64,6 +69,7 @@ def add_rating(request):
 def register(request):
     return render(request,'register.html')
 
+
 def login(request):
     return render(request,'login.html')
 
@@ -74,3 +80,40 @@ def myaccount(request):
 #@login_required
 def logout(request):
     return render(request,'index.html')
+
+def register_owner(request):
+    # True when registration succeeds.
+    registered = False
+
+    # If it's a HTTP POST, we're interested in processing form data.
+    if request.method == 'POST':
+    # Attempt to grab information from the raw form information.
+    #  Note that we make use of both UserForm and UserProfileForm.
+        owner_form = OwnerRegisterForm(data=request.POST)
+        if owner_form.is_valid():
+
+            owner = owner_form.save()
+            owner.set_password(owner.password)
+            owner.save()
+
+            profile = owner_form.save(commit=False)
+            profile.user = owner
+            if 'profile_picture' in request.FILES:
+                profile.profile_picture = request.FILES['profile_picture']
+            if 'dog_picture' in request.FILES:
+                profile.dog_picture = request.FILES['picture']
+        # Now we save the UserProfile model instance.
+            profile.save()
+
+            registered = True
+        else: # Invalid form or forms - mistakes or something else? # Print problems to the terminal.
+            print(owner_form.errors)
+    else:
+       owner_form = OwnerRegisterForm()
+    # Render the template depending on the context.
+    return render(request, 'dogowner.html', {'owner_form': owner_form, 'registered': registered})
+
+
+
+def register_organizer(request):
+    return render(request,'organizer.html')
