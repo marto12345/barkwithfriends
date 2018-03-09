@@ -1,2 +1,65 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block head_block %}
+    <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'add_ratingstyle.css' %}">
+    <title>Ratings</title>
+    <script src="jquery.js"></script>
+        <script>
+            $(function(){
+                $("#includedContent").load("static/rating.html");
+            });
+        </script>
+    <title>Rating</title>
+
+{% endblock %}
+
+
+{% block body_block %}
+<div class="row">
+
+    <div class="col-sm-1">
+    </div>
+
+
+    <div class="col">
+        <p>Add a Rating</p>
+    <form id="add-rating_form" method="post" action={% url 'add-rating' %}>
+    <div>
+        {% if Organizers %}
+             <ul>
+                 {% for organizer in Organizers %}
+                    <li>{{ organizer.name }}
+                        {{ organizer.rating }}
+                         {% csrf_token %}
+                          <div id="includedContent"></div>
+                         {{ form.rating }}
+
+                    </li>
+                 {% endfor %}
+             </ul>
+         {% else %}
+             <strong>There are no organizers present.</strong>
+         {% endif %}
+    </div>
+    </form>
+    </div>
+
+     <div class="col-sm-1">
+    </div>
+
+
+
+    <div class="col">
+    </div>
+
+
+
+    <div class="col-sm-1">
+    </div>
+</div>
+
+{% endblock %}

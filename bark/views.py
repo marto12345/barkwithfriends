@@ -1,6 +1,6 @@
-from bark.forms import addEventForm,UserForm
+from bark.forms import addEventForm,UserForm,addRatingForm
 from django.shortcuts import render
-from bark.models import Event,UserProfile
+from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.views.generic import CreateView
@@ -62,6 +62,16 @@ def ratings(request):
 
 #@login_required
 def add_rating(request):
+    if request.method == 'POST':
+        form = addRatingForm(request.POST)
+
+        if form.is_valid():
+            rating = form.save(commit=True)
+            return HttpResponse("Successfully added an event!");
+            return index(request)
+
+        else:
+            print(form.errors)
     return render(request,'add-rating.html')
 
 def register(request):

@@ -79,6 +79,15 @@ class Rating(models.Model):
     comment = models.CharField(max_length=128)
     ownername = models.ForeignKey(UserProfile,related_name='ownername')
     #organizeruser = models.ForeignKey(Organizer,related_name='organizeruser')
+    class Meta:
+        verbose_name_plural = 'Ratings'
+
+    def save(self, *args, **kwargs):
+        super(Rating, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
 
 class ChooseAnEvent(models.Model):
     ownerusername = models.ForeignKey(UserProfile,related_name='ownerusername')

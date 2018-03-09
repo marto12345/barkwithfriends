@@ -1,7 +1,7 @@
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
-from bark.models import Event,UserProfile
+from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
@@ -41,3 +41,10 @@ class OrganizerForm(forms.ModelForm):
         # is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
         exclude=('dog_name','dog_picture','user','is_owner')
+
+
+class addRatingForm(forms.ModelForm):
+
+    class Meta:
+        model = Rating
+        fields={'starvalue','ident','comment','ownername'}
