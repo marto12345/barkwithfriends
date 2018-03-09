@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
-from bark.models import Event,User,DogOwner
+from django.contrib.auth.models import User
+from bark.models import Event,UserProfile
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
@@ -14,16 +15,17 @@ class addEventForm(forms.ModelForm):
         widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}),'start': forms.TimeInput(attrs={'id': 'start'})
        , 'end': forms.TimeInput(attrs={'id': 'end'})}
 
-class OwnerRegisterForm(UserCreationForm):
-    dogname = models.CharField(max_length=128)
-    dog_picture = models.ImageField(upload_to='profile_images', blank=True)
-    class Meta(UserCreationForm.Meta):
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+    class Meta:
         model = User
-       # fields={'username','first_name','last_name','description','email','profile_picture'}
-    @transaction.atomic
-    def save(self):
-        user = super(self).save(commit=False)
-        user.is_owner = True
-        user.save()
-        student = Student.objects.create(user=user)
-        return user
+        fields = ('username','first_name','last_name' ,'email', 'password')
+class OwnerForm(forms.ModelForm):
+    class Meta:
+        model=UserProfile
+        fields = ('profile_picture','dog_name', 'dog_picture')
+
+class OrganizerForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('profile_picture',)

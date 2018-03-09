@@ -1,11 +1,11 @@
-from bark.forms import addEventForm
+from bark.forms import addEventForm,UserForm
 from django.shortcuts import render
-from bark.models import Event,User,DogOwner
-from django.contrib.auth import login
+from bark.models import Event,UserProfile
+from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.views.generic import CreateView
-
-from bark.forms import OwnerRegisterForm
+from django.http import HttpResponse
+from bark.forms import OwnerForm,OrganizerForm
 
 
 def index(request):
@@ -79,19 +79,8 @@ def myaccount(request):
 def logout(request):
     return render(request,'index.html')
 
-class register_owner(CreateView):
-        model = User
-        form_class = OwnerRegisterForm
-        template_name = 'templates/organizer.html'
 
-        def get_context_data(self, **kwargs):
-            kwargs['user_type'] = 'owner'
-            #return super().get_context_data(**kwargs)
 
-        def form_valid(self, form):
-            user = form.save()
-            login(self.request, user)
-            return redirect('index')
     # True when registration succeeds.
     #registered = False
 
@@ -123,6 +112,33 @@ class register_owner(CreateView):
     # Render the template depending on the context.
     #return render(request, 'dogowner.html', {'owner_form': owner_form, 'registered': registered})
 
+
+def register_owner(request):
+        registered = False
+        if request.method == 'POST':
+            user_form = UserForm(data=request.POST)
+            profile_form = OwnerForm(data=request.POST)
+            if user_form.is_valid() and profile_form.is_valid():
+
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+                profile = profile_form.save(commit=False)
+                profile.user = user
+                if 'profile_picture' in request.FILES:
+                    profile.picture = request.FILES['profile_picture']
+                if 'dog_picture' in request.FILES:
+                    profile.picture = request.FILES['dog_picture']
+                profile.save()
+                registered = True
+            else:
+                print(user_form.errors, profile_form.errors)
+        else:
+            user_form = UserForm()
+            profile_form = OwnerForm()
+        return render(request, 'dogowner.html',
+                      {'user_form': user_form, 'profile_form': profile_form,
+                       'registered': registered})
 
 
 def register_organizer(request):
