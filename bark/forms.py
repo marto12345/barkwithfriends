@@ -32,7 +32,12 @@ class OwnerForm(forms.ModelForm):
         fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner')
 
 class OrganizerForm(forms.ModelForm):
+    profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+    is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+   # dog_picture = forms.ImageField(widget=forms.HiddenInput())
+   # dog_name=forms.
+#
     class Meta:
-        is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+        # is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
-        fields = ('profile_picture',)
+        exclude=('dog_name','dog_picture','user','is_owner')

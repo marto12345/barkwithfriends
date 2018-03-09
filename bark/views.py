@@ -146,4 +146,29 @@ def register_owner(request):
 
 
 def register_organizer(request):
-    return render(request,'organizer.html')
+    registered = False
+    if request.method == 'POST':
+
+        user_form = UserForm(request.POST)
+        profile_form = OrganizerForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            # profile_form.is_owner = True
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            profile = profile_form.save(commit=False)
+            # print (profile.is_owner)
+            profile.user = user
+            if 'profile_picture' in request.FILES:
+                profile.picture = request.FILES['profile_picture']
+            profile.save()
+            registered = True
+        else:
+            print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = OrganizerForm()
+    return render(request, 'organizer.html',
+                  {'user_form': user_form, 'profile_form': profile_form,
+                   'registered': registered})
