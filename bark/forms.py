@@ -19,13 +19,20 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
-        fields = ('username','first_name','last_name' ,'email', 'password')
+        fields = ('username','first_name', 'last_name','email', 'password')
+
+
 class OwnerForm(forms.ModelForm):
+    profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+    dog_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+    is_owner = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+
     class Meta:
         model=UserProfile
-        fields = ('profile_picture','dog_name', 'dog_picture')
+        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner')
 
 class OrganizerForm(forms.ModelForm):
     class Meta:
+        is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
         fields = ('profile_picture',)

@@ -116,14 +116,18 @@ def logout(request):
 def register_owner(request):
         registered = False
         if request.method == 'POST':
-            user_form = UserForm(data=request.POST)
-            profile_form = OwnerForm(data=request.POST)
-            if user_form.is_valid() and profile_form.is_valid():
 
+            user_form = UserForm(request.POST)
+            profile_form = OwnerForm(request.POST)
+
+
+            if user_form.is_valid() and profile_form.is_valid():
+                #profile_form.is_owner = True
                 user = user_form.save()
                 user.set_password(user.password)
                 user.save()
                 profile = profile_form.save(commit=False)
+               # print (profile.is_owner)
                 profile.user = user
                 if 'profile_picture' in request.FILES:
                     profile.picture = request.FILES['profile_picture']

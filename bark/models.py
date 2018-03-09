@@ -15,6 +15,7 @@ class UserProfile(models.Model):
     #avgrating = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
 
     def __str__(self):
+
         return self.user.username
 
 

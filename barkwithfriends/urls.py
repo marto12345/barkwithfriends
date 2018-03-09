@@ -17,6 +17,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from bark import views
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.index,name='index'),
@@ -34,4 +36,4 @@ urlpatterns = [
     url(r'^dogowner/$', views.register_owner, name='register_owner'),
     url(r'^organizer/$', views.register_organizer, name='register_organizer'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
