@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'barkwithfriends.settings')
 import django
 django.setup()
-from bark.models import User, Organizer, DogOwner, Event, FoodMenu, Rating, ChooseAnEvent
+from bark.models import User,  DogOwner, Event, FoodMenu, Rating, ChooseAnEvent
 
 
 def populate():

@@ -1,6 +1,6 @@
 from bark.forms import addEventForm
 from django.shortcuts import render
-from bark.models import Event,User,Organizer,DogOwner
+from bark.models import Event,User,DogOwner
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views.generic import CreateView
@@ -42,18 +42,16 @@ def add_event(request):
 
     # A HTTP POST?
     if request.method == 'POST':
-        title = request.POST.get('title')
-        theme = request.POST.get('theme')
-        capacity = request.POST.get('capacity')
-        date = request.POST.get('date')
-        start = request.POST.get('start')
-        end = request.POST.get('end')
-        form = addEventForm(data=request.POST)
+        form = addEventForm(request.POST)
     # Have we been provided with a valid form?
 
+
+
         if form.is_valid(): # Save the new category to the database.
-            event= form.save()
+            event= form.save(commit=True)
+            return HttpResponse("Successfully added an event!");
             return index(request)
+
         else:
             print(form.errors)
 
@@ -81,37 +79,49 @@ def myaccount(request):
 def logout(request):
     return render(request,'index.html')
 
-def register_owner(request):
+class register_owner(CreateView):
+        model = User
+        form_class = OwnerRegisterForm
+        template_name = 'templates/organizer.html'
+
+        def get_context_data(self, **kwargs):
+            kwargs['user_type'] = 'owner'
+            #return super().get_context_data(**kwargs)
+
+        def form_valid(self, form):
+            user = form.save()
+            login(self.request, user)
+            return redirect('index')
     # True when registration succeeds.
-    registered = False
+    #registered = False
 
     # If it's a HTTP POST, we're interested in processing form data.
-    if request.method == 'POST':
+   # if request.method == 'POST':
     # Attempt to grab information from the raw form information.
     #  Note that we make use of both UserForm and UserProfileForm.
-        owner_form = OwnerRegisterForm(data=request.POST)
-        if owner_form.is_valid():
+       # owner_form = OwnerRegisterForm(data=request.POST)
+        #if owner_form.is_valid():
 
-            owner = owner_form.save()
-            owner.set_password(owner.password)
-            owner.save()
+           # owner = owner_form.save()
+            #owner.set_password(owner.password)
+            #owner.save()
 
-            profile = owner_form.save(commit=False)
-            profile.user = owner
-            if 'profile_picture' in request.FILES:
-                profile.profile_picture = request.FILES['profile_picture']
-            if 'dog_picture' in request.FILES:
-                profile.dog_picture = request.FILES['picture']
+           # profile = owner_form.save(commit=False)
+           # profile.user = owner
+            #if 'profile_picture' in request.FILES:
+            #    profile.profile_picture = request.FILES['profile_picture']
+           # if 'dog_picture' in request.FILES:
+            #    profile.dog_picture = request.FILES['picture']
         # Now we save the UserProfile model instance.
-            profile.save()
+           # profile.save()
 
-            registered = True
-        else: # Invalid form or forms - mistakes or something else? # Print problems to the terminal.
-            print(owner_form.errors)
-    else:
-       owner_form = OwnerRegisterForm()
+            #registered = True
+       # else: # Invalid form or forms - mistakes or something else? # Print problems to the terminal.
+           # print(owner_form.errors)
+   # else:
+      # owner_form = OwnerRegisterForm()
     # Render the template depending on the context.
-    return render(request, 'dogowner.html', {'owner_form': owner_form, 'registered': registered})
+    #return render(request, 'dogowner.html', {'owner_form': owner_form, 'registered': registered})
 
 
 

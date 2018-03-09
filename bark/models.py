@@ -10,13 +10,13 @@ class User(AbstractUser):
     is_organizer = models.BooleanField(default=False)
     is_owner = models.BooleanField(default=False)
 
-class Organizer(User):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    avgrating = models.IntegerField(validators = [MinValueValidator(0),
-                                       MaxValueValidator(5)])
-
-    class Meta:
-        verbose_name_plural = 'Users/Organizers'
+#class Organizer(User):
+   # user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+   # avgrating = models.IntegerField(validators = [MinValueValidator(0),
+     #                                  MaxValueValidator(5)])
+#
+    #class Meta:
+      #  verbose_name_plural = 'Users/Organizers'
 
 
 class DogOwner(User):
@@ -29,16 +29,16 @@ class DogOwner(User):
 
 
 class Event(models.Model):
-    title = models.CharField(max_length=128,unique=True)
-    theme = models.CharField(max_length=128)
+    title = models.CharField(max_length=128,unique=True,help_text="Event title:")
+    theme = models.CharField(max_length=128,help_text="Event theme:")
     capacity = models.IntegerField(validators=[MinValueValidator(1),
-                                               MaxValueValidator(25)])
-    date = models.DateField()
-    start = models.TimeField()
-    end = models.TimeField()
+                                               MaxValueValidator(25) ],help_text="Guest capacity (maximum:25")
+    date = models.DateField(blank=False,help_text="Event date:")
+    start = models.TimeField(help_text="Start time:")
+    end = models.TimeField(help_text="End time:")
 
 
-    organizerusername = models.ForeignKey(Organizer)
+   # organizerusername = models.ForeignKey(Organizer)
 
     class Meta:
         verbose_name_plural = 'Events'
@@ -61,7 +61,7 @@ class FoodMenu(models.Model):
     etitle = models.OneToOneField(Event,related_name='etitle')
     etime=models.OneToOneField(Event,related_name='etime')
     edate = models.OneToOneField(Event,related_name='edate')
-    organizerusername = models.ForeignKey(Organizer)
+   # organizerusername = models.ForeignKey(Organizer)
 
 class Rating(models.Model):
     starvalue = models.IntegerField(validators = [MinValueValidator(1),
@@ -69,7 +69,7 @@ class Rating(models.Model):
     ident = models.IntegerField()
     comment = models.CharField(max_length=128)
     ownername = models.ForeignKey(DogOwner,related_name='ownername')
-    organizeruser = models.ForeignKey(Organizer,related_name='organizeruser')
+    #organizeruser = models.ForeignKey(Organizer,related_name='organizeruser')
 
 class ChooseAnEvent(models.Model):
     ownerusername = models.ForeignKey(DogOwner,related_name='ownerusername')

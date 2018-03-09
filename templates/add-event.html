@@ -30,24 +30,26 @@
     <div class="col">
         <h1>Add an Event</h1>
             <div>
-                <form id="category_form" method="post" action="/index">
+
+                <form id="category_form" method="post" action={% url 'add-event' %}>
                     {% csrf_token %}
                     <label for="etitle">Event title:</label>
-                    <input type="text" id="etitle" name="eventtitle" placeholder="Title...">
+                    {{ form.title }}
                     <br>
-    
+
                     <label for="theme">Theme:</label>
-                    <input type="text" id="etheme" name="eventtheme"     placeholder="Theme..">
+                    {{ form.theme }}
 
                     <label for="Date">Event Date:</label>
-                    <input type="text" id="datepicker">
-    
-                    <label for="Start time">Start time:</label>
-                    <input type="time" id="start" min="17:00" max="21:00" step=1800 required>
-    
-                    <label for="End time">End time:</label>
-                <input type="time" id="end" min="19:00" max="23:00" step=1800 required>    
+                    {{ form.date }}
+                     <label for="Capacity">Capacity (Note max:25 people,25 dogs):</label>
+                    {{ form.capacity}}
+                    <br>
 
+                    <label for="Start time">Start time:</label>
+                    {{ form.start }}
+                    <label for="End time">End time:</label>
+                    {{ form.end }}
 
                     <script type="text/javascript" src="static/startendtime1.js"></script> 
                     <script type="text/javascript">
