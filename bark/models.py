@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from django.db.models import Avg
 from django.conf import settings
 
 
@@ -73,9 +74,9 @@ class FoodMenu(models.Model):
    # organizerusername = models.ForeignKey(Organizer)
 
 class Rating(models.Model):
-    starvalue = models.IntegerField(validators = [MinValueValidator(1),
-                                       MaxValueValidator(5)])
-    ident = models.IntegerField()
+    starvalue = models.IntegerField(validators = [MinValueValidator(1),MaxValueValidator(5)])
+    #ident = models.IntegerField()
+    ident=models.AutoField(primary_key=True)
     comment = models.CharField(max_length=128)
     ownername = models.ForeignKey(UserProfile,related_name='ownername')
     #organizeruser = models.ForeignKey(Organizer,related_name='organizeruser')
@@ -83,7 +84,27 @@ class Rating(models.Model):
         verbose_name_plural = 'Ratings'
 
     def save(self, *args, **kwargs):
+        sum=0
+        num=0
         super(Rating, self).save(*args, **kwargs)
+        owner_list=[]
+        #for rate in Rating.objects.all():
+         #   if rate.ownername==self.ownername:
+          #      owner_list.append(User.objects.get(id=self.ownername))
+
+        avg=Rating.objects.filter(username=self.ownername).aggregate(Avg("starvalue"))
+        owner=User.objects.get(id=self.ownername)
+        owner.averagerating=avg
+        owner.save()
+
+          #       sum+=rate.starvalue
+           #      num+=1
+        #avg=sum/num
+        #owner=User.objects.get(id=self.ownername)
+        #owner.averagerating=avg
+        #owner.save()
+
+
 
     def __str__(self):
         return self.title

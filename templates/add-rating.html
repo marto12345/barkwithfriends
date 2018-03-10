@@ -32,11 +32,13 @@
         {% if Organizers %}
              <ul>
                  {% for organizer in Organizers %}
-                    <li>{{ organizer.name }}
+                    <li id=organizer>{{ organizer.name }}
                         {{ organizer.rating }}
                          {% csrf_token %}
                           <div id="includedContent"></div>
                          {{ form.rating }}
+                        <label for="comment">Comment:</label>
+                    {{ form.comment }}
 
                     </li>
                  {% endfor %}
