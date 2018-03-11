@@ -25,7 +25,9 @@ def contact(request):
     return render(request,'contact.html')
 
 def events(request):
-    return render(request,'events.html')
+    event_list = Event.objects.order_by('-date')
+    context_dict = {'events':event_list}
+    return render(request,'events.html',context_dict)
 
 def show_event(request,event_title):
     context_dict = {}

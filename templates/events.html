@@ -1,2 +1,21 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load staticfiles %}
+{% block body_block %}
+<form action="/index">
+{% if events %}
+	<p>In this page you can choose an event to participate in.</p>
+	{% for event in events %}
+		<input type="checkbox">
+		<p><b>Title : {{ event.title }}</b></p>
+		Theme: {{ event.theme }}</p>
+		Capacity: {{ event.capacity }}</p>
+		Date: {{ event.date }}</p>
+		Start: {{ event.start }}</p>
+		End: {{ event.end }}</p>
+	{% endfor %}
+{% else %}
+<p>We currently do not offer any events.</p>
+{% endif %}
+<input type="submit" value="Submit">
+{% endblock %}
