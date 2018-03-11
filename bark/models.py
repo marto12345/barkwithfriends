@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     dog_name= models.CharField(max_length=128)
     is_organizer = models.BooleanField(default=False)
     is_owner = models.BooleanField(default=False)
-    #avgrating = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
+    avgrating = models.FloatField(null=True,validators=[MinValueValidator(0),MaxValueValidator(5)])
 
     def __str__(self):
 

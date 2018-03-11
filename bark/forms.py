@@ -36,11 +36,12 @@ class OrganizerForm(forms.ModelForm):
     is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
    # dog_picture = forms.ImageField(widget=forms.HiddenInput())
    # dog_name=forms.
+    avgrating=forms.FloatField(widget=forms.HiddenInput(),initial=0.1)
 #
     class Meta:
         # is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
-        exclude=('dog_name','dog_picture','user','is_owner')
+        exclude=('dog_name','dog_picture','user','is_owner','avgrating')
 
 
 class addRatingForm(forms.ModelForm):
