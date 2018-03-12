@@ -26,17 +26,23 @@
         <a href = "{% url 'about' %}">About us</a><br>
         <a href = "{% url 'food-menu' %}">Food menu</a><br>
         <a href = "{% url 'contact' %}">Contact us</a><br>
+        {% if user.is_authenticated %}
         <a href = "{% url 'events' %}">Events</a><br>
+		<a href = "{% url 'ratings' %}">Ratings</a><br>
+		{% endif %}
         {% block event_block %}
         {% endblock %}
-        <a href = "{% url 'ratings' %}">Ratings</a><br>
+        
     </div>
 
 
     <div class="topnav">
+        {% if user.is_authenticated %}
+		<a href="{% url 'logout' %}">Log out</a>
+		{% else %}
         <a href="{% url 'login' %}">Log in</a>
-        <a href="{% url 'logout' %}">Log out</a>
         <a href="{% url 'register' %}">Register</a>
+		{% endif %}
         <span> Bark with Friends </span>
     </div>
 
