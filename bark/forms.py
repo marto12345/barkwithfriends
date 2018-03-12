@@ -23,8 +23,8 @@ class UserForm(forms.ModelForm):
 
 
 class OwnerForm(forms.ModelForm):
-    profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=True)
-    dog_picture = forms.ImageField(help_text="Select a profile image to upload.", required=True)
+    profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
+    dog_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
     is_owner = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
 
     class Meta:

@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Welcome to BarkWithFriends!</h1>
+    {% if user.is_authenticated %}
+
+    <h1>Welcome to BarkWithFriends, {{ user.username }}!!</h1>
+    {% else %} Welcome to BarkWithFriends! {% endif %}
 	<p>Here you can participate in a themed party along with your puppy.</p>
 	<img src="https://media.timeout.com/images/103935991/630/472/image.jpg">
 	<p>(Picture:<a href="https://www.timeout.com"/>Timeout</a>

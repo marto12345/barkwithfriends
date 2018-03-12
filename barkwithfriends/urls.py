@@ -31,9 +31,9 @@ urlpatterns = [
     url(r'^ratings$',views.ratings,name='ratings'),
     url(r'^add-rating$',views.add_rating,name='add-rating'),
     url(r'^register$',views.register,name='register'),
-    url(r'^login$',views.login,name='login'),
+    url(r'^login$',views.user_login,name='login'),
     url(r'^myaccount$',views.myaccount,name='myaccount'),
     url(r'^dogowner/$', views.register_owner, name='register_owner'),
     url(r'^organizer/$', views.register_organizer, name='register_organizer'),
-
+   url(r'^logout/$', views.user_logout, name='logout'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

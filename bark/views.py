@@ -6,7 +6,25 @@ from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.http import HttpResponse
 from bark.forms import OwnerForm,OrganizerForm
+from django.contrib.auth import authenticate,login
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+#from bark.decorators import organizer_required,owner_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+def is_owner(self):
+    if str(self.is_owner) == True:
+        return True
+    else:
+        return False
+rec_login_required = user_passes_test(lambda u: True if u.is_owner else False, login_url='/')
+
+def owner_login_required(view_func):
+    decorated_view_func = login_required(rec_login_required(view_func), login_url='/')
+    return decorated_view_func
 
 def index(request):
 
@@ -23,7 +41,8 @@ def food_menu(request):
 
 def contact(request):
     return render(request,'contact.html')
-
+@login_required
+#@owner_required
 def events(request):
     event_list = Event.objects.order_by('-date')
     context_dict = {'events':event_list}
@@ -38,7 +57,8 @@ def show_event(request,event_title):
     return render(request, 'bark/add-event.html', context_dict)
 
 
-#@login_required
+@login_required
+#@organizer_required
 def add_event(request):
     form = addEventForm()
 
@@ -59,10 +79,13 @@ def add_event(request):
 
     return render(request,'add-event.html', {'form': form})
 
+@login_required
+#@owner_required
 def ratings(request):
     return render(request,'ratings.html')
 
-#@login_required
+@login_required
+#@owner_required
 def add_rating(request):
     if request.method == 'POST':
         form = addRatingForm(request.POST)
@@ -80,16 +103,35 @@ def register(request):
     return render(request,'register.html')
 
 
-def login(request):
-    return render(request,'login.html')
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account is disabled.")
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+    else:
 
-#@login_required
+        return render(request, 'login.html')
+@login_required
 def myaccount(request):
     return render(request,'myaccount.html')
 
-#@login_required
-def logout(request):
-    return render(request,'index.html')
+@login_required
+def user_logout(request):
+# Since we know the user is logged in, we can now just log them out.
+    logout(request) # Take the user back to the homepage.
+    return HttpResponseRedirect(reverse('index'))
+
+
+
 
 
 
