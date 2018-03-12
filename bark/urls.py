@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from bark import views
 urlpatterns = [
-
       url(r'^$', views.index, name='index'),
       url(r'about/$', views.about, name='about'),
       url(r'^add-event/$', views.add_event, name='add_event'),
@@ -11,4 +10,5 @@ urlpatterns = [
       url(r'^organizer/$', views.register_organizer, name='register_organizer'),
       url(r'^login/$', views.user_login, name='login'),
       url(r'^logout/$',views.user_logout,name='logout'),
+      url(r'^restricted/', views.restricted, name='restricted'),
 ]

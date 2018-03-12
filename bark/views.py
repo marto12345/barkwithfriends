@@ -41,8 +41,9 @@ def food_menu(request):
 
 def contact(request):
     return render(request,'contact.html')
-@login_required
+
 #@owner_required
+@login_required
 def events(request):
     event_list = Event.objects.order_by('-date')
     context_dict = {'events':event_list}
@@ -57,8 +58,8 @@ def show_event(request,event_title):
     return render(request, 'bark/add-event.html', context_dict)
 
 
-@login_required
 #@organizer_required
+@login_required
 def add_event(request):
     form = addEventForm()
 
@@ -79,13 +80,13 @@ def add_event(request):
 
     return render(request,'add-event.html', {'form': form})
 
-@login_required
 #@owner_required
+@login_required
 def ratings(request):
     return render(request,'ratings.html')
 
-@login_required
 #@owner_required
+@login_required
 def add_rating(request):
     if request.method == 'POST':
         form = addRatingForm(request.POST)
@@ -226,3 +227,9 @@ def register_organizer(request):
     return render(request, 'organizer.html',
                   {'user_form': user_form, 'profile_form': profile_form,
                    'registered': registered})
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
+
+

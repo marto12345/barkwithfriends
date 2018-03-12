@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'^myaccount$',views.myaccount,name='myaccount'),
     url(r'^dogowner/$', views.register_owner, name='register_owner'),
     url(r'^organizer/$', views.register_organizer, name='register_organizer'),
-   url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^restricted/', views.restricted, name='restricted'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
