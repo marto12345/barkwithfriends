@@ -8,8 +8,8 @@ from django.conf import settings
 class UserProfile(models.Model):
     user=models.OneToOneField(User)
     description = models.CharField(max_length=128)
-    profile_picture = models.ImageField(upload_to='profile_images', blank=True)
-    dog_picture=models.ImageField(upload_to='profile_images',blank=True)
+    profile_picture = models.ImageField(upload_to='profile_images/')
+    dog_picture=models.ImageField(upload_to='profile_images/')
     dog_name= models.CharField(max_length=128)
     is_organizer = models.BooleanField(default=False)
     is_owner = models.BooleanField(default=False)

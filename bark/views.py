@@ -195,9 +195,9 @@ def register_owner(request):
                # print (profile.is_owner)
                 profile.user = user
                 if 'profile_picture' in request.FILES:
-                    profile.picture = request.FILES['profile_picture']
+                    profile.profile_picture = request.FILES['profile_picture']
                 if 'dog_picture' in request.FILES:
-                    profile.picture = request.FILES['dog_picture']
+                    profile.dog_picture = request.FILES['dog_picture']
                 profile.save()
                 registered = True
             else:
@@ -226,7 +226,7 @@ def register_organizer(request):
             # print (profile.is_owner)
             profile.user = user
             if 'profile_picture' in request.FILES:
-                profile.picture = request.FILES['profile_picture']
+                profile.profile_picture = request.FILES['profile_picture']
             profile.save()
             registered = True
         else:
