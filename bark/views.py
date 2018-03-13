@@ -12,26 +12,27 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-#from bark.decorators import organizer_required,owner_required
+from bark.decorators import owner_required,organizer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-def is_owner(self):
-    if str(self.is_owner) == True:
-        return True
-    else:
-        return False
-rec_login_required = user_passes_test(lambda u: True if u.is_owner else False, login_url='/')
+#def is_owner(self):
+#    if str(self.is_owner) == True:
+ #       return True
+ #   else:
+#        return False
+#rec_login_required = user_passes_test(lambda u: True if u.is_owner else False, login_url='/')
 
-def owner_login_required(view_func):
-    decorated_view_func = login_required(rec_login_required(view_func), login_url='/')
-    return decorated_view_func
+#def owner_login_required(view_func):
+#    decorated_view_func = login_required(rec_login_required(view_func), login_url='/')
+#    return decorated_view_func
 
 def index(request):
+
 
     event_list = Event.objects.order_by('-date')[:10]
     context_dict = {'events': event_list}
 
-    return render(request,'index.html', context_dict)
+    return render(request,'index.html', context_dict,)
 
 def about(request):
     return render(request,'about.html')
@@ -42,8 +43,8 @@ def food_menu(request):
 def contact(request):
     return render(request,'contact.html')
 
-#@owner_required
 @login_required
+@owner_required
 def events(request):
     event_list = Event.objects.order_by('-date')
     context_dict = {'events':event_list}
@@ -57,10 +58,15 @@ def show_event(request,event_title):
     except Event.DoesNotExist:context_dict['event'] = None
     return render(request, 'bark/add-event.html', context_dict)
 
-
-#@organizer_required
 @login_required
+def restricted(request):
+    return render(request,'restricted.html')
+
+@login_required
+@organizer_required
 def add_event(request):
+
+
     form = addEventForm()
 
     # A HTTP POST?
@@ -80,13 +86,14 @@ def add_event(request):
 
     return render(request,'add-event.html', {'form': form})
 
-#@owner_required
+
 @login_required
 def ratings(request):
     return render(request,'ratings.html')
 
-#@owner_required
+
 @login_required
+@owner_required
 def add_rating(request):
     if request.method == 'POST':
         form = addRatingForm(request.POST)
@@ -119,6 +126,7 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
+        #print (user.userprofile.is_owner)
         if user:
             if user.is_active:
                 login(request, user)
@@ -238,8 +246,6 @@ def register_organizer(request):
                   {'user_form': user_form, 'profile_form': profile_form,
                    'registered': registered})
 
-@login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+
 
 
