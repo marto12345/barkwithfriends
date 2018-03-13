@@ -79,6 +79,7 @@ class Rating(models.Model):
     ident=models.AutoField(primary_key=True)
     comment = models.CharField(max_length=128)
     ownername = models.ForeignKey(UserProfile,related_name='ownername')
+
     #organizeruser = models.ForeignKey(Organizer,related_name='organizeruser')
     class Meta:
         verbose_name_plural = 'Ratings'

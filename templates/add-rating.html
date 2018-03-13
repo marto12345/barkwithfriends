@@ -28,13 +28,12 @@
     <div class="col">
         <p>Add a Rating</p>
     <form id="add-rating_form" method="post" action={% url 'add-rating' %}>
+    {% csrf_token %}
     <div>
         {% if Organizers %}
              <ul>
                  {% for organizer in Organizers %}
-                    <li id=organizer>{{ organizer.name }}
-                        {{ organizer.rating }}
-                         {% csrf_token %}
+                    <li id=organizer.username>{{ organizer.username }}
                           <div id="includedContent"></div>
                          {{ form.rating }}
                         <label for="comment">Comment:</label>

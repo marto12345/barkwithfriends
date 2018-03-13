@@ -90,15 +90,25 @@ def ratings(request):
 def add_rating(request):
     if request.method == 'POST':
         form = addRatingForm(request.POST)
+        org_list=UserProfile.objects.get(is_organizer=True)
+        context_dict={"Organizers":org_list}
 
         if form.is_valid():
             rating = form.save(commit=True)
-            return HttpResponse("Successfully added an event!");
+            return HttpResponse("Successfully added a rating!");
             return index(request)
 
         else:
             print(form.errors)
-    return render(request,'add-rating.html')
+    return render(request,'add-rating.html',context_dict)
+
+
+def calculate_rating(request,username):
+
+    rates = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    for rating in Rating.objects.get(ownername=username):
+            rates[rating.starvalue] += 1
+    return render(request, 'add-rating.html',rates)
 
 def register(request):
     return render(request,'register.html')

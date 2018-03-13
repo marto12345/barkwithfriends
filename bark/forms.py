@@ -45,6 +45,8 @@ class OrganizerForm(forms.ModelForm):
 
 
 class addRatingForm(forms.ModelForm):
+    #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
+
 
     class Meta:
         model = Rating
