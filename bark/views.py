@@ -268,8 +268,6 @@ def update_profile(request):
         elif request.user.userprofile.is_organizer:
             profile_form = OrganizerForm(request.POST, instance=request.user.userprofile)
             profile = profile_form.save(commit=False)
-            print (profile.profile_picture)
-            print (request.POST['profile_picture'])
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile.profile_picture = request.POST['profile_picture']
