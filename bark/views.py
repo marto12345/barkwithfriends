@@ -195,7 +195,9 @@ def register_owner(request):
             user_form = UserForm(request.POST)
             profile_form = OwnerForm(request.POST)
 
-
+            #print (profile_form.is_valid())
+            #print ("asd" + str(dir(profile_form)))
+            #print (profile_form.profile_picture)
             if user_form.is_valid() and profile_form.is_valid():
                 #profile_form.is_owner = True
                 user = user_form.save()
@@ -248,23 +250,30 @@ def register_organizer(request):
                   {'user_form': user_form, 'profile_form': profile_form,
                    'registered': registered})
 
+#def foo(is_organiser)
+#    return Owener if is_organiser else Oth
 
 @login_required
 @transaction.atomic
 def update_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
-        if request.user.userprofile.is_owner==True:
+        if request.user.userprofile.is_owner:
             profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')
             return redirect('index')
-        elif request.user.userprofile.is_organizer==True:
+        elif request.user.userprofile.is_organizer:
             profile_form = OrganizerForm(request.POST, instance=request.user.userprofile)
+            profile = profile_form.save(commit=False)
+            print (profile.profile_picture)
+            print (request.POST['profile_picture'])
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
+                profile.profile_picture = request.POST['profile_picture']
+                profile.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')
             return redirect('index')

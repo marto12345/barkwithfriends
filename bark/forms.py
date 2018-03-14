@@ -6,8 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 
 class addEventForm(forms.ModelForm):
-
-
+    password = forms.CharField(widget=forms.PasswordInput())
     class Meta:  # Provide an association between the ModelForm and a model
 
         model = Event
@@ -16,7 +15,7 @@ class addEventForm(forms.ModelForm):
        , 'end': forms.TimeInput(attrs={'id': 'end'})}
 
 class UserForm(forms.ModelForm):
-
+    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
