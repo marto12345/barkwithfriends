@@ -1,2 +1,90 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% block body_block %}
+    <!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="static/rating_style.css">
+ <script src="rating.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<fieldset class="rating">
+    <legend>Please rate:</legend>
+    <input type="radio" onclick="fivestar(5)" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">&#9734</label>
+    <input type="radio" onclick="fivestar(4)" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">&#9734</label>
+    <input type="radio" onclick="fivestar(3)" id="star3" name="rating" value="3" /><label for="star3" title="Meh">&#9734</label>
+    <input type="radio" onclick="fivestar(2)" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
+    <input type="radio" onclick="fivestar(1)" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
+</fieldset>
+
+
+
+<p id="avg"> Average rating is {{ organizer.rating }}</p>
+<div class="row">
+  <div class="side">
+    <div>5 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-5"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div id="5">rates[5]</div>
+  </div>
+
+  <div class="side">
+    <div>4 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-4"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div id="4">rares[4]</div>
+  </div>
+
+  <div class="side">
+    <div>3 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-3"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div id="3">rates[3]</div>
+  </div>
+
+  <div class="side">
+    <div>2 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-2"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div id="2">rates[2]</div>
+  </div>
+
+  <div class="side">
+    <div>1 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-1"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div id="1">rates[1]</div>
+  </div>
+</div>
+
+</p>
+</body>
+</html>
+{% endblock %}

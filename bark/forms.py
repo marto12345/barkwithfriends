@@ -52,3 +52,5 @@ class addRatingForm(forms.ModelForm):
     class Meta:
         model = Rating
         fields={'starvalue','ident','comment','ownername'}
+
+
