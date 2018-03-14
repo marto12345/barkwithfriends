@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from bark.decorators import owner_required,organizer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db import transaction
 
 #def is_owner(self):
 #    if str(self.is_owner) == True:
@@ -61,6 +62,7 @@ def show_event(request,event_title):
 @login_required
 def restricted(request):
     return render(request,'restricted.html')
+
 
 @login_required
 @organizer_required
@@ -247,5 +249,36 @@ def register_organizer(request):
                    'registered': registered})
 
 
+@login_required
+@transaction.atomic
+def update_profile(request):
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        if request.user.userprofile.is_owner==True:
+            profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                print('Your profile was successfully updated!')
+            return redirect('index')
+        elif request.user.userprofile.is_organizer==True:
+            profile_form = OrganizerForm(request.POST, instance=request.user.userprofile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                print('Your profile was successfully updated!')
+            return redirect('index')
 
+        else:
+            messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = UserForm(instance=request.user)
+        if request.user.userprofile.is_organizer==True:
+                profile_form = OrganizerForm(instance=request.user.userprofile)
+        if request.user.userprofile.is_owner==True:
+                profile_form = OwnerForm(instance=request.user.userprofile)
+    return render(request, 'update-profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
 

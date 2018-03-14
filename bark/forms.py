@@ -16,10 +16,12 @@ class addEventForm(forms.ModelForm):
        , 'end': forms.TimeInput(attrs={'id': 'end'})}
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+
+
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name','email', 'password')
+        fields = ('username','first_name', 'last_name','email', 'password',)
+
 
 
 class OwnerForm(forms.ModelForm):

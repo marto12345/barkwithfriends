@@ -37,4 +37,5 @@ urlpatterns = [
     url(r'^organizer/$', views.register_organizer, name='register_organizer'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^restricted/', views.restricted, name='restricted'),
+    url(r'^update-profile/', views.update_profile, name='update-profile'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
