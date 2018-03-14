@@ -97,10 +97,20 @@ def ratings(request):
 @login_required
 @owner_required
 def add_rating(request):
-    if request.method == 'POST':
+    context_dict = {"Organizers": []}
+    org_list = UserProfile.objects.filter(is_organizer=True)
+    '''
+    for org in org_list:
+       print("hop")
+       print(org)
+       #print(type(org))
+    '''
+    #context_dict={}
+    if request.method == 'GET':
+        #print('ohhhh')
         form = addRatingForm(request.POST)
-        org_list=UserProfile.objects.get(is_organizer=True)
-        context_dict={"Organizers":org_list}
+        org_list = UserProfile.objects.filter(is_organizer=True)
+        context_dict["Organizers"] = org_list
 
         if form.is_valid():
             rating = form.save(commit=True)

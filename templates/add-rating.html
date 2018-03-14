@@ -5,13 +5,14 @@
 {% block head_block %}
     <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'add_ratingstyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'rating_style.css' %}">
+
     <title>Ratings</title>
-    <script src="jquery.js"></script>
+    <script src="static/jquery.js"></script>
         <script>
-            $(function(){
-                $("#includedContent").load("static/rating.html");
-            });
+            $(document).ready((function(){
+                $("#includedContent").load("ratings");
+            }));
         </script>
     <title>Rating</title>
 
@@ -19,48 +20,34 @@
 
 
 {% block body_block %}
-<div class="row">
 
-    <div class="col-sm-1">
-    </div>
-
-
-    <div class="col">
-        <p>Add a Rating</p>
-    <form id="add-rating_form" method="post" action={% url 'add-rating' %}>
+    <h>Add a Rating</h>
+    <form id="addRatingForm" method="POST" action={% url 'add-rating' %}>
     {% csrf_token %}
-    <div>
         {% if Organizers %}
-             <ul>
-                 {% for organizer in Organizers %}
-                    <li id=organizer.username>{{ organizer.username }}
-                          <div id="includedContent"></div>
-                         {{ form.rating }}
-                        <label for="comment">Comment:</label>
-                    {{ form.comment }}
 
-                    </li>
+                 {% for organizer in Organizers %}
+
+                    <ul class="row" id=organizer>
+
+                            <p class="col-1">{{ organizer }}</p>
+
+                        <a class="col-3" href = "{% url 'ratings' %}">Add a rating</a><br>
+                        
+                        <label for="comment">Comment:</label>
+
+
+
+
+                    </ul>
                  {% endfor %}
-             </ul>
+
          {% else %}
              <strong>There are no organizers present.</strong>
          {% endif %}
-    </div>
     </form>
-    </div>
-
-     <div class="col-sm-1">
-    </div>
 
 
 
-    <div class="col">
-    </div>
-
-
-
-    <div class="col-sm-1">
-    </div>
-</div>
 
 {% endblock %}
