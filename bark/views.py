@@ -93,6 +93,10 @@ def add_event(request):
 def ratings(request):
     return render(request,'ratings.html')
 
+@login_required
+def rating(request):
+    return render(request,'rating.html')
+
 
 @login_required
 @owner_required
@@ -272,6 +276,7 @@ def update_profile(request):
             profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
+                profile = profile_form.save(commit=False)
                 profile.profile_picture = request.POST['profile_picture']
                 profile.dog_picture = request.POST['dog_picture']
                 profile.save()
@@ -279,10 +284,11 @@ def update_profile(request):
                 print('Your profile was successfully updated!')
             return redirect('update-profile')
         elif request.user.userprofile.is_organizer:
-            profile_form = OrganizerForm(request.POST, instance=request.user.userprofile)
-            profile = profile_form.save(commit=False)
+            profile_form = OrganizerForm(request.POST, request.FILES, instance=request.user.userprofile)
+            #profile = profile_form.save(commit=False)
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
+                profile = profile_form.save(commit=False)
                 profile.profile_picture = request.POST['profile_picture']
                 profile.save()
                 profile_form.save()
