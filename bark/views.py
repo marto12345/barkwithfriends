@@ -262,9 +262,12 @@ def update_profile(request):
             profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
+                profile.profile_picture = request.POST['profile_picture']
+                profile.dog_picture = request.POST['dog_picture']
+                profile.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')
-            return redirect('index')
+            return redirect('update-profile')
         elif request.user.userprofile.is_organizer:
             profile_form = OrganizerForm(request.POST, instance=request.user.userprofile)
             profile = profile_form.save(commit=False)
@@ -274,7 +277,7 @@ def update_profile(request):
                 profile.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')
-            return redirect('index')
+            return redirect('update-profile')
 
         else:
             messages.error(request, _('Please correct the error below.'))
