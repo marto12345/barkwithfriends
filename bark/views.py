@@ -101,9 +101,40 @@ def add_event(request):
     return render(request,'add-event.html', {'form': form})
 
 
+def calculate_rating(username):
+
+    rates = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    try:
+        for rating in Rating.objects.get(ownername=username):
+                rates[rating.starvalue] += 1
+    except:
+        return rates
+
+    return rates
+
 @login_required
+@owner_required
 def ratings(request):
-    return render(request,'ratings.html')
+    context_dict = {'rates': {}, 'form': {addRatingForm(request.GET)}}
+
+    if request.method == 'POST':
+        # print('ohhhh')
+        form = addRatingForm(request.POST)
+        context_dict['form'] = form
+        if form.is_valid():
+            rating = form.save(commit=True)
+
+            return HttpResponse("Successfully added a rating!");
+            return index(request)
+
+        else:
+            print(form.errors)
+
+    name = request.POST.get('organizername')
+    rates = calculate_rating(name)
+    context_dict['rates'] = rates
+
+    return render(request,'ratings.html',context_dict)
 
 @login_required
 def rating(request):
@@ -114,7 +145,9 @@ def rating(request):
 @owner_required
 def add_rating(request):
     context_dict = {"Organizers": []}
-    org_list = UserProfile.objects.filter(is_organizer=True)
+    if request.method == 'GET':
+          org_list = UserProfile.objects.filter(is_organizer=True)
+          context_dict["Organizers"] = org_list
     '''
     for org in org_list:
        print("hop")
@@ -122,28 +155,14 @@ def add_rating(request):
        #print(type(org))
     '''
     #context_dict={}
-    if request.method == 'GET':
-        #print('ohhhh')
-        form = addRatingForm(request.POST)
-        org_list = UserProfile.objects.filter(is_organizer=True)
-        context_dict["Organizers"] = org_list
 
-        if form.is_valid():
-            rating = form.save(commit=True)
-            return HttpResponse("Successfully added a rating!");
-            return index(request)
-
-        else:
-            print(form.errors)
-    return render(request,'add-rating.html',context_dict,{'form':form})
+    #org_list = UserProfile.objects.filter(is_organizer=True)
 
 
-def calculate_rating(request,username):
 
-    rates = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
-    for rating in Rating.objects.get(ownername=username):
-            rates[rating.starvalue] += 1
-    return render(request, 'add-rating.html',rates)
+    return render(request,'add-rating.html',context_dict)
+
+
 
 def register(request):
     return render(request,'register.html')
