@@ -49,9 +49,18 @@ def contact(request):
 def events(request):
     event_list = Event.objects.order_by('-date')
     context_dict = {'events':event_list}
-    for event in event_list:
-        if (event.capacity==0):
-            del context_dict[event]
+    #for event in event_list:
+        #if event.capacity==0:
+              #  del context_dict[event]
+    print(request)
+    some_var=request.GET.getlist('checks')
+
+    for chosen in some_var:
+        print ("kur")
+        for event in event_list:
+         if event.title==chosen:
+                event.capacity-=1
+                event.save()
     return render(request,'events.html',context_dict)
 
 def show_event(request,event_title):
