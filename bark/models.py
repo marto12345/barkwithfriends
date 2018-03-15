@@ -80,13 +80,13 @@ class Rating(models.Model):
     comment = models.CharField(max_length=128)
     ownername = models.ForeignKey(UserProfile,related_name='ownername')
 
-    #organizeruser = models.ForeignKey(Organizer,related_name='organizeruser')
+    organizename = models.ForeignKey(UserProfile,related_name='organizername')
     class Meta:
         verbose_name_plural = 'Ratings'
 
     def save(self, *args, **kwargs):
-        sum=0
-        num=0
+        #sum=0
+        #num=0
         super(Rating, self).save(*args, **kwargs)
         owner_list=[]
         #for rate in Rating.objects.all():
@@ -95,7 +95,9 @@ class Rating(models.Model):
 
         avg=Rating.objects.filter(username=self.ownername).aggregate(Avg("starvalue"))
         owner=User.objects.get(id=self.ownername)
-        owner.averagerating=avg
+        organizer=UserProfile.objects.get(id=organizername)
+        organizer.averagerating=avg
+        organizer.save()
         owner.save()
 
           #       sum+=rate.starvalue

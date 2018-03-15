@@ -123,7 +123,7 @@ def add_rating(request):
 
         else:
             print(form.errors)
-    return render(request,'add-rating.html',context_dict)
+    return render(request,'add-rating.html',context_dict,{'form':form})
 
 
 def calculate_rating(request,username):

@@ -47,10 +47,14 @@ class OrganizerForm(forms.ModelForm):
 
 class addRatingForm(forms.ModelForm):
     #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
+    CHOICES = [('1', '2'),
+               ('3', '4','5')]
 
-
+    starvalue = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect())
+    comment=forms.CharField()
+    organizername=forms.CharField()
     class Meta:
         model = Rating
-        fields={'starvalue','ident','comment','ownername'}
+        fields = {'comment', 'organizername','starvalue'}
 
 

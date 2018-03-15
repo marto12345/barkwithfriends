@@ -5,23 +5,27 @@
 <html>
 <head>
  <link rel="stylesheet" href="static/rating_style.css">
- <script src="rating.js"></script>
+ <script src="static/rating.js"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
+<form id="addRatingForm" method="POST" action={% url 'ratings' %}>
 <fieldset class="rating">
     <legend>Please rate:</legend>
-    <input type="radio" onclick="fivestar(5)" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">&#9734</label>
-    <input type="radio" onclick="fivestar(4)" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">&#9734</label>
-    <input type="radio" onclick="fivestar(3)" id="star3" name="rating" value="3" /><label for="star3" title="Meh">&#9734</label>
-    <input type="radio" onclick="fivestar(2)" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
-    <input type="radio" onclick="fivestar(1)" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
+    <input type="radio" onclick="fivestar(5)" id="star5" name="starvalue" value="5" /><label for="star5" title="Rocks!">&#9734</label>
+    <input type="radio" onclick="fivestar(4)" id="star4" name="starvalue" value="4" /><label for="star4" title="Pretty good">&#9734</label>
+    <input type="radio" onclick="fivestar(3)" id="star3" name="starvalue" value="3" /><label for="star3" title="Meh">&#9734</label>
+    <input type="radio" onclick="fivestar(2)" id="star2" name="starvalue" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
+    <input type="radio" onclick="fivestar(1)" id="star1" name="starvalue" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
 </fieldset>
+    <div id="orgname">
+    <label for="organizername">Organizer:</label>
+    <input  type="text" name="organizerrname" READONLY/></div>
+</form>
 
 
-
-<p id="avg"> Average rating is {{ organizer.rating }}</p>
+<p id="avg"> Average rating is {{ organizer.avgrating }}</p>
 <div class="row">
   <div class="side">
     <div>5 star</div>
@@ -86,5 +90,6 @@
 
 </p>
 </body>
+
 </html>
 {% endblock %}

@@ -131,3 +131,10 @@ p{
   float:right;
   display:block;
 }
+
+#orgname{
+    padding-top: 150px;
+    position:relative;
+    float:right;
+    display: block;
+}
