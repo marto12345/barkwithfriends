@@ -2,32 +2,25 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block body_block %}
-<form action='index'>
+<form action={% url 'events' %}
 {% if events %}
 	<p>In this page you can choose an event to participate in.</p>
 	{% for event in events %}
-		<input type="checkbox" value="{{ event.capacity }}">
+        {% if event.capacity > 0 %}
+		<input type="checkbox" value="{{ event.title }}" name="checks">
+
 		<p><b>Title : {{ event.title }}</b></p>
 		Theme: {{ event.theme }}</p>
 		Capacity: {{ event.capacity }}</p>S
 		Date: {{ event.date }}</p>
 		Start: {{ event.start }}</p>
 		End: {{ event.end }}</p>
+        {% endif %}
 	{% endfor %}
-    <input type="submit" value="Submit" id="submit" >
-    <script src="https://code.jquery.com/jquery-1.7.2.js">
+    <input type="submit" value="submit" >
 
 
-     $('#submit').click(function(){
 
-                var final = '';
-                $(':checkbox:checked').each(function(i){
-                    var values = $(this).val();
-                    final += values;
-                });
-                console.log(final);
-        });
-     </script>
 {% else %}
 <p>We currently do not offer any events.</p>
 {% endif %}

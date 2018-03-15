@@ -9,11 +9,8 @@
 
     <title>Ratings</title>
     <script src="static/jquery.js"></script>
-        <script>
-            $(document).ready((function(){
-                $("#includedContent").load("ratings");
-            }));
-        </script>
+    <script src="{% static 'fillorganizer.js' %}"></script>
+
     <title>Rating</title>
 
 {% endblock %}
@@ -22,20 +19,17 @@
 {% block body_block %}
 
     <h>Add a Rating</h>
-    <form id="addRatingForm" method="POST" action={% url 'add-rating' %}>
     {% csrf_token %}
         {% if Organizers %}
 
                  {% for organizer in Organizers %}
 
-                    <ul class="row" id=organizer>
+                    <ul class="row" >
 
-                            <p class="col-1">{{ organizer }}</p>
+                        <p id=organizer class="col-1">{{ organizer }}</p>
 
-                        <a class="col-3" href = "{% url 'ratings' %}">Add a rating</a><br>
+                        <a onclick="fillorganizer.js" class="col-3" href = "{% url 'ratings' %}">Add a rating</a><br>
 
-                        <label for="comment">Comment:</label>
-                        <input type="text" name="comment" >
 
 
 
@@ -46,7 +40,7 @@
          {% else %}
              <strong>There are no organizers present.</strong>
          {% endif %}
-    </form>
+
 
 
 
