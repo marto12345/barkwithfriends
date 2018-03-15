@@ -49,6 +49,9 @@ def contact(request):
 def events(request):
     event_list = Event.objects.order_by('-date')
     context_dict = {'events':event_list}
+    for event in event_list:
+        if (event.capacity==0):
+            del context_dict[event]
     return render(request,'events.html',context_dict)
 
 def show_event(request,event_title):
