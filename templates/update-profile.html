@@ -2,11 +2,16 @@
 {% load staticfiles %}
 {% block body_block %}
 
-    <h1>{{user.username}} Profile</h1> <img src="{{user.userprofile.profile_picture.url }}" width="300"  alt="{{user.username}}" /> <br/>
+    <h1>{{user.username}} Profile</h1>
+    {% if user.userprofile.profile_picture  %}
+    <img src="{{user.userprofile.profile_picture.url }}" width="300"  alt="{{user.username}}" /> <br/>
+
+{% endif %}
    {% if user.userprofile.is_owner %}
+       {% if user.userprofile.dog_picture  %}
      <h2>This is your lovely doggo:{{user.userprofile.dog_name}} </h2> <img src="{{user.userprofile.dog_picture.url }}" width="300"   /> <br/>
 
-
+   {% endif %}
    {% endif %}
 
 

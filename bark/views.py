@@ -316,8 +316,8 @@ def update_profile(request):
                 user_form.save()
                 profile = profile_form.save(commit=False)
                 picture = profile.profile_picture
-                if(profile)
                 profile.profile_picture = request.FILES.get('profile_picture', picture)
+
                 dog_picture = profile.profile_picture
                 profile.dog_picture = request.FILES.get('dog_picture', dog_picture)
                 profile.save()
