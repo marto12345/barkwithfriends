@@ -10,30 +10,28 @@
    {% endif %}
 
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <br>
   {% csrf_token %}
-    {{ user_form.username.as_hidden }}
-   <label for="First_Name">First Name:</label> {{ user_form.first_name }}
-    <br>
-   <label for="Last_Name">Last Name:</label>{{ user_form.last_name }}
-    <br>
-   <label for="Email">Email:</label>{{ user_form.email }}
-    {{ user_form.password.as_hidden }}
+  {{ user_form.username.as_hidden }}
+  <label for="First_Name">First Name:</label> {{ user_form.first_name }}
+  <br>
+  <label for="Last_Name">Last Name:</label>{{ user_form.last_name }}
+  <br>
+  <label for="Email">Email:</label>{{ user_form.email }}
+  {{ user_form.password.as_hidden }}
 
   {{ profile_form.as_p }}
-
-<script type="text/javascript" src="static/userevents.js"></script>
- <script type="text/javascript">
-            function go()
-                        {
-                           alertfunction();
-                        }
-     </script>
-
-
+  {{ profile_form.events }}
   <input type="submit" value="save changes">
-<input type="button" value="Click me" onclick="go()">
+  <script type="text/javascript" src="{% static 'userevents.js' %}"></script>
+  <script type="text/javascript">
+   function go()
+     {
+         getevents();
+     }
+  </script>
+   <input type="button" value="Click me" onclick="go()">
 
 </form>
 

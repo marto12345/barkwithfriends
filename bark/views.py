@@ -59,12 +59,12 @@ def events(request):
         events_list=request.user.userprofile.events
         event_date=Event.objects.get(title=chosen).date
         event_time=Event.objects.get(title=chosen).start
-        print(event_date)
-        events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+" "
+
+        events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+";"
         request.user.userprofile.events=events_list
         request.user.userprofile.save()
         print( request.user.userprofile.events)
-        print ("kur")
+
         for event in event_list:
          if event.title==chosen:
                 event.capacity-=1
@@ -194,9 +194,8 @@ def user_login(request):
     else:
 
         return render(request, 'login.html')
-@login_required
-def myaccount(request):
-    return render(request,'myaccount.html')
+
+
 
 @login_required
 def user_logout(request):
@@ -307,7 +306,7 @@ def register_organizer(request):
 #    return Owener if is_organiser else Oth
 
 @login_required
-@transaction.atomic
+
 def update_profile(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=request.user)
@@ -316,8 +315,11 @@ def update_profile(request):
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile = profile_form.save(commit=False)
-                profile.profile_picture = request.POST['profile_picture']
-                profile.dog_picture = request.POST['dog_picture']
+                picture = profile.profile_picture
+                if(profile)
+                profile.profile_picture = request.FILES.get('profile_picture', picture)
+                dog_picture = profile.profile_picture
+                profile.dog_picture = request.FILES.get('dog_picture', dog_picture)
                 profile.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')
@@ -328,7 +330,7 @@ def update_profile(request):
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile = profile_form.save(commit=False)
-                profile.profile_picture = request.POST['profile_picture']
+                profile.profile_picture = request.FILES.get('profile_picture')
                 profile.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')
