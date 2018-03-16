@@ -56,6 +56,14 @@ def events(request):
     some_var=request.GET.getlist('checks')
 
     for chosen in some_var:
+        events_list=request.user.userprofile.events
+        event_date=Event.objects.get(title=chosen).date
+        event_time=Event.objects.get(title=chosen).start
+        print(event_date)
+        events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+" "
+        request.user.userprofile.events=events_list
+        request.user.userprofile.save()
+        print( request.user.userprofile.events)
         print ("kur")
         for event in event_list:
          if event.title==chosen:

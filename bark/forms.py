@@ -27,10 +27,13 @@ class OwnerForm(forms.ModelForm):
     profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
     dog_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
     is_owner = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
+    events = forms.CharField(widget=forms.HiddenInput(), initial='',required=False)
+
 
     class Meta:
         model=UserProfile
-        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner')
+        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events')
+        widgets = {'events': forms.HiddenInput(attrs={'id': 'events'})}
 
 class OrganizerForm(forms.ModelForm):
     profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)

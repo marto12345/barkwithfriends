@@ -5,19 +5,6 @@ from django.db.models import Avg
 from django.conf import settings
 
 
-class UserProfile(models.Model):
-    user=models.OneToOneField(User)
-    description = models.CharField(max_length=128)
-    profile_picture = models.ImageField(upload_to='profile_images/', default='default/person.jpg')
-    dog_picture=models.ImageField(upload_to='profile_images/', default='default/dog.jpg')
-    dog_name= models.CharField(max_length=128)
-    is_organizer = models.BooleanField(default=False)
-    is_owner = models.BooleanField(default=False)
-    avgrating = models.FloatField(null=True,validators=[MinValueValidator(0),MaxValueValidator(5)],default=0)
-
-    def __str__(self):
-
-        return self.user.username
 
 
 #class Organizer(User):
@@ -62,6 +49,20 @@ class Event(models.Model):
         return self.title
 
 
+class UserProfile(models.Model):
+    user=models.OneToOneField(User)
+    description = models.CharField(max_length=128)
+    profile_picture = models.ImageField(upload_to='profile_images/', default='default/person.jpg')
+    dog_picture=models.ImageField(upload_to='profile_images/', default='default/dog.jpg')
+    dog_name= models.CharField(max_length=128)
+    is_organizer = models.BooleanField(default=False)
+    is_owner = models.BooleanField(default=False)
+    avgrating = models.FloatField(null=True,validators=[MinValueValidator(0),MaxValueValidator(5)],default=0)
+    events=models.CharField(max_length=256)
+    events=models.CharField(max_length=256)
+    def __str__(self):
+
+        return self.user.username
 class FoodMenu(models.Model):
     starter = models.CharField(max_length=128)
     mainCourse = models.CharField(max_length=128)
@@ -118,3 +119,4 @@ class ChooseAnEvent(models.Model):
     eventtitle = models.ForeignKey(Event,related_name='eventtitle')
     eventdate = models.ForeignKey(Event,related_name='eventdate')
     time = models.ForeignKey(Event)
+
