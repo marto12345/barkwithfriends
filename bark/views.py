@@ -204,42 +204,6 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
-
-
-
-
-    # True when registration succeeds.
-    #registered = False
-
-    # If it's a HTTP POST, we're interested in processing form data.
-   # if request.method == 'POST':
-    # Attempt to grab information from the raw form information.
-    #  Note that we make use of both UserForm and UserProfileForm.
-       # owner_form = OwnerRegisterForm(data=request.POST)
-        #if owner_form.is_valid():
-
-           # owner = owner_form.save()
-            #owner.set_password(owner.password)
-            #owner.save()
-
-           # profile = owner_form.save(commit=False)
-           # profile.user = owner
-            #if 'profile_picture' in request.FILES:
-            #    profile.profile_picture = request.FILES['profile_picture']
-           # if 'dog_picture' in request.FILES:
-            #    profile.dog_picture = request.FILES['picture']
-        # Now we save the UserProfile model instance.
-           # profile.save()
-
-            #registered = True
-       # else: # Invalid form or forms - mistakes or something else? # Print problems to the terminal.
-           # print(owner_form.errors)
-   # else:
-      # owner_form = OwnerRegisterForm()
-    # Render the template depending on the context.
-    #return render(request, 'dogowner.html', {'owner_form': owner_form, 'registered': registered})
-
-
 def register_owner(request):
         registered = False
         if request.method == 'POST':
@@ -318,7 +282,7 @@ def update_profile(request):
                 picture = profile.profile_picture
                 profile.profile_picture = request.FILES.get('profile_picture', picture)
 
-                dog_picture = profile.profile_picture
+                dog_picture = profile.dog_picture
                 profile.dog_picture = request.FILES.get('dog_picture', dog_picture)
                 profile.save()
                 profile_form.save()
