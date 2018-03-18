@@ -36,7 +36,7 @@ def contact(request):
 @login_required
 @owner_required
 def events(request):
-    event_list = Event.objects.order_by('-date')
+    event_list = Event.objects.order_by('date')
     context_dict = {'events':event_list}
     #for event in event_list:
         #if event.capacity==0:
