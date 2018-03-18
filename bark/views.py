@@ -150,8 +150,12 @@ def ratings(request):
     return render(request,'ratings.html',context_dict)
 
 @login_required
-def rating(request):
-    return render(request,'rating.html')
+def view_ratings(request):
+    context_dict={"organizers":[]}
+    org_list = UserProfile.objects.filter(is_organizer=True)
+    context_dict["organizers"]=org_list
+
+    return render(request,'view-ratings.html',context_dict)
 
 
 @login_required

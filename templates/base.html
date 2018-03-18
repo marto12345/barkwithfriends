@@ -36,7 +36,7 @@
             {% endif %}
             {%  if user.userprofile.is_organizer %}
                 <a href = "{% url 'add-event' %}">Add An Event</a><br>
-                <a href = "{% url 'rating' %}">Ratings</a><br>
+                <a href = "{% url 'view_ratings' %}">Ratings</a><br>
             {% endif %}
 
 	{% endif %}        
