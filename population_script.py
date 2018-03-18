@@ -13,7 +13,8 @@ def populate():
          "capacity": "12",
          "date":"2018-03-29",
          "start":"16:30:00",
-         "end":"20:30:00"
+         "end":"20:30:00",
+         "organizerusername":"John Smith"
 
     },
          {"title": "Hawaii party",
@@ -21,27 +22,29 @@ def populate():
          "capacity": "18",
          "date": "2018-04-29",
          "start": "17:30:00",
-         "end": "20:30:00"
+         "end": "20:30:00",
+        "organizerusername": "John Smith"
     }
     ]
 
 
     for event in dog_events:
 
-        c = add_event( event["title"], event["theme"],event["capacity"],event["date"],event["start"],event["end"])
+        c = add_event( event["title"], event["theme"],event["capacity"],event["date"],event["start"],event["end"],event["organizerusername"])
 
 
 
 
 
 
-def add_event(title,theme,capacity,date,start,end):
+def add_event(title,theme,capacity,date,start,end,organizerusername):
         c = Event.objects.get_or_create(title=title,theme=theme,capacity=capacity,date=date,start=start,end=end)[0]
         c.theme=theme
         c.capacity = capacity
         c.date=date
         c.start=start
         c.end=end
+        c.organizerusername=organizerusername
         c.save()
         return c
 
