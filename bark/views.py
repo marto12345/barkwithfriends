@@ -15,22 +15,11 @@ from django.shortcuts import get_object_or_404
 from bark.decorators import owner_required,organizer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
-
-#def is_owner(self):
-#    if str(self.is_owner) == True:
- #       return True
- #   else:
-#        return False
-#rec_login_required = user_passes_test(lambda u: True if u.is_owner else False, login_url='/')
-
-#def owner_login_required(view_func):
-#    decorated_view_func = login_required(rec_login_required(view_func), login_url='/')
-#    return decorated_view_func
+from django.contrib import messages
 
 def index(request):
 
-
-    event_list = Event.objects.order_by('-date')[:10]
+    event_list = Event.objects.order_by('date')[:10]
     context_dict = {'events': event_list}
 
     return render(request,'index.html', context_dict,)
@@ -57,18 +46,24 @@ def events(request):
 
     for chosen in some_var:
         events_list=request.user.userprofile.events
-        event_date=Event.objects.get(title=chosen).date
-        event_time=Event.objects.get(title=chosen).start
+        if chosen in events_list:
+            messages.warning(request,'''You are not allowed to sign for the same event twice!
+            If you have another pet you wish to bring , you need to create another account!
+            
+            ''')
+        else:
+            event_date=Event.objects.get(title=chosen).date
+            event_time=Event.objects.get(title=chosen).start
 
-        events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+";"
-        request.user.userprofile.events=events_list
-        request.user.userprofile.save()
-        print( request.user.userprofile.events)
+            events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+";"
+            request.user.userprofile.events=events_list
+            request.user.userprofile.save()
+            print( request.user.userprofile.events)
 
-        for event in event_list:
-         if event.title==chosen:
-                event.capacity-=1
-                event.save()
+            for event in event_list:
+             if event.title==chosen:
+                    event.capacity-=1
+                    event.save()
     return render(request,'events.html',context_dict)
 
 def show_event(request,event_title):

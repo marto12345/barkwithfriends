@@ -10,12 +10,19 @@
 		<input type="checkbox" value="{{ event.title }}" name="checks">
 		<p><b>Title : {{ event.title }}</b></p>
 		Theme: {{ event.theme }}</p>
-		Capacity: {{ event.capacity }}</p>S
+		Capacity: {{ event.capacity }}</p>
 		Date: {{ event.date }}</p>
 		Start: {{ event.start }}</p>
 		End: {{ event.end }}</p>
         {% endif %}
 	{% endfor %}
+    {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
     <input type="submit" value="submit" >
 
 

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
-
 {% block head_block %}
-
-
 {% endblock %}
-
-
-
 {% block body_block %}
+    {% if user.is_authenticated %}
+        <h2>You have already registered!</h2>
+
+    {% else %}
     <h1>Register for free here! Choose one of the options below:</h1>
 
    <form action="/dogowner">
@@ -17,6 +15,6 @@
     <form action="/organizer">
     <input type="submit" value="Event organizer" />
    </form>
-
+{% endif %}
 
 {% endblock %}
