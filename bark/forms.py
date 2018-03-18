@@ -12,7 +12,7 @@ class addEventForm(forms.ModelForm):
         model = Event
         fields={'title','theme','capacity','date','start','end'}
         widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}),'start': forms.TimeInput(attrs={'id': 'start'})
-       , 'end': forms.TimeInput(attrs={'id': 'end'})}
+       , 'end': forms.TimeInput(attrs={'id': 'end'}),"organizerusername":forms.HiddenInput()}
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -38,14 +38,13 @@ class OwnerForm(forms.ModelForm):
 class OrganizerForm(forms.ModelForm):
     profile_picture = forms.ImageField(help_text="Select a profile image to upload.", required=False)
     is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
-   # dog_picture = forms.ImageField(widget=forms.HiddenInput())
-   # dog_name=forms.
     avgrating=forms.FloatField(widget=forms.HiddenInput(),initial=0.1)
+    events = forms.CharField(widget=forms.HiddenInput(), initial='', required=False)
 #
     class Meta:
         # is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
-        exclude=('dog_name','dog_picture','user','is_owner','avgrating')
+        exclude=('dog_name','dog_picture','user','is_owner','avgrating','events')
 
 
 class addRatingForm(forms.ModelForm):

@@ -16,6 +16,7 @@
          <h1>Register for BarkWithFriends</h1>
         {% if registered %}
              <strong>Thank you for registering!</strong>
+            <a href = "{% url 'login' %}">Log in now</a><br>
              <a href="{% url 'index' %}">Return to the homepage.</a><br />
         {% else %}
               <strong>register here!</strong><br />

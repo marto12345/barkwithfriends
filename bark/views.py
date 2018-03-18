@@ -88,15 +88,25 @@ def add_event(request):
 
     # A HTTP POST?
     if request.method == 'POST':
+
         form = addEventForm(request.POST)
+
     # Have we been provided with a valid form?
 
 
 
         if form.is_valid(): # Save the new category to the database.
+            org = request.user.first_name +" "+ request.user.last_name
+            form.organizerusername=org
+            print(form.organizerusername)
+
             event= form.save(commit=True)
-            return HttpResponse("Successfully added an event!");
-            return index(request)
+            e = Event.objects.get(title=event.title)
+            e.organizerusername=org
+            e.save()
+
+
+            return redirect('index')
 
         else:
             print(form.errors)

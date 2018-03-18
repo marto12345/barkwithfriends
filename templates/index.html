@@ -13,9 +13,17 @@
     {% if events %}
     <ul>
         {% for event in events %}
+           <h3>{{ event.title }}</h3>
+            <br>
             <li>
-                 {{ event.title }}
+
+                 Theme :{{ event.theme }} ---
+                 Start time:{{ event.start }}
+                 End time:{{ event.end }}
+                 Organzied by: {{ event.organizerusername }}
+
             </li>
+            <br>
         {% endfor %}
     </ul>
     {% else %}

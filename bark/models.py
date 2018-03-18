@@ -35,7 +35,7 @@ class Event(models.Model):
     end = models.TimeField(help_text="End time:")
 
 
-   # organizerusername = models.ForeignKey(Organizer)
+    organizerusername = models.CharField(max_length=128)
 
     class Meta:
         verbose_name_plural = 'Events'
