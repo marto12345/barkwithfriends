@@ -36,6 +36,11 @@ class Event(models.Model):
 
 
     organizerusername = models.CharField(max_length=128)
+    starter=models.CharField(max_length=128)
+    main=models.CharField(max_length=128)
+    dessert=models.CharField(max_length=128)
+    drink=models.CharField(max_length=128)
+    dog_food=models.CharField(max_length=128)
 
     class Meta:
         verbose_name_plural = 'Events'

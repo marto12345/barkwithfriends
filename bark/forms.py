@@ -4,15 +4,52 @@ from django.contrib.auth.models import User
 from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
+MAINS = (
+    ('Toastie', 'Toastie with Cheese and Ham'),
+    ('Chicken', 'Toast Chicken Baguette'),
+    ('Pasta', 'Pasta bolognese'),
+    ('Tofu', 'Tofu katsu curry'),
+)
+STARTERS = (
 
+    ('TomSoup', 'Tomato soup'),
+    ('Green', 'Greenveg Soup'),
+    ('Falhum', 'Falafel and Hummus'),
+    ('Olive', 'Olive sun dried tomato baguette'),
+    ('Cheese','Cheese selection'),
+)
+
+DESSERTS= (
+
+    ('Porridge', 'Oatmeal blueberry porridge '),
+    ('Choc', 'Chocolate cake'),
+    ('Crepe', 'Banana nutella crepe'),
+)
+DRINKS=(
+    ('Espresso','Espresso' ),
+    ('Cappuccino','Cappuccino'),
+    ('Chai','Chai Latte'),
+)
+DOG=(
+    ('Beef ','Beef stew ' ),
+    ('Chicken','Chicken soup'),
+    ('Chai','Chai Latte'),
+    ('Cookies','Cookies'),
+)
 class addEventForm(forms.ModelForm):
+    starter = forms.ChoiceField(choices=STARTERS, label="", initial='', widget=forms.Select(), required=True)
+    main = forms.ChoiceField(choices=MAINS, label="", initial='', widget=forms.Select(), required=True)
+    dessert = forms.ChoiceField(choices=DESSERTS, label="", initial='', widget=forms.Select(), required=True)
+    drink = forms.ChoiceField(choices=DRINKS, label="", initial='', widget=forms.Select(), required=True)
+    dog_food = forms.ChoiceField(choices=DOG, label="", initial='', widget=forms.Select(), required=True)
 
     class Meta:  # Provide an association between the ModelForm and a model
 
         model = Event
-        fields={'title','theme','capacity','date','start','end'}
+        fields={'title','theme','capacity','date','start','end','starter','main','dessert','drink','dog_food'}
         widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}),'start': forms.TimeInput(attrs={'id': 'start'})
-       , 'end': forms.TimeInput(attrs={'id': 'end'}),"organizerusername":forms.HiddenInput()}
+        }
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())

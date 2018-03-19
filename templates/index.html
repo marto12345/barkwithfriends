@@ -13,15 +13,14 @@
     {% if events %}
     <ul>
         {% for event in events %}
-           <h3>{{ event.title }}</h3>
-            <br>
+           <h3>{{ event.title }}
+               <br>Theme :{{ event.theme }} </h3>
             <li>
-
-                 Theme :{{ event.theme }} ---
-                 Date: {{ event.date }} ---
+                <h5 >Date: {{ event.date }} ---
                  Start time:{{ event.start }}
-                 End time:{{ event.end }}--
-                 Organzied by: {{ event.organizerusername }}
+                 End time:{{ event.end }}</h5>
+                <h6> Organzied by: {{ event.organizerusername }}</h6>
+
 
             </li>
             <br>

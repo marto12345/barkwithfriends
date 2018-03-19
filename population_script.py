@@ -14,7 +14,12 @@ def populate():
          "date":"2018-03-29",
          "start":"16:30:00",
          "end":"20:30:00",
-         "organizerusername":"John Smith"
+         "organizerusername":"John Smith",
+         "starter":"Tomato Soup",
+         "main":"Pasta bolognese",
+         "dessert":"Chocolate cake",
+         "drink":"Espresso",
+         "dog_food":"Beef stew"
 
     },
          {"title": "Hawaii party",
@@ -23,28 +28,40 @@ def populate():
          "date": "2018-04-29",
          "start": "17:30:00",
          "end": "20:30:00",
-        "organizerusername": "John Smith"
+        "organizerusername": "John Smith",
+          "starter": "Tomato Soup",
+          "main": "Pasta bolognese",
+          "dessert": "Chocolate cake",
+          "drink": "Espresso",
+          "dog_food": "Beef stew"
     }
     ]
 
 
     for event in dog_events:
 
-        c = add_event( event["title"], event["theme"],event["capacity"],event["date"],event["start"],event["end"],event["organizerusername"])
+        c = add_event( event["title"], event["theme"],event["capacity"],event["date"],event["start"],event["end"],event["organizerusername"],
+                       event["starter"],event["main"],event["dessert"],event["drink"],event["dog_food"])
 
 
 
 
 
 
-def add_event(title,theme,capacity,date,start,end,organizerusername):
-        c = Event.objects.get_or_create(title=title,theme=theme,capacity=capacity,date=date,start=start,end=end)[0]
+def add_event(title,theme,capacity,date,start,end,organizerusername,starter,main,dessert,drink,dog_food):
+        c = Event.objects.get_or_create(title=title,theme=theme,capacity=capacity,date=date,start=start,end=end,organizerusername=organizerusername,starter=starter,
+          main=main,dessert=dessert,drink=drink,dog_food=dog_food)[0]
         c.theme=theme
         c.capacity = capacity
         c.date=date
         c.start=start
         c.end=end
         c.organizerusername=organizerusername
+        c.starter=starter
+        c.main=main
+        c.dessert=dessert
+        c.drink=drink
+        c.dog_food=dog_food
         c.save()
         return c
 
