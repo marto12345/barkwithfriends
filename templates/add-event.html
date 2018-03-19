@@ -59,8 +59,15 @@
                         {
                            alertfunction();
                         }
-                      {{ form.organizerusername.as_hidden }}
+
                     </script>
+                     {{ form.organizerusername.as_hidden }}
+                    <h6>Choose menu for your event</h6>
+                    Starter:{{ form.starter }}
+                    Main course:{{ form.main }}
+                    Dessert:{{ form.dessert }}
+                    Drink:{{ form.drink}}
+                    Dog food:{{ form.dog_food }}
                     <input type="submit" value="Submit" onclick="go()">
 
                 </form>

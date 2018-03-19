@@ -8,12 +8,26 @@
 	{% for event in events %}
         {% if event.capacity > 0 %}
 		<input type="checkbox" value="{{ event.title }}" name="checks">
-		<p><b>Title : {{ event.title }}</b></p>
-		Theme: {{ event.theme }}</p>
-		Capacity: {{ event.capacity }}</p>
-		Date: {{ event.date }}</p>
-		Start: {{ event.start }}</p>
-		End: {{ event.end }}</p>
+		<p><b>{{ event.title }}</b> -- Organized by {{ event.organizerusername }}</p>
+            This event has a topic : <b>{{ event.theme }}</b>
+            It will take place on <b>{{ event.date }}</b>.
+            <br>
+            It will start at <b>{{ event.start }}</b>
+		    and is expected to finsih at <b>{{ event.end }}.</b></p>
+		    The current number of availabel place is :<b>{{ event.capacity }}</b></p>
+
+         Menu for the event :</p>
+
+                 Starter:  {{ event.starter }}<br>
+
+                 Main course:  {{ event.main }}<br>
+
+                 Dessert:  {{ event.dessert }}<br>
+
+                 Drink:  {{ event.drink }}<br>
+
+                 Food for the dogs: {{ event.dog_food }}
+            <br>
         {% endif %}
 	{% endfor %}
     {% if messages %}
