@@ -27,8 +27,9 @@
   {{ user_form.password.as_hidden }}
 
   {{ profile_form.as_p }}
+
  {% if user.userprofile.is_owner %}
-  <input type="submit" value="save changes">
+
   <script type="text/javascript" src="{% static 'userevents.js' %}"></script>
   <script type="text/javascript">
    function go()
@@ -43,6 +44,7 @@
    <div id="div1">
         <p id="p1">These are your events.</p>
   {% endif %}
+<input type="submit" value="save changes">
 </div>
 </form>
 
