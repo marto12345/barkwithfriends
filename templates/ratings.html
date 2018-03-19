@@ -22,11 +22,11 @@
     <input type="radio" onclick="fivestar(1)" id="star1" name="starvalue" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
 </fieldset>
     <div id="orgname">
-     <div id="starvalue"   >{{ form.starvalue }}</div>
-    <label for="organizername">Organizer:</label>
-        {{ form.organizername }}
-        <label for="comment">Comment:</label>
-        {{ form.comment }}
+     <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
+    <label for="organizername">Organizer: {{ form.organizername }}</label>
+
+        <label for="comment">Comment:  {{ form.comment }}</label>
+
         <input id="submit" type="submit" value="Submit" >
     </div>
 
@@ -44,7 +44,7 @@
     </div>
   </div>
   <div class="side right">
-    <div id="5">rates[5]</div>
+    <div id="5">{{rates.5}}</div>
   </div>
 
   <div class="side">
@@ -56,7 +56,7 @@
     </div>
   </div>
   <div class="side right">
-    <div id="4">rares[4]</div>
+    <div id="4">{{ rates.4 }}</div>
   </div>
 
   <div class="side">
@@ -68,7 +68,7 @@
     </div>
   </div>
   <div class="side right">
-    <div id="3">rates[3]</div>
+    <div id="3">{{ rates.3 }}</div>
   </div>
 
   <div class="side">
@@ -80,7 +80,7 @@
     </div>
   </div>
   <div class="side right">
-    <div id="2">rates[2]</div>
+    <div id="2">{{ rates.2 }}</div>
   </div>
 
   <div class="side">
@@ -92,7 +92,7 @@
     </div>
   </div>
   <div class="side right">
-    <div id="1">rates[1]</div>
+    <div id="1">{{ rates.1 }}</div>
   </div>
 </div>
 

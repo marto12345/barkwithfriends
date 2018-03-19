@@ -116,15 +116,17 @@ def add_event(request):
 
 def calculate_rating(username):
 
-    rates = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
+    rates = {1:0, 2:0, 3:0, 4:0, 5:0}
+    #print('smqtam')
+    #print(rates[1])
     try:
-        for rating in Rating.objects.get(ownername=username):
+        for rating in Rating.objects.get(organizername=username):
                 rates[rating.starvalue] += 1
     except:
-        return rates
+        pass
 
     return rates
-
+'''
 @login_required
 @owner_required
 def ratings(request):
@@ -148,7 +150,7 @@ def ratings(request):
     context_dict['rates'] = rates
 
     return render(request,'ratings.html',context_dict)
-
+'''
 @login_required
 def view_ratings(request):
     context_dict={"organizers":[]}
@@ -156,6 +158,32 @@ def view_ratings(request):
     context_dict["organizers"]=org_list
 
     return render(request,'view-ratings.html',context_dict)
+@login_required
+@owner_required
+def ratings(request):
+    context_dict = {'rates': {}, 'form': {}}
+    name = request.POST.get('organizername')
+    form = addRatingForm(request.GET)
+    context_dict['form'] = form
+    rates = calculate_rating('org')
+    context_dict['rates'] = rates
+    if request.method == 'POST':
+        # print('ohhhh')
+        form = addRatingForm(request.POST)
+        context_dict['form'] = form
+        if form.is_valid():
+            rating = form.save(commit=True)
+
+            return HttpResponse("Successfully added a rating!");
+            return index(request)
+
+        else:
+            print(form.errors)
+
+
+
+
+    return render(request,'ratings.html',context_dict)
 
 
 @login_required
@@ -163,14 +191,34 @@ def view_ratings(request):
 def add_rating(request):
     context_dict = {"Organizers": []}
     if request.method == 'GET':
+        org_list = UserProfile.objects.filter(is_organizer=True)
+        context_dict["Organizers"] = org_list
+
+    # for org in org_list:
+    #   print("hop")
+    #  print(org)
+    # print(type(org))
+
+    # context_dict={}
+
+    # org_list = UserProfile.objects.filter(is_organizer=True)
+
+    return render(request, 'add-rating.html', context_dict)
+
+'''
+@login_required
+@owner_required
+def add_rating(request):
+    context_dict = {"Organizers": []}
+    if request.method == 'GET':
           org_list = UserProfile.objects.filter(is_organizer=True)
           context_dict["Organizers"] = org_list
-    '''
-    for org in org_list:
-       print("hop")
-       print(org)
+    
+   # for org in org_list:
+    #   print("hop")
+     #  print(org)
        #print(type(org))
-    '''
+
     #context_dict={}
 
     #org_list = UserProfile.objects.filter(is_organizer=True)
@@ -178,7 +226,7 @@ def add_rating(request):
 
 
     return render(request,'add-rating.html',context_dict)
-
+'''
 
 
 def register(request):

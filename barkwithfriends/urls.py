@@ -31,6 +31,8 @@ urlpatterns = [
     url(r'^ratings$',views.ratings,name='ratings'),
     url(r'^view-ratings$',views.view_ratings,name='view_ratings'),
     url(r'^add-rating$',views.add_rating,name='add-rating'),
+    url(r'^ratings/(?P<organizer>\w+)$',views.ratings,name='ratings'),
+
     url(r'^register$',views.register,name='register'),
     url(r'^login$',views.user_login,name='login'),
 
