@@ -27,6 +27,7 @@
         <a href = "{% url 'food-menu' %}">Food menu</a><br>
         <a href = "{% url 'contact' %}">Contact us</a><br>
         {% if user.is_authenticated %}
+           
 
             {%  if user.userprofile.is_owner %}
 
