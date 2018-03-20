@@ -98,12 +98,26 @@ class Rating(models.Model):
         #for rate in Rating.objects.all():
          #   if rate.ownername==self.ownername:
           #      owner_list.append(User.objects.get(id=self.ownername))
+        sum=0
+        num=0
+        #print('dick')
+        for rate in Rating.objects.filter(organizername=self.organizername):
+            print(rate.starvalue)
+            sum=sum+rate.starvalue
+            num+=1
+        #avg=Rating.objects.filter(organizername=self.organizername).aggregate(Avg("starvalue"))
+        # owner=UserProfile.objects.filter(id=User)
+        avg=sum/num
+       # print('this is avg')
+        #print(avg)
+        self.organizername.avgrating = avg
+        self.organizername.save()
+        #print(self.organizername)
+        #super(Rating, self).save(*args, **kwargs)
+        # organizer=UserProfile.objects.filter(id=self.organizername)
+        # organizer.averagerating=avg
+        # organizer.save()
 
-        avg=Rating.objects.filter(username=self.ownername).aggregate(Avg("starvalue"))
-        owner=UserProfile.objects.filter(id=User)
-        organizer=UserProfile.objects.filter(id=organizername)
-        organizer.averagerating=avg
-        organizer.save()
         #owner.save()
 
           #       sum+=rate.starvalue
@@ -116,7 +130,7 @@ class Rating(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return 'Raiting: {}'.format(self.ident)
 
 
 class ChooseAnEvent(models.Model):

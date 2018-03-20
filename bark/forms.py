@@ -85,15 +85,24 @@ class OrganizerForm(forms.ModelForm):
 
 
 class addRatingForm(forms.ModelForm):
-    #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
-    #CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
-    starvalue = forms.IntegerField(widget=forms.HiddenInput())
-    comment = forms.CharField()
-    #organizername=forms.CharField().disabled
-    #organizername = forms.CharField(widget=forms.HiddenInput())
-    ownername=forms.CharField(widget=forms.HiddenInput())
+    # #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
+    # #CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+    # starvalue = forms.IntegerField(widget=forms.HiddenInput())
+    # comment = forms.CharField()
+    # #organizername=forms.CharField().disabled
+    #
+    # # organizername = forms.CharField(widget=forms.HiddenInput())
+    # ownername=forms.CharField(widget=forms.HiddenInput())
+
+    # organizername = forms.ModelMultipleChoiceField(queryset=UserProfile.objects.filter(is_organizer=True))
+    # ownername = forms.ModelMultipleChoiceField(queryset=UserProfile.objects.filter(is_owner=True))
+    # def __init__(self, *args, **kwargs):
+    #     super(addRatingForm, self).__init__(*args, **kwargs)
+    #     self.initial['ownername'] = ownername
+
     class Meta:
         model = Rating
-        fields = {'comment', 'organizername','starvalue','ownername'}
+        # fields = { 'organizername','starvalue','comment','ownername'}
+        fields = { 'organizername','starvalue','comment'}
 
 

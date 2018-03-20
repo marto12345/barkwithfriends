@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'rating_style.css' %}">
 
     <title>Ratings</title>
+
     <script src="static/jquery.js"></script>
     <script src="{% static 'fillorganizer.js' %}"></script>
 
@@ -25,12 +26,13 @@
                  {% for organizer in Organizers %}
 
                     <ul class="row" >
-                        <form action="/ratings/{{ organizer }}" method="get">
+                        <form id="submit" action="/ratings/{{ organizer }}" method="get">
 
                         <p id=organizer class="col-1">{{ organizer }}</p>
 
-                        <a  class="col-3" href = "{% url 'ratings' %} ">Add a rating</a><br>
-                             <input type="submit" value="Submit">
+                        <a onclick="submit_form()" onmouseenter="mouse_enter()" onmouseleave="mouse_leave()" id="rate" class="col-3" >Add a rating</a><br>
+
+                            <input hidden type="submit" value="Submit" >
 
                         </form>
 
@@ -46,5 +48,17 @@
 
 
 
-
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script>
+   function submit_form(){
+       $('#submit').submit();
+   }
+   function mouse_enter(){
+       $('#rate').css("color",'blue');
+       $('#rate').css('cursor','pointer');
+   }
+    function mouse_leave(){
+       $('#rate').css("color",'black');
+   }
+   </script>
 {% endblock %}

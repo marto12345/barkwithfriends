@@ -157,37 +157,48 @@ def view_ratings(request):
     context_dict["organizers"]=org_list
 
     return render(request,'view-ratings.html',context_dict)
+
 @login_required
 @owner_required
-def ratings(request,organizer):
-    context_dict = {'rates': {}, 'form': {},'organizer_user':organizer}
+def ratings(request,organizer_str):
+    owner_user=User.objects.get(username=request.user.username)
+    owner = UserProfile.objects.get(user=owner_user)
+    print("orgvjhbhbjhbjh")
+    print(owner)
+    context_dict = {'rates': {}, 'form': {},'organizer_user':organizer_str,'owner_user':owner}
    # print(organizer)
     #print(type(organizer))
     #name = request.POST.get('organizername')
-    form = addRatingForm(request.GET)
-    name=User.objects.get(username=organizer)
+    # form = addRatingForm(request.GET)
+    organizer_user = User.objects.get(username=organizer_str)
+    organizer = UserProfile.objects.get(user= organizer_user)
+    print("organizer")
+    print(organizer)
 
     #print(type(name))
-    form.organizername=name
-    context_dict['form'] = form
+    # form.organizername=name
+    # context_dict['form'] = form
     rates = calculate_rating('org')
     context_dict['rates'] = rates
-    context_dict['organizer_user']=name
+    context_dict['organizer_user']=organizer
     if request.method == 'POST':
         # print('ohhhh')
+        print(request.POST)
         form = addRatingForm(request.POST)
-        form.organizername = name
-        form.ownername=User.objects.get(username=request.user.username)
-        print(form)
         context_dict['form'] = form
         if form.is_valid():
-            rating = form.save(commit=True)
+            rating = form.save(commit=False)
+            rating.ownername = owner
+            rating.save()
 
             return HttpResponse("Successfully added a rating!");
             return index(request)
 
         else:
             print(form.errors)
+    else:
+        form = addRatingForm()
+        context_dict['form'] = form
 
     return render(request,'ratings.html',context_dict)
 
@@ -364,7 +375,7 @@ def update_profile(request):
             return redirect('update-profile')
 
         else:
-            messages.error(request, _('Please correct the error below.'))
+            messages.error(request, ('Please correct the error below.'))
     else:
         user_form = UserForm(instance=request.user)
         if request.user.userprofile.is_organizer==True:
