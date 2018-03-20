@@ -102,12 +102,12 @@ class Rating(models.Model):
         num=0
         #print('dick')
         for rate in Rating.objects.filter(organizername=self.organizername):
-            print(rate.starvalue)
+            #print(rate.starvalue)
             sum=sum+rate.starvalue
             num+=1
         #avg=Rating.objects.filter(organizername=self.organizername).aggregate(Avg("starvalue"))
         # owner=UserProfile.objects.filter(id=User)
-        avg=sum/num
+        avg=round(sum/num,2)
        # print('this is avg')
         #print(avg)
         self.organizername.avgrating = avg
