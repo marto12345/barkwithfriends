@@ -6,8 +6,6 @@
     right: 0;
     left: 162px;
     float:left;
-    overflow-x: hidden;
-    overflow-y: scroll;
     height: 100%;
 }
 

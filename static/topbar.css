@@ -37,3 +37,7 @@
     display: none;
 }
 
+@media screen and (max-height: 450px) {
+    .topnav {padding-top: 15px;}
+    .topnav a {font-size: 18px;}
+}

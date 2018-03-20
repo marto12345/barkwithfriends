@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 <?xml version="1.0" encoding="UTF-8"?>
+
 {% block head_block %}
-<?xml-stylesheet type="text/xsl" href="{% static 'menu.xsl' %}"?>
+    <?xml-stylesheet type="text/xsl" href="{% static 'menu.xsl' %}"?>
 {% endblock %}
+
+{% block title_block %}
+Food Menu
+{% endblock %}
+
 {% block body_block %}
 <menu>
 <h1>For the owners</h1>

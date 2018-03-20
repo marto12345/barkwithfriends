@@ -1,56 +1,54 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+
+{% block title_block %}
+My Account
+{% endblock %}
+
 {% block body_block %}
-
     <h1>{{user.username}} Profile</h1>
+
     {% if user.userprofile.profile_picture  %}
-    <img src="{{user.userprofile.profile_picture.url }}" width="300"  alt="{{user.username}}" /> <br/>
+        <img src="{{user.userprofile.profile_picture.url }}" width="300"  alt="{{user.username}}" /> <br/>
+    {% endif %}
 
-{% endif %}
-   {% if user.userprofile.is_owner %}
-       {% if user.userprofile.dog_picture  %}
-     <h2>This is your lovely doggo:{{user.userprofile.dog_name}} </h2> <img src="{{user.userprofile.dog_picture.url }}" width="300"   /> <br/>
+    {% if user.userprofile.is_owner %}
+        {% if user.userprofile.dog_picture  %}
+            <h2>This is your lovely doggo:{{user.userprofile.dog_name}} </h2> <img src="{{user.userprofile.dog_picture.url }}" width="300"   /> <br/>
+        {% endif %}
+    {% endif %}
 
-   {% endif %}
-   {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        <br>
+        {% csrf_token %}
+        {{ user_form.username.as_hidden }}
+        <label for="First_Name">First Name:</label> {{ user_form.first_name }}
+        <br>
+        <label for="Last_Name">Last Name:</label>{{ user_form.last_name }}
+        <br>
+        <label for="Email">Email:</label>{{ user_form.email }}
+        {{ user_form.password.as_hidden }}
 
+        {{ profile_form.as_p }}
 
-<form method="post" enctype="multipart/form-data">
-    <br>
-  {% csrf_token %}
-  {{ user_form.username.as_hidden }}
-  <label for="First_Name">First Name:</label> {{ user_form.first_name }}
-  <br>
-  <label for="Last_Name">Last Name:</label>{{ user_form.last_name }}
-  <br>
-  <label for="Email">Email:</label>{{ user_form.email }}
-  {{ user_form.password.as_hidden }}
+        {% if user.userprofile.is_owner %}
+            <script type="text/javascript" src="{% static 'userevents.js' %}"></script>
+            <script type="text/javascript">
+                function go()
+                {
+                    getevents();
+                }
+            </script>
+            <br>
+            <input type="button" id="b" value="Show me my events" onclick="go()" >
 
-  {{ profile_form.as_p }}
-
- {% if user.userprofile.is_owner %}
-
-  <script type="text/javascript" src="{% static 'userevents.js' %}"></script>
-  <script type="text/javascript">
-   function go()
-     {
-         getevents();
-     }
-  </script>
-    <br>
-   <input type="button" id="b" value="Show me my events" onclick="go()" >
-
-
-   <div id="div1">
-        <p id="p1">These are your events.</p>
-  {% endif %}
-<input type="submit" value="Save changes">
-</div>
-</form>
-
-
-
+            <div id="div1">
+            <p id="p1">These are your events.</p>
+        {% endif %}
+        <input type="submit" value="Save changes">
+        </div>
+    </form>
 
     </div>
-</div>
+    </div>
 {% endblock %}

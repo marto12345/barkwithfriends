@@ -1,9 +1,11 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
+
+{% block title_block %}
+Index
+{% endblock %}
 
 {% block body_block %}
     {% if user.is_authenticated %}
-
     <h1>Welcome to BarkWithFriends, {{ user.username }}!!</h1>
     {% else %} Welcome to BarkWithFriends! {% endif %}
 	<p>Here you can participate in a themed party along with your puppy.</p>

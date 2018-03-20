@@ -1,21 +1,16 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
 
+{% block title_block %}
+View Ratings
+{% endblock %}
+
 {% block body_block %}
-     <h1> These are the average ratings for all organizers</h1>
-
-        {% if organizers %}
-
-
-                 {% for organizer in organizers %}
-
-                    <ul class="row" >
-
-                          <p> {{ organizer }}  <span>Average rating: {{ organizer.avgrating }} </span> </p>
-
-                    </ul>
-{% endfor %}
-
-{% endif %}
-
+    <h1> These are the average ratings for all organizers</h1>
+    {% if organizers %}
+        {% for organizer in organizers %}
+            <ul class="row" >
+                <p> {{ organizer }}  <span>Average rating: {{ organizer.avgrating }} </span> </p>
+            </ul>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
