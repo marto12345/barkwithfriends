@@ -26,33 +26,43 @@
         <a href = "{% url 'about' %}">About us</a><br>
         <a href = "{% url 'food-menu' %}">Food menu</a><br>
         <a href = "{% url 'contact' %}">Contact us</a><br>
+
         {% if user.is_authenticated %}
-           
+            {% if user.is_superuser %}
 
-            {%  if user.userprofile.is_owner %}
+            {% else %}
 
-            <a href = "{% url 'events' %}">Events</a><br>
-            <a href = "{% url 'add-rating' %}">Add ratings</a><br>
 
+                {%  if user.userprofile.is_owner %}
+
+                <a href = "{% url 'events' %}">Events</a><br>
+                <a href = "{% url 'add-rating' %}">Add ratings</a><br>
+
+                {% endif %}
+                {%  if user.userprofile.is_organizer %}
+                    <a href = "{% url 'add-event' %}">Add An Event</a><br>
+                    <a href = "{% url 'view_ratings' %}">Ratings</a><br>
+
+                {% endif %}
             {% endif %}
-            {%  if user.userprofile.is_organizer %}
-                <a href = "{% url 'add-event' %}">Add An Event</a><br>
-                <a href = "{% url 'view_ratings' %}">Ratings</a><br>
-            {% endif %}
-
 	{% endif %}        
     </div>
 
 
     <div class="topnav">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and not user.is_superuser %}
+
 
 		    <a href="{% url 'logout' %}">Log out</a>
             <a href = "{% url 'update-profile' %}">My Account</a>
 		{% else %}
-        <a href="{% url 'login' %}">Log in</a>
-        <a href="{% url 'register' %}">Register</a>
-		{% endif %}
+            {%if user.is_superuser%}
+                 <a href="{% url 'logout' %}">Log out</a>
+             {% else%}
+                <a href="{% url 'login' %}">Log in</a>
+                <a href="{% url 'register' %}">Register</a>
+		    {% endif %}
+        {% endif %}
         <span> Bark with Friends </span>
     </div>
 
