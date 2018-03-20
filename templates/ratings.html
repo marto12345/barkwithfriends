@@ -4,8 +4,9 @@
 {% block head_block %}
     <link rel="stylesheet" href="{% static 'rating_style.css' %}">
     <link rel="text/javascrpt" href="{% static 'rating.js' %}">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="{% static 'ajax_rating.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block title_block %}
@@ -107,9 +108,11 @@ Add Rating
 {% endblock %}
 
 {% block end_block %}
-    <link rel="stylesheet" href="{% static 'rating_style.css' %}">
-    <link rel="text/javascrpt" href="{% static 'rating.js' %}">
-    <script src="{% static 'rating.js' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'rating_style.css' %}">
+    <script src="{% static 'rating.js' %}" type="text/javascript"> </script>
+    <link rel="text/javascrpt" href="{% static 'rating.js' %}">
+    <link rel="text/javascrpt" href="{% static 'ajax_rating.js' %}">
+
 {% endblock %}
