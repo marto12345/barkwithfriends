@@ -102,7 +102,7 @@ class addRatingForm(forms.ModelForm):
 
     class Meta:
         model = Rating
-        # fields = { 'organizername','starvalue','comment','ownername'}
-        fields = { 'organizername','starvalue','comment'}
+        # fields = { 'organizername','starvalue','comment'}
+        fields = {'starvalue','comment'}
 
 

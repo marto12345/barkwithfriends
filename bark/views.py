@@ -115,16 +115,18 @@ def add_event(request):
 
 def calculate_rating(username):
 
-    rates = {1:0, 2:0, 3:0, 4:0, 5:0}
+    rating_freq = {1:0, 2:0, 3:0, 4:0, 5:0}
     #print('smqtam')
     #print(rates[1])
+    reviews_num=0
     try:
-        for rating in Rating.objects.get(organizername=username):
-                rates[rating.starvalue] += 1
+        for rating in Rating.objects.filter(organizername=username):
+                rating_freq[rating.starvalue] += 1
+                reviews_num+=1
     except:
         pass
 
-    return rates
+    return rating_freq,reviews_num
 '''
 @login_required
 @owner_required
@@ -163,36 +165,41 @@ def view_ratings(request):
 def ratings(request,organizer_str):
     owner_user=User.objects.get(username=request.user.username)
     owner = UserProfile.objects.get(user=owner_user)
-    print("orgvjhbhbjhbjh")
-    print(owner)
-    context_dict = {'rates': {}, 'form': {},'organizer_user':organizer_str,'owner_user':owner}
+    #print("orgvjhbhbjhbjh")
+  # print(owner)
+    context_dict = {'rates': {}, 'form': {},'organizer_user':organizer_str,'owner_user':owner,"reviews":0}
    # print(organizer)
     #print(type(organizer))
     #name = request.POST.get('organizername')
     # form = addRatingForm(request.GET)
     organizer_user = User.objects.get(username=organizer_str)
     organizer = UserProfile.objects.get(user= organizer_user)
-    print("organizer")
-    print(organizer)
+  # print("organizer")
+    #print(organizer)
 
     #print(type(name))
     # form.organizername=name
     # context_dict['form'] = form
-    rates = calculate_rating('org')
+    rates,reviews = calculate_rating(organizer)
+    context_dict["reviews"]=reviews
     context_dict['rates'] = rates
+  #for k,v in rates.items():
+       #print(k, v)
     context_dict['organizer_user']=organizer
     if request.method == 'POST':
         # print('ohhhh')
-        print(request.POST)
+        #print(request.POST)
         form = addRatingForm(request.POST)
         context_dict['form'] = form
         if form.is_valid():
             rating = form.save(commit=False)
             rating.ownername = owner
+            rating.organizername=organizer
             rating.save()
 
-            return HttpResponse("Successfully added a rating!");
-            return index(request)
+            #return HttpResponse("Successfully added a rating!");
+            #return index(request)
+            return render(request, 'ratings.html', context_dict)
 
         else:
             print(form.errors)
