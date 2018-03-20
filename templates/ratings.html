@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block body_block %}
     <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="static/rating_style.css">
- <script src="static/rating.js"></script>
-    <script src="static/jquery.js"></script>
+ <link rel="stylesheet" href="{% static 'rating_style.css' %}">
+    <link rel="text/javascrpt" href="{% static 'rating.js' %}">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
-<form id="addRatingForm" method="POST" action={% url 'ratings' %}>
+<form id="addRatingForm" method="POST" action="{{organizer_user }}">
     {% csrf_token %}
 <fieldset class="rating">
     <legend>Please rate:</legend>
@@ -23,7 +26,9 @@
 </fieldset>
     <div id="orgname">
      <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
-    <label for="organizername">Organizer: {{ form.organizername }}</label>
+    <label for="organizername">Organizer: </label>
+        {{ form.organizername }}
+        <span hidden id="org" value={{ organizer_user }}>{{ organizer_user }}</span>
 
         <label for="comment">Comment:  {{ form.comment }}</label>
 
@@ -33,7 +38,7 @@
 </form>
 
 
-<p id="avg"> Average rating is {{ organizer.avgrating }}</p>
+<p id="avg"> Average rating is {{ organizer_user.avgrating }}</p>
 <div class="row">
   <div class="side">
     <div>5 star</div>
@@ -99,5 +104,12 @@
 </p>
 </body>
 
+<link rel="stylesheet" href="{% static 'rating_style.css' %}">
+    <link rel="text/javascrpt" href="{% static 'rating.js' %}">
+<script src="{% static 'rating.js' %}">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </html>
 {% endblock %}

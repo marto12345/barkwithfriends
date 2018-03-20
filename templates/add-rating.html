@@ -25,12 +25,14 @@
                  {% for organizer in Organizers %}
 
                     <ul class="row" >
+                        <form action="/ratings/{{ organizer }}" method="get">
 
                         <p id=organizer class="col-1">{{ organizer }}</p>
 
-                        <a onclick="fillorganizer.js" class="col-3" href = "{% url 'ratings' %} ">Add a rating</a><br>
+                        <a  class="col-3" href = "{% url 'ratings' %} ">Add a rating</a><br>
+                             <input type="submit" value="Submit">
 
-
+                        </form>
 
 
 

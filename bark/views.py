@@ -105,7 +105,6 @@ def add_event(request):
             e.organizerusername=org
             e.save()
 
-
             return redirect('index')
 
         else:
@@ -160,16 +159,26 @@ def view_ratings(request):
     return render(request,'view-ratings.html',context_dict)
 @login_required
 @owner_required
-def ratings(request):
-    context_dict = {'rates': {}, 'form': {}}
-    name = request.POST.get('organizername')
+def ratings(request,organizer):
+    context_dict = {'rates': {}, 'form': {},'organizer_user':organizer}
+   # print(organizer)
+    #print(type(organizer))
+    #name = request.POST.get('organizername')
     form = addRatingForm(request.GET)
+    name=User.objects.get(username=organizer)
+
+    #print(type(name))
+    form.organizername=name
     context_dict['form'] = form
     rates = calculate_rating('org')
     context_dict['rates'] = rates
+    context_dict['organizer_user']=name
     if request.method == 'POST':
         # print('ohhhh')
         form = addRatingForm(request.POST)
+        form.organizername = name
+        form.ownername=User.objects.get(username=request.user.username)
+        print(form)
         context_dict['form'] = form
         if form.is_valid():
             rating = form.save(commit=True)
@@ -179,9 +188,6 @@ def ratings(request):
 
         else:
             print(form.errors)
-
-
-
 
     return render(request,'ratings.html',context_dict)
 

@@ -21,7 +21,9 @@ function fivestar(mul){
    var number=(sum/count).toFixed(2);
    document.getElementById("avg").innerHTML=String(number)+" average based on "+String(count)+" reviews";
    //document.getElementById("starvalue").val(mul);
-    form.starvalue=mul;
+    document.getElementById("id_starvalue").value=mul;
+    document.getElementById("id_organizer").value=document.getElementById("org").value;
+
    
 }
 

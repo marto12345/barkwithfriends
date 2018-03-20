@@ -90,8 +90,8 @@ class addRatingForm(forms.ModelForm):
     starvalue = forms.IntegerField(widget=forms.HiddenInput())
     comment = forms.CharField()
     #organizername=forms.CharField().disabled
-    organizername = forms.CharField()
-    ownername=forms.CharField(widget=forms.HiddenInput(),initial=User)
+    #organizername = forms.CharField(widget=forms.HiddenInput())
+    ownername=forms.CharField(widget=forms.HiddenInput())
     class Meta:
         model = Rating
         fields = {'comment', 'organizername','starvalue','ownername'}
