@@ -114,7 +114,7 @@ class addRatingForm(forms.ModelForm):
     # def __init__(self, *args, **kwargs):
     #     super(addRatingForm, self).__init__(*args, **kwargs)
     #     self.initial['ownername'] = ownername
-
+    #comment=forms.CharField(initial='')
     class Meta:
         model = Rating
         # fields = { 'organizername','starvalue','comment'}
