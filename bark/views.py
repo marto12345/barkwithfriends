@@ -1,4 +1,4 @@
-from bark.forms import addEventForm,UserForm,addRatingForm
+from bark.forms import addEventForm,UserForm,addRatingForm,UserUpdateForm
 from django.shortcuts import render
 from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.models import User
@@ -354,7 +354,7 @@ def register_organizer(request):
 
 def update_profile(request):
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
+        user_form = UserUpdateForm(request.POST, instance=request.user)
         if request.user.userprofile.is_owner:
             profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
