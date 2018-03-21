@@ -1,80 +1,212 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+
 <html>
 <head>
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-   <link rel="stylesheet" type="text/css" href="{% static 'topbar.css' %}">
-   <link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}">
-   <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <!--Bar Icons Fa Fa- -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!--CSS File-->
+    <link href="{% static 'sb-admin.css' %}" rel="stylesheet">
+
+    <!--Browser Tab Logo-->
+    <link rel="icon" type="image/png" href="media/default/logo/logodoggoIcon.png"/>
+
+{#   <link rel="stylesheet" type="text/css" href="{% static 'topbar.css' %}">#}
+{#   <link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}">#}
+{#   <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">#}
 
    {% block head_block %}
    {% endblock %}
+
+    <title>Bark with Friends -
+        {% block title_block %}
+        {% endblock %}
+    </title>
+
 </head>
 
 
-<title>Bark with Friends -
-{% block title_block %}
-{% endblock %}
-</title>
 
-<body>
+<body class="fixed-nav bg-dark" id="page-top">
+    <!--Side Bar Links-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a href="{% url 'index' %}" class="pull-left"><img src='media/default/logo/logodoggoIcon.png'></a>
+        <a class="navbar-brand" href="{% url 'index' %}">Bark with Friends</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="sidenav">
-        <a href = "{% url 'index' %}">Home</a><br>
-        <a href = "{% url 'about' %}">About us</a><br>
-        <a href = "{% url 'food-menu' %}">Food menu</a><br>
-        <a href = "{% url 'contact' %}">Contact us</a><br>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <i class="fa fa-fw fa-paw"></i>
+                        <span class="nav-link-text">Home</span>
+                    </a>
+                </li>
 
-        {% if user.is_authenticated %}
-            {% if user.is_superuser %}
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="About us">
+                    <a class="nav-link" href="{% url 'about' %}">
+                        <i class="fa fa-fw fa-paw"></i>
+                        <span class="nav-link-text">About us</span>
+                    </a>
+                </li>
 
-            {% else %}
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Food menu">
+                    <a class="nav-link" href="{% url 'food-menu' %}">
+                        <i class="fa fa-fw fa-paw"></i>
+                        <span class="nav-link-text">Food menu</span>
+                    </a>
+                </li>
 
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contact us">
+                    <a class="nav-link" href="{% url 'contact' %}">
+                        <i class="fa fa-fw fa-paw"></i>
+                        <span class="nav-link-text">Contact us</span>
+                    </a>
+                </li>
 
-                {%  if user.userprofile.is_owner %}
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                    {% else %}
+                        {%  if user.userprofile.is_owner %}
+                            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Events">
+                                <a class="nav-link" href="{% url 'events' %}">
+                                    <i class="fa fa-fw fa-paw"></i>
+                                    <span class="nav-link-text">Events</span>
+                                </a>
+                            </li>
 
-                <a href = "{% url 'events' %}">Events</a><br>
-                <a href = "{% url 'add-rating' %}">Add ratings</a><br>
-
+                            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add ratings">
+                                <a class="nav-link" href="{% url 'add-rating' %}">
+                                    <i class="fa fa-fw fa-paw"></i>
+                                    <span class="nav-link-text">Add ratings</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {%  if user.userprofile.is_organizer %}
+                            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add An Event">
+                                <a class="nav-link" href="{% url 'add-event' %}">
+                                    <i class="fa fa-fw fa-paw"></i>
+                                    <span class="nav-link-text">Add An Event</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ratings">
+                                <a class="nav-link" href="{% url 'view_ratings' %}">
+                                    <i class="fa fa-fw fa-paw"></i>
+                                    <span class="nav-link-text">Ratings</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
-                {%  if user.userprofile.is_organizer %}
-                    <a href = "{% url 'add-event' %}">Add An Event</a><br>
-                    <a href = "{% url 'view_ratings' %}">Ratings</a><br>
+            </ul>
 
+            <!--Top Bar Links-->
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated and not user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'update-profile' %}">
+                            <i class="fa fa-fw fa-user"></i>My Account</a>
+                    </li>
+                {% else %}
+                    {%if user.is_superuser%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                        </li>
+                    {% else%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fa fa-fw fa-sign-in"></i>Log in</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">
+                                <i class="fa fa-fw fa-edit"></i>Register</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-	{% endif %}        
+            </ul>
+
+        </div>
+    </nav>
+
+    <!--Main-->
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            {% block body_block %}
+
+            {% endblock %}
+
+        </div>
     </div>
 
 
-    <div class="topnav">
-        {% if user.is_authenticated and not user.is_superuser %}
-
-
-		    <a href="{% url 'logout' %}">Log out</a>
-            <a href = "{% url 'update-profile' %}">My Account</a>
-		{% else %}
-            {%if user.is_superuser%}
-                 <a href="{% url 'logout' %}">Log out</a>
-             {% else%}
-                <a href="{% url 'login' %}">Log in</a>
-                <a href="{% url 'register' %}">Register</a>
-		    {% endif %}
-        {% endif %}
-        <span> Bark with Friends </span>
-    </div>
-
-
-    <div class= "main">
-
-        {% block body_block %}
-        {% endblock %}
-
-    </div>
+{##}
+{#    <div class="topnav">#}
+{#        {% if user.is_authenticated and not user.is_superuser %}#}
+{#            <a href="{% url 'logout' %}">Log out</a>#}
+{#            <a href = "{% url 'update-profile' %}">My Account</a>#}
+{#        {% else %}#}
+{#            {%if user.is_superuser%}#}
+{#                <a href="{% url 'logout' %}">Log out</a>#}
+{#            {% else%}#}
+{#                <a href="{% url 'login' %}">Log in</a>#}
+{#                <a href="{% url 'register' %}">Register</a>#}
+{#            {% endif %}#}
+{#        {% endif %}#}
+{#        <span> Bark with Friends </span>#}
+{#    </div>#}
+{##}
+{##}
+{##}
+{#    <div class="sidenav">#}
+{#        <a href = "{% url 'index' %}">Home</a><br>#}
+{#        <a href = "{% url 'about' %}">About us</a><br>#}
+{#        <a href = "{% url 'food-menu' %}">Food menu</a><br>#}
+{#        <a href = "{% url 'contact' %}">Contact us</a><br>#}
+{##}
+{#        {% if user.is_authenticated %}#}
+{#            {% if user.is_superuser %}#}
+{#            {% else %}#}
+{##}
+{##}
+{#                {%  if user.userprofile.is_owner %}#}
+{##}
+{#                <a href = "{% url 'events' %}">Events</a><br>#}
+{#                <a href = "{% url 'add-rating' %}">Add ratings</a><br>#}
+{##}
+{#                {% endif %}#}
+{#                {%  if user.userprofile.is_organizer %}#}
+{#                    <a href = "{% url 'add-event' %}">Add An Event</a><br>#}
+{#                    <a href = "{% url 'view_ratings' %}">Ratings</a><br>#}
+{##}
+{#                {% endif %}#}
+{#            {% endif %}#}
+{#	{% endif %}#}
+{#    </div>#}
+{##}
+{##}
+{#    <div class= "main">#}
+{##}
+{#        {% block body_block %}#}
+{#        {% endblock %}#}
+{##}
+{#    </div>#}
 
 </body>
 </html>
