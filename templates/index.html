@@ -9,7 +9,7 @@ Home
     <h1>Welcome to BarkWithFriends{% if user.is_authenticated %}, {{ user.username }}{% endif %}!!</h1>
 	<p>Here you can participate in a themed party along with your puppy.</p>
 	<img src="https://media.timeout.com/images/103935991/630/472/image.jpg">
-	<p>(Picture:<a href="https://www.timeout.com"/>Timeout)</a>
+	<p>(Picture:<a href="https://www.timeout.com"/>Timeout</a>)
     <div>
     {% if events %}
     <ul>
@@ -31,4 +31,70 @@ Home
         <strong>There are no events present.</strong>
     {% endif %}
     </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="mb-0 mt-4">Upcoming Events</div>
+            <hr class="mt-2">
+        </div>
+        <div class="card-columns">
+
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=180" alt="">
+              <div class="card-body">
+                <h6 class="card-title mb-1"><a href="#">John Smith</a></h6>
+                <p class="card-text small">Another day at the office...
+                  <a href="#">#workinghardorhardlyworking</a>
+                </p>
+              </div>
+              <hr class="my-0">
+              <div class="card-body py-2 small">
+              </div>
+              <hr class="my-0">
+              <div class="card-body small bg-faded">
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+            <!-- Example Social Card-->
+            <div class="card mb-3">
+              <a href="#">
+                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=281" alt="">
+              </a>
+              <div class="card-body">
+                <h6 class="card-title mb-1"><a href="#">Jeffery Wellings</a></h6>
+                <p class="card-text small">Nice shot from the skate park!
+                  <a href="#">#kickflip</a>
+                  <a href="#">#holdmybeer</a>
+                  <a href="#">#igotthis</a>
+                </p>
+              </div>
+              <hr class="my-0">
+              <div class="card-body py-2 small">
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+            <!-- Example Social Card-->
+            <div class="card mb-3">
+              <a href="#">
+                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=185" alt="">
+              </a>
+              <div class="card-body">
+                <h6 class="card-title mb-1"><a href="#">David Miller</a></h6>
+                <p class="card-text small">It's hot, and I might be lost...
+                  <a href="#">#desert</a>
+                </p>
+              </div>
+              <hr class="my-0">
+              <div class="card-body py-2 small">
+              </div>
+              <hr class="my-0">
+              <div class="card-body small bg-faded">
+              </div>
+              <div class="card-footer small text-muted"></div>
+            </div>
+          </div>
+    </div>
+
+
+
 {% endblock %}
