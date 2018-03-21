@@ -16,10 +16,13 @@ from bark.decorators import owner_required,organizer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 from django.contrib import messages
-
+from datetime import datetime, timedelta, time
+from datetime import date
+from django.db.models import Q
 def index(request):
 
-    event_list = Event.objects.order_by('date')[:10]
+    event_list = today =date.today()
+    event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')[:10]
     context_dict = {'events': event_list}
 
     return render(request,'index.html', context_dict,)
@@ -36,7 +39,12 @@ def contact(request):
 @login_required
 @owner_required
 def events(request):
-    event_list = Event.objects.order_by('date')
+
+
+    #today = datetime.now().date()
+    #event_list = Event.objects.order_by('date')
+    today =date.today()
+    event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')
     context_dict = {'events':event_list}
     #for event in event_list:
         #if event.capacity==0:
@@ -101,11 +109,16 @@ def add_event(request):
             print(form.organizerusername)
 
             event= form.save(commit=True)
-            e = Event.objects.get(title=event.title)
-            e.organizerusername=org
-            e.save()
+            event_list= Event.objects.filter(date=event.date)
+            if event_list:
+                messages.error(request,"This date is taken!")
+            else:
+                e = Event.objects.get(title=event.title)
+                e.organizerusername=org
+                e.save()
+                print(form)
 
-            return redirect('index')
+                return redirect('index')
 
         else:
             print(form.errors)
