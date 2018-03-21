@@ -3,10 +3,10 @@
 
 {% block head_block %}
     <link rel="stylesheet" href="{% static 'rating_style.css' %}">
-    <link rel="text/javascrpt" href="{% static 'rating.js' %}">
-    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-    <script src="{% static 'ajax_rating.js' %}" type="text/javascript"></script>
+    <script src="{% static 'rating.js' %}" type="text/javascript"> </script>
+     <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+     <script src="{% static 'ajax_rating.js' %}" type="text/javascript"> </script>
 {% endblock %}
 
 {% block title_block %}
@@ -27,10 +27,6 @@ Add Rating
         <div id="orgname">
             <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
             <div hidden id="org">{{ organizer_user }}</div>
-{#    <label for="organizername">Organizer: </label>#}
-{#        {{ form.organizername }}#}
-{#        <span hidden id="org" value={{ organizer_user }}>{{ organizer_user }}</span>#}
-        {#  <label for="organizername">Organizername:  {{ form.organizername  }}</label>#}
 
             <label for="comment">Comment:  {{ form.comment }}</label>
 
@@ -43,6 +39,7 @@ Add Rating
 
     <span hidden id="count">{{ reviews }}</span>
     <p id="avg"> Average rating for {{ organizer_user }} is {{ organizer_user.avgrating }} based on {{ reviews }} reviews. </p>
+    <body onload="load_bars()">
 <div class="row">
   <div class="side">
     <div>5 star</div>
@@ -104,15 +101,12 @@ Add Rating
     <div id="1">{{ rates.1 }}</div>
   </div>
 </div>
+    </body>
 </p>
 {% endblock %}
 
 {% block end_block %}
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'rating_style.css' %}">
-    <script src="{% static 'rating.js' %}" type="text/javascript"> </script>
-    <link rel="text/javascrpt" href="{% static 'rating.js' %}">
-    <link rel="text/javascrpt" href="{% static 'ajax_rating.js' %}">
+    
+
 
 {% endblock %}

@@ -152,6 +152,13 @@ def ratings(request):
 
     return render(request,'ratings.html',context_dict)
 '''
+def rating_exists(rating):
+    owner=rating.ownername
+    org=rating.organizername
+    for r in Rating.objects.filter(ownername=owner):
+        if r.organizername==org:
+            return r
+    return rating
 @login_required
 def view_ratings(request):
     context_dict={"organizers":[]}
@@ -195,6 +202,9 @@ def ratings(request,organizer_str):
             rating = form.save(commit=False)
             rating.ownername = owner
             rating.organizername=organizer
+            rating = rating_exists(rating)
+            rating.starvalue=form.cleaned_data['starvalue']
+            rating.comment=form.cleaned_data['comment']
             rating.save()
 
             #return HttpResponse("Successfully added a rating!");
