@@ -4,9 +4,27 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'barkwithfriends.settings')
 import django
 django.setup()
+from django.contrib.auth.models import User
 from bark.models import UserProfile, Event, FoodMenu, Rating, ChooseAnEvent
 
+def add_user(username,email,password,first,last):
+    user = User.objects.create_user(username,email,password,first_name=first,last_name=last)
+    user.save()
+    return user
+
+def add_userprofile(user,description,profile_picture,dog_picture,dog_name,is_organizer,is_owner):
+    userprofile = UserProfile.objects.get_or_create(user=user,description=description,
+                                                    profile_picture=profile_picture,dog_picture=dog_picture,dog_name=dog_name,is_organizer=is_organizer,is_owner=is_owner)[0]
+
+
 def populate():
+    owner = add_user("owner","marto12345@abv.bg","parola","Martin","Dimitrov")
+    owner.save()
+    organizer = add_user("organizer","marto12345@abv.bg","parola","Martin","Dimitrov")
+    organizer.save()
+    Owner = add_userprofile(owner,"123","default/person.jpg","default/dog.jpg","Fifo",False,True)
+    Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
+    
     dog_events = [
         {"title": "Disco Party",
          "theme": "80s",
