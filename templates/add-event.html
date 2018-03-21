@@ -31,6 +31,13 @@
 
         <h1>Add an Event</h1>
             <div>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
 
                 <form id="category_form" method="post" action={% url 'add-event' %}>
                     {% csrf_token %}

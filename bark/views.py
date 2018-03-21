@@ -109,12 +109,16 @@ def add_event(request):
             print(form.organizerusername)
 
             event= form.save(commit=True)
-            e = Event.objects.get(title=event.title)
-            e.organizerusername=org
-            e.save()
-            print(form)
+            event_list= Event.objects.filter(date=event.date)
+            if event_list:
+                messages.error(request,"This date is taken!")
+            else:
+                e = Event.objects.get(title=event.title)
+                e.organizerusername=org
+                e.save()
+                print(form)
 
-            return redirect('index')
+                return redirect('index')
 
         else:
             print(form.errors)
