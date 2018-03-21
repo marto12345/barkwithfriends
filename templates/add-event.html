@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+
 {% block head_block %}
    <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
 
@@ -16,10 +17,7 @@
     $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2M +0D" });
   } );
   </script>
-{% endblock %}
-
-{% block title_block %}
-Add Event
+  
 {% endblock %}
 
 {% block body_block %}
@@ -28,50 +26,52 @@ Add Event
     <div class="col-sm-1">
     </div>
 
+
     <div class="col">
 
         <h1>Add an Event</h1>
             <div>
+
                 <form id="category_form" method="post" action={% url 'add-event' %}>
                     {% csrf_token %}
                     <label for="etitle">Event title:</label>
                     {{ form.title }}
 
                     <br>
+
                     <label for="theme">Theme:</label>
                     {{ form.theme }}
 
                     <label for="Date">Event Date:</label>
                     {{ form.date }}
-
                      <label for="Capacity">Capacity (Note max:25 people,25 dogs):</label>
                     {{ form.capacity}}
                     <br>
 
                     <label for="Start time">Start time:</label>
                     {{ form.start }}
-
                     <label for="End time">End time:</label>
                     {{ form.end }}
+                    <input type="button" id="b" value="Check if times are valid" onclick="go()" >
 
-                    <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script> 
+                    <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script>
                     <script type="text/javascript">
-
                         function go()
                         {
                            alertfunction();
                         }
                     </script>
-
-                    {{ form.organizerusername.as_hidden }}
+                     {{ form.organizerusername.as_hidden }}
                     <h6>Choose menu for your event</h6>
                     Starter:{{ form.starter }}
                     Main course:{{ form.main }}
                     Dessert:{{ form.dessert }}
                     Drink:{{ form.drink}}
                     Dog food:{{ form.dog_food }}
-                    <input type="submit" value="Submit" onclick="go()">
+                    <input type="submit" value="Submit" id="subm" >
+
                 </form>
+
             </div>
         </div>
 
@@ -94,4 +94,4 @@ Add Event
 </div>
 </html> 
 
-{% endblock %}
+{% endblock %}	
