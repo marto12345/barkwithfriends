@@ -24,6 +24,8 @@ def populate():
     organizer.save()
     Owner = add_userprofile(owner,"123","default/person.jpg","default/dog.jpg","Fifo",False,True)
     Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
+    Owner.save()
+    Organizer.save()
     
     dog_events = [
         {"title": "Disco Party",
