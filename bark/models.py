@@ -30,7 +30,7 @@ class Event(models.Model):
     theme = models.CharField(max_length=128,help_text="Event theme:")
     capacity = models.IntegerField(validators=[MinValueValidator(1),
                                                MaxValueValidator(25) ],help_text="Guest capacity (maximum:25")
-    date = models.DateField(blank=False,help_text="Event date:")
+    date = models.DateField(blank=True,help_text="Event date:")
     start = models.TimeField(help_text="Start time:")
     end = models.TimeField(help_text="End time:")
 

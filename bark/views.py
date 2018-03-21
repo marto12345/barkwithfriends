@@ -19,9 +19,11 @@ from django.contrib import messages
 from datetime import datetime, timedelta, time
 from datetime import date
 from django.db.models import Q
+from datetime import datetime
+
 def index(request):
 
-    event_list = today =date.today()
+    today =date.today()
     event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')[:10]
     context_dict = {'events': event_list}
 
@@ -106,13 +108,17 @@ def add_event(request):
         if form.is_valid(): # Save the new category to the database.
             org = request.user.first_name +" "+ request.user.last_name
             form.organizerusername=org
-            print(form.organizerusername)
+            print(form)
+            #event_list = Event.objects.filter(request.POST.get('date'))
+            string_input_with_date=str(request.POST.get('date'))
+            past = datetime.strptime(string_input_with_date, "%m/%d/%Y")
+            print(past.date())
 
-            event= form.save(commit=True)
-            event_list= Event.objects.filter(date=event.date)
-            if event_list:
-                messages.error(request,"This date is taken!")
+            if Event.objects.filter(date=past.date()):
+                messages.error(request, "This date is taken!")
+
             else:
+                event= form.save(commit=True)
                 e = Event.objects.get(title=event.title)
                 e.organizerusername=org
                 e.save()
@@ -140,31 +146,7 @@ def calculate_rating(username):
         pass
 
     return rating_freq,reviews_num
-'''
-@login_required
-@owner_required
-def ratings(request):
-    context_dict = {'rates': {}, 'form': {addRatingForm(request.GET)}}
 
-    if request.method == 'POST':
-        # print('ohhhh')
-        form = addRatingForm(request.POST)
-        context_dict['form'] = form
-        if form.is_valid():
-            rating = form.save(commit=True)
-
-            return HttpResponse("Successfully added a rating!");
-            return index(request)
-
-        else:
-            print(form.errors)
-
-    name = request.POST.get('organizername')
-    rates = calculate_rating(name)
-    context_dict['rates'] = rates
-
-    return render(request,'ratings.html',context_dict)
-'''
 def rating_exists(rating):
     owner=rating.ownername
     org=rating.organizername

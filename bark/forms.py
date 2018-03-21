@@ -46,10 +46,9 @@ class addEventForm(forms.ModelForm):
     class Meta:  # Provide an association between the ModelForm and a model
 
         model = Event
-        fields={'title','theme','capacity','date','start','end','starter','main','dessert','drink','dog_food'}
-        widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}),'start': forms.TimeInput(attrs={'id': 'start'})
-        }
-
+        fields = {'title', 'theme', 'capacity', 'date', 'start', 'end'}
+        widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}), 'start': forms.TimeInput(attrs={'id': 'start'})
+            , 'end': forms.TimeInput(attrs={'id': 'end'}), "organizerusername": forms.HiddenInput()}
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
