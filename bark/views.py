@@ -115,11 +115,13 @@ def add_event(request):
             print(past.date())
 
             if Event.objects.filter(date=past.date()):
-                messages.error(request, "This date is taken!")
+                messages.error(request, "This date is taken! Please choose another date and refill and recheck your event start and end times")
 
             else:
                 event= form.save(commit=True)
                 e = Event.objects.get(title=event.title)
+                pic=request.FILES.get("event_picture")
+                e.event_picture=pic
                 e.organizerusername=org
                 e.save()
                 print(form)

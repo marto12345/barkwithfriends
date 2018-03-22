@@ -41,17 +41,18 @@ class Event(models.Model):
     dessert=models.CharField(max_length=128)
     drink=models.CharField(max_length=128)
     dog_food=models.CharField(max_length=128)
+    event_picture=models.ImageField(upload_to='event-images/', default='default/event.jpg',blank=True,null=True)
 
     class Meta:
         verbose_name_plural = 'Events'
 
     def save(self, *args, **kwargs):
 
-
         super(Event, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
+
 
 
 class UserProfile(models.Model):

@@ -42,11 +42,11 @@ class addEventForm(forms.ModelForm):
     dessert = forms.ChoiceField(choices=DESSERTS, label="", initial='', widget=forms.Select(), required=True)
     drink = forms.ChoiceField(choices=DRINKS, label="", initial='', widget=forms.Select(), required=True)
     dog_food = forms.ChoiceField(choices=DOG, label="", initial='', widget=forms.Select(), required=True)
-
+    event_picture = forms.ImageField(help_text="Select a suitable image for your event", required=False)
     class Meta:  # Provide an association between the ModelForm and a model
 
         model = Event
-        fields = {'title', 'theme', 'capacity', 'date', 'start', 'end'}
+        fields = {'title', 'theme', 'capacity', 'date', 'start', 'end','event_picture'}
         widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}), 'start': forms.TimeInput(attrs={'id': 'start'})
             , 'end': forms.TimeInput(attrs={'id': 'end'}), "organizerusername": forms.HiddenInput()}
 
