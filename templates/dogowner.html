@@ -1,13 +1,63 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-<html lang="en">
-
 
 {% block title_block %}
 Register As Dog Owner
 {% endblock %}
 
-    {% block body_block %}
+{% block body_block %}
+<body class="bg-dark">
+  <div class="container blarr">
+    <div class="card card-login mx-auto mt-5">
+      {% if user.is_authenticated %}
+        <h2>You have already registered!</h2>
+      {% else %}
+        <div class="card-header" align="center"><h5>Register for BarkWithFriends</h5></div>
+        {% if registered %}
+          <strong>Thank you for registering!</strong>
+          <a href = "{% url 'login' %}">Log in now</a><br>
+          <a href="{% url 'index' %}">Return to the homepage.</a><br />
+        {% else %}
+          <div class="card-body">
+            <form id="owform" method="post" action="{% url 'register_owner' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+
+<!-- Display each form -->
+
+                {% for field in user_form %}
+                  <div class="form-group">
+                    <p class="stylelabel">{{ field.label_tag }}</p>
+                    <p>{{ field }}</p>
+                  </div>
+                {% endfor %}
+
+                {% for field in profile_form %}
+                  <div class="form-group">
+                    <p class="stylelabel">{{ field.label_tag }}</p>
+                    <p>{{ field }}</p>
+                  </div>
+                {% endfor %}
+
+                {% if messages %}
+                  <ul class="messages">
+                    {% for message in messages %}
+                      <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+
+ <!-- Provide a button to click to submit the form. -->
+                  <input type="submit" name="submit" value="Register" />
+              </form>
+        {% endif %}
+      {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+
+<!--
         {% if user.is_authenticated %}
         <h2>You have already registered!</h2>
         {% else %}
@@ -23,7 +73,7 @@ Register As Dog Owner
 
                   {% csrf_token %}
 
- <!-- Display each form -->
+ <!-- Display each form ->
                   {{ user_form.as_p }}
                   {{ profile_form.as_p }}
 
@@ -35,10 +85,11 @@ Register As Dog Owner
                   </ul>
                 {% endif %}
 
- <!-- Provide a button to click to submit the form. -->
+ <!-- Provide a button to click to submit the form. ->
                   <input type="submit" name="submit" value="Register" />
               </form>
               {% endif %}
         {% endif %}
-    {% endblock %}
-</html>
+-->
+
+
