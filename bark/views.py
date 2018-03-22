@@ -20,6 +20,8 @@ from datetime import datetime, timedelta, time
 from datetime import date
 from django.db.models import Q
 from datetime import datetime
+from django.contrib.auth.password_validation import MinimumLengthValidator
+
 
 def index(request):
 
@@ -307,20 +309,25 @@ def register_owner(request):
             #print (profile_form.is_valid())
             #print ("asd" + str(dir(profile_form)))
             #print (profile_form.profile_picture)
+
             if user_form.is_valid() and profile_form.is_valid():
                 #profile_form.is_owner = True
-                user = user_form.save()
-                user.set_password(user.password)
-                user.save()
-                profile = profile_form.save(commit=False)
-               # print (profile.is_owner)
-                profile.user = user
-                if 'profile_picture' in request.FILES:
-                    profile.profile_picture = request.FILES['profile_picture']
-                if 'dog_picture' in request.FILES:
-                    profile.dog_picture = request.FILES['dog_picture']
-                profile.save()
-                registered = True
+                if len(request.POST.get('password'))<6:
+                    messages.error(request,"Password too short.Needs to be at least 6 characters long")
+                else:
+                    user = user_form.save()
+
+                    user.set_password(user.password)
+                    user.save()
+                    profile = profile_form.save(commit=False)
+                   # print (profile.is_owner)
+                    profile.user = user
+                    if 'profile_picture' in request.FILES:
+                        profile.profile_picture = request.FILES['profile_picture']
+                    if 'dog_picture' in request.FILES:
+                        profile.dog_picture = request.FILES['dog_picture']
+                    profile.save()
+                    registered = True
             else:
                 print(user_form.errors, profile_form.errors)
         else:
@@ -339,17 +346,20 @@ def register_organizer(request):
         profile_form = OrganizerForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
+            if len(request.POST.get('password')) < 6:
+                messages.error(request, "Password too short.Needs to be at least 6 characters long")
             # profile_form.is_owner = True
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            profile = profile_form.save(commit=False)
-            # print (profile.is_owner)
-            profile.user = user
-            if 'profile_picture' in request.FILES:
-                profile.profile_picture = request.FILES['profile_picture']
-            profile.save()
-            registered = True
+            else:
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+                profile = profile_form.save(commit=False)
+                # print (profile.is_owner)
+                profile.user = user
+                if 'profile_picture' in request.FILES:
+                    profile.profile_picture = request.FILES['profile_picture']
+                profile.save()
+                registered = True
         else:
             print(user_form.errors, profile_form.errors)
     else:
