@@ -326,8 +326,7 @@ def user_login(request):
             else:
                 return HttpResponse("Your account is disabled.")
         else:
-            print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
+            return render(request, 'invalidlogin.html')
     else:
 
         return render(request, 'login.html')
@@ -421,6 +420,10 @@ def reset_password(request):
         print(reset_pass.username)
 
     return render(request, 'reset-password.html',{'reset_pass':reset_pass })
+
+def invalid_login(request):
+    return render('invalidlogin.html')
+
 
 @login_required
 
