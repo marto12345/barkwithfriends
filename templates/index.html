@@ -5,100 +5,65 @@ Home
 {% endblock %}
 
 {% block body_block %}
-
-    <h1>Welcome to BarkWithFriends{% if user.is_authenticated %}, {{ user.username }}{% endif %}!!</h1>
-	<p>Here you can participate in a themed party along with your puppy.</p>
-	<img src="https://media.timeout.com/images/103935991/630/472/image.jpg">
-	<p>(Picture:<a href="https://www.timeout.com"/>Timeout</a>)
-    <div>
-    {% if events %}
-    <ul>
-        {% for event in events %}
-           <h3>{{ event.title }}
-               <br>Theme :{{ event.theme }}
-               {% if event.event_picture %}
-                     <img src="{{event.event_picture.url }}" width="150"   />
-           {% endif %}
-           </h3>
-            <li>
-                <h5 >Date: {{ event.date }} ---
-                 Start time:{{ event.start }}
-                 End time:{{ event.end }}</h5>
-                <h6> Organzied by: {{ event.organizerusername }}</h6>
-
-
-            </li>
-            <br>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <strong>There are no events present.</strong>
-    {% endif %}
-    </div>
-
+<div class="container">
     <div class="row">
-        <div class="col-lg-8">
-            <div class="mb-0 mt-4">Upcoming Events</div>
+        <div class="col-lg-12">
+            <div class="mb-0 mt-4" align="center"><h1>Welcome to BarkWithFriends{% if user.is_authenticated %}, {{ user.username }}{% endif %}!!</h1>
+	    <p>Here you can participate in a themed party along with your puppy.</p></div>
+            <hr class="mt-2">
+    </div>
+</div>
+
+  <!-- <div class="container-fluid"> -->
+    <div class="row">
+      <div class="card-columns">
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid w-100" src="https://media.timeout.com/images/103935991/630/472/image.jpg">
+            <div class="card-footer small text-muted">Picture:<a href="https://www.timeout.com"/>Timeout</a></div>
+        </div>
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid w-100" src="https://heylookitsbrooke.files.wordpress.com/2012/06/img_2820.jpg">
+            <div class="card-footer small text-muted">Picture: <a href="https://heylookitsbrooke.wordpress.com/2012/06/13/dog-cafe"/>heylookitsbrooke</a></div>
+        </div>
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid w-100" src="https://a1.cdn.japantravel.com/photo/27739-142904/1000/miyagi-withdog-dog-cafe-in-sendai-142904.jpg">
+            <div class="card-footer small text-muted">Picture: <a href="https://en.japantravel.com/miyagi/withdog-dog-cafe-in-sendai/27739"/>JapanTravel</a></div>
+        </div>
+      </div>
+    </div>
+    <!--</div>-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="mb-0 mt-4" align="center"><h2>Upcoming Events</h2></div>
             <hr class="mt-2">
         </div>
+      {% if events %}
         <div class="card-columns">
-
+        {% for event in events %}
             <div class="card mb-3">
-                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=180" alt="">
+                {% if event.event_picture %}
+                    <img class="card-img-top img-fluid w-100" src="{{event.event_picture.url}}" alt="">
+                {% endif %}
               <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">John Smith</a></h6>
-                <p class="card-text small">Another day at the office...
-                  <a href="#">#workinghardorhardlyworking</a>
+                <h6 class="card-title mb-1"><a><h4>{{ event.title }}</h4></a></h6>
+                <p class="card-text small"><h5>Theme: {{ event.theme }}</h5></a>
                 </p>
               </div>
               <hr class="my-0">
-              <div class="card-body py-2 small">
-              </div>
+              <div class="card-body py-2 small"><h6>Date: {{ event.date }}</h6></div>
               <hr class="my-0">
-              <div class="card-body small bg-faded">
-              </div>
-              <div class="card-footer small text-muted"></div>
+              <div class="card-body small bg-faded"><h7>
+                 Start time:{{ event.start }}
+                 End time:{{ event.end }}
+              </h7></div>
+              <div class="card-footer small text-muted">Organzied by: {{ event.organizerusername }}</div>
             </div>
-            <!-- Example Social Card-->
-            <div class="card mb-3">
-              <a href="#">
-                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=281" alt="">
-              </a>
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">Jeffery Wellings</a></h6>
-                <p class="card-text small">Nice shot from the skate park!
-                  <a href="#">#kickflip</a>
-                  <a href="#">#holdmybeer</a>
-                  <a href="#">#igotthis</a>
-                </p>
-              </div>
-              <hr class="my-0">
-              <div class="card-body py-2 small">
-              </div>
-              <div class="card-footer small text-muted"></div>
-            </div>
-            <!-- Example Social Card-->
-            <div class="card mb-3">
-              <a href="#">
-                <img class="card-img-top img-fluid w-100" src="https://unsplash.it/700/450?image=185" alt="">
-              </a>
-              <div class="card-body">
-                <h6 class="card-title mb-1"><a href="#">David Miller</a></h6>
-                <p class="card-text small">It's hot, and I might be lost...
-                  <a href="#">#desert</a>
-                </p>
-              </div>
-              <hr class="my-0">
-              <div class="card-body py-2 small">
-              </div>
-              <hr class="my-0">
-              <div class="card-body small bg-faded">
-              </div>
-              <div class="card-footer small text-muted"></div>
-            </div>
-          </div>
+        {% endfor %}
+        {% else %}
+          <strong>There are no events present.</strong>
+      {% endif %}
+        </div>
     </div>
-
-
+</div>
 
 {% endblock %}

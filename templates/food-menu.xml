@@ -11,6 +11,13 @@ Food Menu
 {% endblock %}
 
 {% block body_block %}
+<div class = "row">
+    <img src="media/logo/logo2small.png">
+</div>
+<div class = "somaba">
+    <p>Logo Made: <a href="https://www.logocrisp.com/logomaker"/>LogoCrisp</a></p>
+</div>
+
 <menu>
 <h1>For the owners</h1>
 <h2>Starters</h2>

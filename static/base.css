@@ -319,13 +319,10 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   }
 }
 
-.card-login {
-  max-width: 25rem;
+.somaba{
+  padding-left: 40px;
 }
 
-.card-register {
-  max-width: 40rem;
-}
 
 /*.logodoggo*/
 /*{*/
