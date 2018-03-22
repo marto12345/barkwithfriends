@@ -58,8 +58,7 @@
                     {{ form.start }}
                     <label for="End time">End time:</label>
                     {{ form.end }}
-
-                    <input type="button" id="b" value="Check if times are valid" onclick="go()" >
+					<p>Required: Please ensure that you click this button.</p><input type="button" id="b" value="Check if times are valid" onclick="go()" >
 
                     <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script>
                     <script type="text/javascript">
@@ -79,7 +78,6 @@
                     <input type="submit" value="Submit" id="subm"  disabled="True">
 
                 </form>
-
             </div>
         </div>
 
