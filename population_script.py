@@ -15,15 +15,19 @@ def add_user(username,email,password,first,last):
 def add_userprofile(user,description,profile_picture,dog_picture,dog_name,is_organizer,is_owner):
     userprofile = UserProfile.objects.get_or_create(user=user,description=description,
                                                     profile_picture=profile_picture,dog_picture=dog_picture,dog_name=dog_name,is_organizer=is_organizer,is_owner=is_owner)[0]
-
+    userprofile.save()
+    return userprofile
 
 def populate():
     owner = add_user("owner","marto12345@abv.bg","parola","Martin","Dimitrov")
     owner.save()
     organizer = add_user("organizer","marto12345@abv.bg","parola","Martin","Dimitrov")
     organizer.save()
+    johnsmith = add_user("JohnSmith", "marto1662345@abv.bg", "parola", "Martinka", "Dimitrovv")
+    johnsmith.save()
     Owner = add_userprofile(owner,"123","default/person.jpg","default/dog.jpg","Fifo",False,True)
     Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
+    JohnSmith=add_userprofile(johnsmith,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
    # Owner.save()
     #Organizer.save()
     
@@ -57,12 +61,34 @@ def populate():
     }
     ]
 
+    ratings=[{"starvalue":"5",
+              "comment":"Had a wonderful time",
+              "ownername":Owner,
+              "organizername":Organizer
+             # "ownername_id":Owner.id,
+              #"organizename_id":Organizer.id
+
+    },
+             {"starvalue":"2",
+              "comment": "Found a dog hair from organizer's dog in my food. ",
+              "ownername": Owner,
+              "organizername": JohnSmith,
+             # "ownername_id": Owner.id,
+              #"organizename_id": JohnSmith.id
+
+    }
+
+    ]
+
 
     for event in dog_events:
 
         c = add_event( event["title"], event["theme"],event["capacity"],event["date"],event["start"],event["end"],event["organizerusername"],
                        event["starter"],event["main"],event["dessert"],event["drink"],event["dog_food"])
 
+    for rating in ratings:
+        c = add_rating(rating["starvalue"],rating["comment"],rating["ownername"],rating["organizername"])
+                      # rating["organizername_id"],rating["ownername_id"])
 
 
 
@@ -84,6 +110,18 @@ def add_event(title,theme,capacity,date,start,end,organizerusername,starter,main
         c.dog_food=dog_food
         c.save()
         return c
+
+def add_rating(starvalue,comment,ownername,organizername):
+    c=Rating.objects.get_or_create(starvalue=starvalue,comment=comment,ownername=ownername,organizername=organizername)[0]
+                                   #organizername_id=organizernameid,ownername_id=ownernameid)[0]
+    c.starvalue=starvalue
+    c.comment=comment
+    c.ownername=ownername
+    c.organizername=organizername
+    #c.organizername_id =organizernameid
+    #c.ownername_id=ownernameid
+    c.save()
+    return c
 
 
 if __name__ == '__main__':

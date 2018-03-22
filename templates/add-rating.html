@@ -25,11 +25,11 @@ Ratings
                  {% for organizer in Organizers %}
 
                     <ul class="row" >
-                       <form id="submit" action="/ratings/{{ organizer }}" method="get">
+                       <form class={{organizer}} id={{organizer}} class="submit" action="/ratings/{{ organizer }}" method="get">
 
-                        <p id=organizer class="col-1">{{ organizer }}</p>
+                        <p class={{organizer}} class="col-1">{{ organizer }} </p>
 
-                        <a onclick="submit_form()" onmouseenter="mouse_enter()" onmouseleave="mouse_leave()" id="rate" class="col-3" >Add a rating</a><br>
+                        <a href="/ratings/{{ organizer }}" class={{organizer}} onclick="submit_form({{organizer}})"  >Add a rating</a><br>
 
                             <input hidden type="submit" value="Submit" >
 
@@ -46,15 +46,24 @@ Ratings
 
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
    <script>
-   function submit_form(){
-       $('#submit').submit();
+   function submit_form(param){
+       //var org={{organizer}};
+
+       console.log(param);
+       param.submit();
+       //var id=$(this).attr(param);
+       //document.getElementById(id).submit();
+
+       //var org=this.className;
+       //var form = $(this).parents('form:first');
+       //console.log(form);
+       //var org=$('.submit p:first').innerHTML;
+       //var form=document.getElementById(org);
+       //form.submit();
+       //$(this.form).submit();
+       //this.form.submit();
+      // this.parentElement.submit;
    }
-   function mouse_enter(){
-       $('#rate').css("color",'blue');
-       $('#rate').css('cursor','pointer');
-   }
-    function mouse_leave(){
-       $('#rate').css("color",'black');
-   }
+   
    </script>
 {% endblock %}
