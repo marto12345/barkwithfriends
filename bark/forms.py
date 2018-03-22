@@ -49,7 +49,7 @@ class addEventForm(forms.ModelForm):
     class Meta:  # Provide an association between the ModelForm and a model
 
         model = Event
-        fields = {'title', 'theme', 'capacity', 'date', 'start', 'end','event_picture'}
+        fields = {'title', 'theme', 'capacity', 'date', 'start', 'end','starter','main','dessert','drink','dog_food','event_picture'}
         widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'}), 'start': forms.TimeInput(attrs={'id': 'start'})
             , 'end': forms.TimeInput(attrs={'id': 'end'}), "organizerusername": forms.HiddenInput()}
 
@@ -87,10 +87,10 @@ class OwnerForm(forms.ModelForm):
     dog_picture = forms.ImageField(help_text="Select a profile image to upload.",required=False)
     is_owner = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
     events = forms.CharField(widget=forms.HiddenInput(), initial='',required=False)
-    secret_question=forms.CharField(label="What is your first pet's name?")
+
     class Meta:
         model=UserProfile
-        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events','secret_question')
+        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events')
         widgets = {'events': forms.HiddenInput(attrs={'id':'e'})}
 
 class OrganizerForm(forms.ModelForm):

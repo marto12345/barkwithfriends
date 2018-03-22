@@ -111,11 +111,11 @@ def add_event(request):
         if form.is_valid(): # Save the new category to the database.
             org = request.user.first_name +" "+ request.user.last_name
             form.organizerusername=org
-            print(form)
+
             #event_list = Event.objects.filter(request.POST.get('date'))
             string_input_with_date=str(request.POST.get('date'))
             past = datetime.strptime(string_input_with_date, "%m/%d/%Y")
-            print(past.date())
+
 
             if Event.objects.filter(date=past.date()):
                 messages.error(request, "This date is taken! Please choose another date and refill and recheck your event start and end times")
@@ -127,7 +127,8 @@ def add_event(request):
                 e.event_picture=pic
                 e.organizerusername=org
                 e.save()
-                print(form)
+
+                print(e.dessert)
 
                 return redirect('index')
 
