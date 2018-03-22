@@ -15,7 +15,11 @@ Home
     <ul>
         {% for event in events %}
            <h3>{{ event.title }}
-               <br>Theme :{{ event.theme }} </h3>
+               <br>Theme :{{ event.theme }}
+               {% if event.event_picture %}
+                     <img src="{{event.event_picture.url }}" width="150"   />
+           {% endif %}
+           </h3>
             <li>
                 <h5 >Date: {{ event.date }} ---
                  Start time:{{ event.start }}
