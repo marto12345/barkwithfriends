@@ -119,6 +119,7 @@ class Rating(models.Model):
        # print('this is avg')
         #print(avg)
         self.organizername.avgrating = avg
+        print(self.organizername.avgrating)
         self.organizername.save()
         #print(self.organizername)
         #super(Rating, self).save(*args, **kwargs)

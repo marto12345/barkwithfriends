@@ -19,6 +19,7 @@ from django.contrib import messages
 from datetime import datetime, timedelta, time
 from datetime import date
 from django.db.models import Q
+from django.http import JsonResponse
 from datetime import datetime
 from django.contrib.auth.password_validation import MinimumLengthValidator
 
@@ -186,6 +187,7 @@ def ratings(request,organizer_str):
     for r in Rating.objects.filter(organizername=organizer)[:5]:
         comments.append(r.comment)
     context_dict['comments']=comments;
+    context_dict['avg']=organizer.avgrating
   # print("organizer")
     #print(organizer)
 
@@ -198,6 +200,7 @@ def ratings(request,organizer_str):
   #for k,v in rates.items():
        #print(k, v)
     context_dict['organizer_user']=organizer
+    '''
     if request.method == 'POST':
         # print('ohhhh')
         #print(request.POST)
@@ -221,11 +224,11 @@ def ratings(request,organizer_str):
     else:
         form = addRatingForm()
         context_dict['form'] = form
-
+'''
     return render(request,'ratings.html',context_dict)
 
 def rate_ajax(request, organizer_str):
-    from django.http import JsonResponse
+
     owner_user=User.objects.get(username=request.user.username)
     owner = UserProfile.objects.get(user=owner_user)
 
@@ -237,9 +240,11 @@ def rate_ajax(request, organizer_str):
     organizer = UserProfile.objects.get(user=organizer_user)
 
     context_dict['avg'] = organizer.avgrating
-    starValue = 42;
-    print (request.GET)
-    rating = request.GET['star_value']
+    print('avg1')
+    print(organizer.avgrating)
+    #starValue = 42;
+    #print (request.GET)
+    #rating = request.GET['star_value']
 
     # form = addRatingForm(request.GET)
     # print ('form %s ' % form)
@@ -249,20 +254,34 @@ def rate_ajax(request, organizer_str):
 
     # c = Rating(starvalue=request.GET['star_value'], comment=request.GET['comment'], ownername=owner, organizername=organizer)
     c = Rating()
-    c.starvalue = request.GET['star_value']
-    c.comment = request.GET['comment']
+    starvalue=request.GET['star_value']
+    comment=request.GET['comment']
+    #c.starvalue = request.POST['star_value']
+    #c.comment = request.POST['comment']
+    c.starvalue=starvalue
+    c.comment=comment
     c.ownername = owner
     c.organizername = organizer
-    c=rating_exists(c)
-    c.starvalue = request.GET['star_value']
-    c.comment = request.GET['comment']
+    c = rating_exists(c)
+    #c.starvalue = request.POST['star_value']
+    #c.comment = request.POST['comment']
+    c.starvalue = starvalue
+    c.comment = comment
     c.save()
+    context_dict['avg'] = c.organizername.avgrating
     print ('obj %s' % c)
+    print('avg2')
+    print(organizer.avgrating)
+    comments = []
+    for r in Rating.objects.filter(organizername=organizer)[:5]:
+        comments.append(r.comment)
+    context_dict['comments'] = comments;
 
     context_dict['star_value'] = c.starvalue;
     rates, reviews = calculate_rating(organizer)
     context_dict["reviews"] = reviews
     context_dict['rates'] = rates
+
 
     return JsonResponse(context_dict)
 

@@ -1,36 +1,28 @@
 function fivestar(mul){
     document.getElementById("starvalue").innerHTML = mul;
-   // console.log($(this));
-    //onsole.log(document.getElementById('org'))
-    var v = document.getElementById('org').innerHTML;
-    //$("#addRatingForm").submit();
-    //$.get('/ratings/' + v, {}, function (data) {
-        //console.log("data: " + data);
-        //console.log(document.getElementById('avg'));
-        //document.getElementById("count").innerHTML+=1;
-        //
 
-   // });
-
-
-
-    //document.getElementById("id_organizer").value = document.getElementById("org").value;
 }
-
-
 
 function sendAjax(uri) {
 
 
     console.log(uri);
         // var comment = document.getElementById('comment').value;
-        var comment = document.getElementById('id_comment').value;
-        console.log(comment);
+        var comment = document.getElementById('comment').value;
+        if(comment==''){
+            alert("Please fill out the comment field.")
+            return
+        }
+        //console.log(comment);
         var star_value =  document.getElementById("starvalue").innerHTML;
+        if(star_value==''){
+            alert("Please give a star rating.")
+            return
+        }
 
         $.get(uri+'/rate', {'comment': comment, 'star_value': star_value}, function (data) {
-        console.log("data: " + data);
-        console.log(data);
+        //console.log("data: " + data);
+        //console.log(data);
         var avg = data['avg'];
         var reviews=data['reviews'];
         //var starsCount= {1:0, 2:0, 3:0, 4:0, 5:0};
@@ -40,8 +32,22 @@ function sendAjax(uri) {
         }
         document.getElementById('avg').innerHTML = avg;
         document.getElementById('reviews').innerHTML = reviews;
-        console.log(document.getElementById('avg'));
+        document.getElementById('comment').innerHTML='';
+        document.getElementById('starvalue').innerHTML='';
+        star_value =  document.getElementById("starvalue").innerHTML;
+        console.log('star'+star_value)
+        comment_div=document.getElementById('comments');
+        comment_div.innerHTML='';
+        for(i=0; i<data['comments'].length;i++){
+              var node=document.createElement('ul');
+              node.innerHTML=data['comments'][i];
+              comment_div.appendChild(node);
+            }
+
+        //console.log(document.getElementById('avg'));
         load_bars();
+        document.getElementById('avg').innerHTML = avg;
+
         // document.getElementById("count").innerHTML+=1;
 
 
