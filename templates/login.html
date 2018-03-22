@@ -6,6 +6,36 @@ Login
 {% endblock %}
 
 {% block body_block %}
+<body class="bg-dark">
+  <div class="container bla">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header" align="center"><h5>Login to BarkWithFriends</h5></div>
+      {% if user.is_authenticated %}
+          <h2>You have already logged in!</h2>
+      {% else %}
+      <div class="card-body">
+        <form id="login_form" method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleInputUsername1">Username</label>
+            <input class="form-control" input type="text" name="username" value="" size="50">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input class="form-control" type="password" name="password" value="" size="50">
+          </div>
+          <input type="submit" value="Login" />
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href = "{% url 'reset_password' %}">Forgot Password?</a>
+        </div>
+      </div>
+     {% endif %}
+    </div>
+  </div>
+
+
+<!--
     <h1>Login to BarkWithFriends</h1>
     {% if user.is_authenticated %}
         <h2>You have already logged in!</h2>
@@ -20,6 +50,9 @@ Login
         <input type="submit" value="submit" />
     </form>
         <a href = "{% url 'reset_password' %}">Forgot your password?</a><br>
-
     {% endif %}
+-->
+
 {% endblock %}
+
+

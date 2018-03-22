@@ -44,6 +44,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
+
+<hr class="mt-2">
+
             <!--Side Bar Links-->
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Home">
@@ -110,6 +113,8 @@
                 {% endif %}
             </ul>
 
+            <hr class="mt-2">
+
             <!--Top Bar Links-->
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated and not user.is_superuser %}
@@ -148,11 +153,10 @@
     <!--Main-->
     <div class="content-wrapper">
         <div class="container-fluid">
-
+          <div class="container">
             {% block body_block %}
-
             {% endblock %}
-
+          </div>
         </div>
     </div>
 

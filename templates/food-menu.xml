@@ -11,13 +11,16 @@ Food Menu
 {% endblock %}
 
 {% block body_block %}
-<div class = "row">
-    <img src="media/logo/logo2small.png">
-</div>
-<div class = "somaba">
-    <p>Logo Made: <a href="https://www.logocrisp.com/logomaker"/>LogoCrisp</a></p>
+<div class="row">
+  <div class="col-6 col-md-4"></div>
+  <div class="col-6 col-md-4"><img src="media/logo/logo2small.png"></div>
+  <div class="col-6 col-md-4"></div>
 </div>
 
+<div class = "somaba" align="center">
+    <p>Logo Made: <a href="https://www.logocrisp.com/logomaker"/>LogoCrisp</a></p>
+</div>
+<div align="center">
 <menu>
 <h1>For the owners</h1>
 <h2>Starters</h2>
@@ -134,4 +137,5 @@ Food Menu
 <br>
 </food>
 </menu>
+</div>
 {% endblock %}
