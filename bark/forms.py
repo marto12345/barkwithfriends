@@ -87,11 +87,10 @@ class OwnerForm(forms.ModelForm):
     dog_picture = forms.ImageField(help_text="Select a profile image to upload.",required=False)
     is_owner = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
     events = forms.CharField(widget=forms.HiddenInput(), initial='',required=False)
-
-
+    secret_question=forms.CharField(label="What is your first pet's name?")
     class Meta:
         model=UserProfile
-        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events')
+        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events','secret_question')
         widgets = {'events': forms.HiddenInput(attrs={'id':'e'})}
 
 class OrganizerForm(forms.ModelForm):
@@ -105,7 +104,12 @@ class OrganizerForm(forms.ModelForm):
         model = UserProfile
         exclude=('dog_name','dog_picture','user','is_owner','avgrating','events')
 
-
+class ResetForm(forms.ModelForm):
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
+    secret_question=forms.CharField(label="What is your first pet's name?")
+    class Meta:
+        model=User
+        fields=('username','password','confirm_password')
 class addRatingForm(forms.ModelForm):
     # #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
     # #CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]

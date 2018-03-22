@@ -14,4 +14,5 @@ urlpatterns = [
       url(r'^restricted/', views.restricted, name='restricted'),
       url(r'^update-profile/', views.update_profile, name='update_profile'),
       url(r'^events$',views.events,name='events'),
+      url(r'^reset-password/$', views.reset_password, name='reset_password'),
 ]

@@ -3,6 +3,7 @@
 
 {% block title_block %}
 My Account
+  <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block body_block %}
@@ -27,6 +28,7 @@ My Account
         <label for="Last_Name">Last Name:</label>{{ user_form.last_name }}
         <br>
         <label for="Email">Email:</label>{{ user_form.email }}
+
         {{ user_form.password.as_hidden }}
 
         {{ profile_form.as_p }}
@@ -46,6 +48,10 @@ My Account
             <p id="p1">These are your events.</p>
         {% endif %}
         <input type="submit" value="Save changes">
+    <script type="text/javascript">
+
+            $('label[for=id_secret_question],input#id_secret_question').hide();
+        </script>
         </div>
     </form>
 

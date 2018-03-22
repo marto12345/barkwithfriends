@@ -65,7 +65,7 @@ class UserProfile(models.Model):
     is_owner = models.BooleanField(default=False)
     avgrating = models.FloatField(null=True,validators=[MinValueValidator(0),MaxValueValidator(5)],default=0)
     events=models.CharField(max_length=256)
-    events=models.CharField(max_length=256)
+    secret_question=models.CharField(max_length=128)
     def __str__(self):
 
         return self.user.username

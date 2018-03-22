@@ -1,4 +1,4 @@
-from bark.forms import addEventForm,UserForm,addRatingForm,UserUpdateForm
+from bark.forms import addEventForm,UserForm,addRatingForm,UserUpdateForm,ResetForm
 from django.shortcuts import render
 from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.models import User
@@ -371,6 +371,14 @@ def register_organizer(request):
 
 #def foo(is_organiser)
 #    return Owener if is_organiser else Oth
+
+def reset_password(request):
+    reset_pass={}
+    if request.method=='POST':
+        reset_pass=ResetForm(request.POST,instance=request.user)
+        print(reset_pass.username)
+
+    return render(request, 'reset-password.html',{'reset_pass':reset_pass })
 
 @login_required
 

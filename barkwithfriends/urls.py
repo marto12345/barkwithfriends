@@ -35,7 +35,7 @@ urlpatterns = [
 
     url(r'^register$',views.register,name='register'),
     url(r'^login$',views.user_login,name='login'),
-
+    url(r'^reset-password/$', views.reset_password, name='reset_password'),
     url(r'^dogowner/$', views.register_owner, name='register_owner'),
     url(r'^organizer/$', views.register_organizer, name='register_organizer'),
     url(r'^logout/$', views.user_logout, name='logout'),
