@@ -158,6 +158,7 @@ def rating_exists(rating):
         if r.organizername==org:
             return r
     return rating
+
 @login_required
 def view_ratings(request):
     context_dict={"organizers":[]}
@@ -223,6 +224,47 @@ def ratings(request,organizer_str):
 
     return render(request,'ratings.html',context_dict)
 
+def rate_ajax(request, organizer_str):
+    from django.http import JsonResponse
+    owner_user=User.objects.get(username=request.user.username)
+    owner = UserProfile.objects.get(user=owner_user)
+
+    context_dict = {'rates': {}, 'form': {}, "reviews": 0}
+
+    print ('owner %s' % owner)
+
+    organizer_user = User.objects.get(username=organizer_str)
+    organizer = UserProfile.objects.get(user=organizer_user)
+
+    context_dict['avg'] = organizer.avgrating
+    starValue = 42;
+    print (request.GET)
+    rating = request.GET['star_value']
+
+    # form = addRatingForm(request.GET)
+    # print ('form %s ' % form)
+    #
+    # rating = form.save(commit=False)
+    # print ('rating %s' % rating)
+
+    # c = Rating(starvalue=request.GET['star_value'], comment=request.GET['comment'], ownername=owner, organizername=organizer)
+    c = Rating()
+    c.starvalue = request.GET['star_value']
+    c.comment = request.GET['comment']
+    c.ownername = owner
+    c.organizername = organizer
+    c=rating_exists(c)
+    c.starvalue = request.GET['star_value']
+    c.comment = request.GET['comment']
+    c.save()
+    print ('obj %s' % c)
+
+    context_dict['star_value'] = c.starvalue;
+    rates, reviews = calculate_rating(organizer)
+    context_dict["reviews"] = reviews
+    context_dict['rates'] = rates
+
+    return JsonResponse(context_dict)
 
 @login_required
 @owner_required

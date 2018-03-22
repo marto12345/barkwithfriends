@@ -88,6 +88,13 @@ class Rating(models.Model):
     ownername = models.ForeignKey(UserProfile,related_name='ownername')
 
     organizername = models.ForeignKey(UserProfile,related_name='organizername')
+
+    # def __init__(self, starvalue, comment, ownername, organizername):
+    #     self.starvalue = starvalue
+    #     self.comment = comment
+    #     self.ownername = ownername
+    #     self.organizername = organizername
+
     class Meta:
         verbose_name_plural = 'Ratings'
 

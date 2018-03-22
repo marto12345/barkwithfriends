@@ -14,7 +14,7 @@ Add Rating
 {% endblock %}
 
 {% block body_block %}
-    <form id="addRatingForm" method="POST"  >
+    <form id="addRatingForm"  >
         {% csrf_token %}
         <fieldset class="rating">
             <legend>Please rate:</legend>
@@ -33,13 +33,13 @@ Add Rating
 {#        <span id="owner_name" value={{ owner_user}}>{{ owner_user }}</span>#}
 
 
-            <input id="submit" type="submit" value="Submit"  >
+            <input id="submit" type="button" value="Submit"  onclick='sendAjax("/ratings/{{organizer_user}}")'>
         </div>
     </form>
 
     <span hidden id="count">{{ reviews }}</span>
     <span > Average rating for {{ organizer_user }} is <span id="avg" > {{ organizer_user.avgrating }} </span>
-        based on <span id="reviews" {{ reviews }}</span> reviews. </p>
+        based on <span id="reviews" >{{ reviews }}</span> reviews. </p>
     <body onload="load_bars()">
 <div class="row">
   <div class="side">
