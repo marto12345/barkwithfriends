@@ -28,7 +28,7 @@ Add Rating
             <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
             <div hidden id="org">{{ organizer_user }}</div>
 
-            <label id="comment" for="comment">Comment:  {{ form.comment }}</label>
+           Comment: <input type="text" id="comment" for="comment"> </input>
 
 {#        <span id="owner_name" value={{ owner_user}}>{{ owner_user }}</span>#}
 
@@ -103,7 +103,7 @@ Add Rating
   </div>
 </div>
 
-    <div class="comments">
+    <div id="comments">
         {% if comments %}
         {% for comment in comments %}
            <ul>

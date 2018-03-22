@@ -198,6 +198,7 @@ def ratings(request,organizer_str):
   #for k,v in rates.items():
        #print(k, v)
     context_dict['organizer_user']=organizer
+    '''
     if request.method == 'POST':
         # print('ohhhh')
         #print(request.POST)
@@ -221,7 +222,7 @@ def ratings(request,organizer_str):
     else:
         form = addRatingForm()
         context_dict['form'] = form
-
+'''
     return render(request,'ratings.html',context_dict)
 
 def rate_ajax(request, organizer_str):
@@ -258,6 +259,10 @@ def rate_ajax(request, organizer_str):
     c.comment = request.GET['comment']
     c.save()
     print ('obj %s' % c)
+    comments = []
+    for r in Rating.objects.filter(organizername=organizer)[:5]:
+        comments.append(r.comment)
+    context_dict['comments'] = comments;
 
     context_dict['star_value'] = c.starvalue;
     rates, reviews = calculate_rating(organizer)

@@ -1,4 +1,5 @@
 function load_bars() {
+    console.log('loading bars');
     var sum=0.0;
     var i;
     var count=0;
