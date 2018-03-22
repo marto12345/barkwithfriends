@@ -46,6 +46,7 @@ function sendAjax(uri) {
 
         //console.log(document.getElementById('avg'));
         load_bars();
+        document.getElementById('avg').innerHTML = avg;
 
         // document.getElementById("count").innerHTML+=1;
 
