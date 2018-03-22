@@ -131,7 +131,7 @@ class Rating(models.Model):
 
 
     def __str__(self):
-        return 'Raiting: {}'.format(self.ident)
+        return 'Rating: {}'.format(self.ident)
 
 
 class ChooseAnEvent(models.Model):

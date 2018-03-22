@@ -172,12 +172,17 @@ def ratings(request,organizer_str):
     #print("orgvjhbhbjhbjh")
   # print(owner)
     context_dict = {'rates': {}, 'form': {},'organizer_user':organizer_str,'owner_user':owner,"reviews":0}
+
    # print(organizer)
     #print(type(organizer))
     #name = request.POST.get('organizername')
     # form = addRatingForm(request.GET)
     organizer_user = User.objects.get(username=organizer_str)
     organizer = UserProfile.objects.get(user= organizer_user)
+    comments=[]
+    for r in Rating.objects.filter(organizername=organizer)[:5]:
+        comments.append(r.comment)
+    context_dict['comments']=comments;
   # print("organizer")
     #print(organizer)
 
