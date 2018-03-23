@@ -408,8 +408,15 @@ label.ss{
 }
 
 .blarr{
-  max-width: 45rem;
+  max-width: 60rem;
 }
+
+.blapadding{
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+
 
 /*.logodoggo*/
 /*{*/

@@ -7,10 +7,8 @@ My Account
 {% endblock %}
 
 {% block body_block %}
-<body class="bg-dark">
-  <div class="container blarr">
-    <div class="card card-login mx-auto mt-5">
-
+<div class="container blarr">
+  <div class="card card-login mx-auto mt-5">
     <div class="card-header" align="center"><h1>My Account</h1></div>
 
     {% if user.userprofile.profile_picture  %}
@@ -59,9 +57,7 @@ My Account
         </div>
     </form>
   </div>
-    </div>
-    </div>
-   </div>
-  </div>
-</body>
+ </div>
+</div>
 {% endblock %}
+

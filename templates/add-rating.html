@@ -5,7 +5,6 @@
 {% block head_block %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'rating_style.css' %}">
 
 
     <script src="static/jquery.js"></script>
@@ -17,32 +16,35 @@ Ratings
 {% endblock %}
 
 {% block body_block %}
-
-    <h>Add a Rating</h>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="mb-0 mt-4" align="center"><h2>Add a Rating</h></div>
+    <hr class="mt-2">
+  </div>
+</div>
     {% csrf_token %}
         {% if Organizers %}
-
+            <div class="card-columns">
                  {% for organizer in Organizers %}
-
-                    <ul class="row" >
+                   <div class="card mb-3">
+                     {% if user.userprofile.profile_picture %}
+                       <img class="card-img-top img-fluid w-100" src="{{ user.userprofile.profile_picture.url }}" alt="{{user.username}}"/>
+                     {% endif %}
+                   <div class="card-body">
                        <form class={{organizer}} id={{organizer}} class="submit" action="/ratings/{{ organizer }}" method="get" >
+                        <h6 class="card-title mb-1" class={{organizer}}><h4><b>{{ organizer }}</b></h4></h6>
+                        <hr class="my-0">
+                        <div class="card-body py-2 small"><a href="/ratings/{{ organizer }}" class={{organizer}} onclick="submit_form({{organizer}})"><h6>Add a rating</h6></a></div>
 
-                        <p class={{organizer}} class="col-1">{{ organizer }} </p>
-
-                        <a href="/ratings/{{ organizer }}" class={{organizer}} onclick="submit_form({{organizer}})"  >Add a rating</a><br>
-
-                            <input hidden type="submit" value="Submit" >
-
-                        </form>
-
-
-
-                    </ul>
+                         <input hidden type="submit" value="Submit" >
+                       </form>
+                   </div>
                  {% endfor %}
-
+             </div>
          {% else %}
              <strong>There are no organizers present.</strong>
          {% endif %}
+</div>
 
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
    <script>

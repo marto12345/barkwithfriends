@@ -7,7 +7,7 @@
 
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>jQuery UI Datepicker - Restrict date range</title>
+   <!--<title>jQuery UI Datepicker - Restrict date range</title>-->
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -17,19 +17,12 @@
     $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2M +0D" });
   } );
   </script>
-  
 {% endblock %}
 
 {% block body_block %}
-<div class="row">
-
-    <div class="col-sm-1">
-    </div>
-
-
-    <div class="col">
-
-        <h1>Add an Event</h1>
+<div class="container blarr">
+  <div class="card card-register mx-auto mt-5">
+      <div class="card-header" align="center"><h1>Add an Event</h1></div>
             <div>
                 {% if messages %}
                     <ul class="messages">
@@ -38,9 +31,14 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-
+            </div>
+            <div class="card-body">
                 <form id="category_form" method="post" action={% url 'add-event' %} enctype="multipart/form-data">
-                    {% csrf_token %}
+                  {% csrf_token %}
+                  <div class="form-group">
+                   <div class="form-row">
+                    <div class="col-md-6">
+                    <div class="container">
                     <label for="etitle">Event title:</label>
                     {{ form.title }}
 
@@ -58,7 +56,7 @@
                     {{ form.start }}
                     <label for="End time">End time:</label>
                     {{ form.end }}
-					<p>Required: Please ensure that you click this button.</p><input type="button" id="b" value="Check if times are valid" onclick="go()" >
+					<p><font color="#ff9900">Required: Please ensure that you click this button.</font></p><input type="button" id="b" value="Check if times are valid" onclick="go()" >
 
                     <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script>
                     <script type="text/javascript">
@@ -68,7 +66,11 @@
                         }
                     </script>
                      {{ form.organizerusername.as_hidden }}
-                    <h6>Choose menu for your event</h6>
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="container">
+                    <h4>Choose menu for your event</h4></div>
                     Starter:{{ form.starter }}
                     Main course:{{ form.main }}
                     Dessert:{{ form.dessert }}
@@ -76,28 +78,13 @@
                     Dog food:{{ form.dog_food }}
                     Event picture:{{ form.event_picture }}
                     <input type="submit" value="Submit" id="subm"  disabled="True">
-
+                    </div>
+                    </div>
                 </form>
+               </div>
+              </div>
             </div>
         </div>
-
-
-
-    <div class="col-sm-1">
     </div>
+{% endblock %}
 
-
-
-    <div class="col">
-    </div>
-
-
-
-    <div class="col-sm-1">
-    </div>
-
-
-</div>
-</html> 
-
-{% endblock %}	

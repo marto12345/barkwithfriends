@@ -14,32 +14,32 @@ Add Rating
 {% endblock %}
 
 {% block body_block %}
-    <form id="addRatingForm"  >
+<div class="container blarr">
+  <div class="card card-login mx-auto mt-5">
+   <div class="card-header" align="center"><h4>Please rate: {{ organizer_user }}</h4></div> 
+    <div class="card-body">
+    <form id="addRatingForm">
         {% csrf_token %}
-        <fieldset class="rating">
-		<br>
-            <legend>Please rate:</legend>
-            <input type="radio" onclick="fivestar(5)" id="star5" name="starvalue" value="5" /><label for="star5" title="Rocks!">&#9734</label>
-            <input type="radio" onclick="fivestar(4)" id="star4" name="starvalue" value="4" /><label for="star4" title="Pretty good">&#9734</label>
-            <input type="radio" onclick="fivestar(3)" id="star3" name="starvalue" value="3" /><label for="star3" title="Meh">&#9734</label>
-            <input type="radio" onclick="fivestar(2)" id="star2" name="starvalue" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
-            <input type="radio" onclick="fivestar(1)" id="star1" name="starvalue" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
-        </fieldset>
+
         <div id="orgname">
             <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
             <div hidden id="org">{{ organizer_user }}</div>
 
            Comment: <input type="text" id="comment" for="comment"> </input>
-
 {#        <span id="owner_name" value={{ owner_user}}>{{ owner_user }}</span>#}
 
-
-            <input id="submit" type="button" value="Submit"  onclick='sendAjax("/ratings/{{organizer_user}}")'>
+            
         </div>
     </form>
-
     <span hidden id="count">{{ reviews }}</span>
-	<br>
+           <fieldset class="rating">
+            <input type="radio" onclick="fivestar(5)" id="star5" name="starvalue" value="5" /><label for="star5" title="Rocks!">&#9734</label>
+            <input type="radio" onclick="fivestar(4)" id="star4" name="starvalue" value="4" /><label for="star4" title="Pretty good">&#9734</label>
+            <input type="radio" onclick="fivestar(3)" id="star3" name="starvalue" value="3" /><label for="star3" title="Meh">&#9734</label>
+            <input type="radio" onclick="fivestar(2)" id="star2" name="starvalue" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
+            <input type="radio" onclick="fivestar(1)" id="star1" name="starvalue" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
+         </fieldset>
+	</br></br>
     <span> Average rating for {{ organizer_user }} is <span id="avg" > {{ organizer_user.avgrating }} </span>
         based on <span id="reviews" >{{ reviews }}</span> reviews. </p><br>
     <body onload="load_bars()">
@@ -52,10 +52,11 @@ Add Rating
       <div class="bar-5"></div>
     </div>
   </div>
-  <div class="side right">
+  <div class="right">
     <div id="5">{{rates.5}}</div>
   </div>
-
+</div>
+<div class="row">
   <div class="side">
     <div>4 star</div>
   </div>
@@ -64,10 +65,11 @@ Add Rating
       <div class="bar-4"></div>
     </div>
   </div>
-  <div class="side right">
+  <div class="right">
     <div id="4">{{ rates.4 }}</div>
   </div>
-
+</div>
+<div class="row">
   <div class="side">
     <div>3 star</div>
   </div>
@@ -76,10 +78,11 @@ Add Rating
       <div class="bar-3"></div>
     </div>
   </div>
-  <div class="side right">
+  <div class="right">
     <div id="3">{{ rates.3 }}</div>
   </div>
-
+</div>
+<div class="row">
   <div class="side">
     <div>2 star</div>
   </div>
@@ -88,10 +91,11 @@ Add Rating
       <div class="bar-2"></div>
     </div>
   </div>
-  <div class="side right">
+  <div class="right">
     <div id="2">{{ rates.2 }}</div>
   </div>
-
+</div>
+<div class="row">
   <div class="side">
     <div>1 star</div>
   </div>
@@ -100,29 +104,31 @@ Add Rating
       <div class="bar-1"></div>
     </div>
   </div>
-  <div class="side right">
+  <div class="right">
     <div id="1">{{ rates.1 }}</div>
   </div>
 </div>
+<input id="submit" type="button" value="Submit"  onclick='sendAjax("/ratings/{{organizer_user}}")'>
+</div>
+</div>
 	<br>
 	<br>
-	<br>
-	<br>
-    <div id="comments">
+<hr class="mt-2">
+<h4 align="center">Comments:</h4>
+<hr class="mt-2">
+<div id="comments">
         {% if comments %}
         {% for comment in comments %}
-           <ul>
+           <div align="center">
                {{comment}}
-           </ul>
+           </div>
         {% endfor %}
         {% endif %}
-    </div>
-    </body>
-</p>
+</div>
+</body>
+</div>
+</div>
+</br>
+</div>
 {% endblock %}
 
-{% block end_block %}
-    
-
-
-{% endblock %}

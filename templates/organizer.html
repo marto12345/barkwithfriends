@@ -7,14 +7,12 @@ Register As An Event Organizer
 {% endblock %}
 
 {% block body_block %}
-
-<body class="bg-dark">
-  <div class="container blarr">
-    <div class="card card-login mx-auto mt-5">
+<div class="container blarr">
+  <div class="card card-login mx-auto mt-5">
       {% if user.is_authenticated %}
         <h2>You have already registered!</h2>
       {% else %}
-        <div class="card-header" align="center"><h5>Register for BarkWithFriends</h5></div>
+        <div class="card-header" align="center"><h4>Register for BarkWithFriends</h4S></div>
         {% if registered %}
           <div align="center">
             <strong>Thank you for registering!</strong></br>
