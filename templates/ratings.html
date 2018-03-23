@@ -17,6 +17,7 @@ Add Rating
     <form id="addRatingForm"  >
         {% csrf_token %}
         <fieldset class="rating">
+		<br>
             <legend>Please rate:</legend>
             <input type="radio" onclick="fivestar(5)" id="star5" name="starvalue" value="5" /><label for="star5" title="Rocks!">&#9734</label>
             <input type="radio" onclick="fivestar(4)" id="star4" name="starvalue" value="4" /><label for="star4" title="Pretty good">&#9734</label>
@@ -38,8 +39,9 @@ Add Rating
     </form>
 
     <span hidden id="count">{{ reviews }}</span>
-    <span > Average rating for {{ organizer_user }} is <span id="avg" > {{ organizer_user.avgrating }} </span>
-        based on <span id="reviews" >{{ reviews }}</span> reviews. </p>
+	<br>
+    <span> Average rating for {{ organizer_user }} is <span id="avg" > {{ organizer_user.avgrating }} </span>
+        based on <span id="reviews" >{{ reviews }}</span> reviews. </p><br>
     <body onload="load_bars()">
 <div class="row">
   <div class="side">
@@ -102,7 +104,10 @@ Add Rating
     <div id="1">{{ rates.1 }}</div>
   </div>
 </div>
-
+	<br>
+	<br>
+	<br>
+	<br>
     <div id="comments">
         {% if comments %}
         {% for comment in comments %}

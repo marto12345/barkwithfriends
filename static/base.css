@@ -400,11 +400,15 @@ label.ss{
 }
 
 .bla{
-max-width: 30rem;
+  max-width: 30rem;
+}
+
+.blar{
+  max-width: 40rem;
 }
 
 .blarr{
-max-width: 45rem;
+  max-width: 45rem;
 }
 
 /*.logodoggo*/

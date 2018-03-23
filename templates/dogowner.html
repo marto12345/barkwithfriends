@@ -14,29 +14,19 @@ Register As Dog Owner
       {% else %}
         <div class="card-header" align="center"><h5>Register for BarkWithFriends</h5></div>
         {% if registered %}
-          <strong>Thank you for registering!</strong>
-          <a href = "{% url 'login' %}">Log in now</a><br>
-          <a href="{% url 'index' %}">Return to the homepage.</a><br />
+          <div align="center">
+            <strong>Thank you for registering!</strong></br>
+            <a href = "{% url 'login' %}">Log in now</a></br>
+            <a href="{% url 'index' %}">Return to the homepage.</a></br>
+          </div>
         {% else %}
           <div class="card-body">
             <form id="owform" method="post" action="{% url 'register_owner' %}" enctype="multipart/form-data">
               {% csrf_token %}
 
 <!-- Display each form -->
-
-                {% for field in user_form %}
-                  <div class="form-group">
-                    <p class="stylelabel">{{ field.label_tag }}</p>
-                    <p>{{ field }}</p>
-                  </div>
-                {% endfor %}
-
-                {% for field in profile_form %}
-                  <div class="form-group">
-                    <p class="stylelabel">{{ field.label_tag }}</p>
-                    <p>{{ field }}</p>
-                  </div>
-                {% endfor %}
+                {{ user_form.as_p }}
+                {{ profile_form.as_p }}
 
                 {% if messages %}
                   <ul class="messages">
