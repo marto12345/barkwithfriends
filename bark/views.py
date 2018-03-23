@@ -22,7 +22,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from datetime import datetime
 from django.contrib.auth.password_validation import MinimumLengthValidator
-
+from django.contrib.auth.decorators import user_passes_test
 
 def index(request):
 
@@ -42,42 +42,43 @@ def contact(request):
     return render(request,'contact.html')
 
 @login_required
+@user_passes_test(lambda u: not u.is_superuser)
 @owner_required
+
 def events(request):
 
+        #today = datetime.now().date()
+        #event_list = Event.objects.order_by('date')
+        today =date.today()
+        event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')
+        context_dict = {'events':event_list}
+        #for event in event_list:
+            #if event.capacity==0:
+                  #  del context_dict[event]
+        print(request)
+        some_var=request.GET.getlist('checks')
 
-    #today = datetime.now().date()
-    #event_list = Event.objects.order_by('date')
-    today =date.today()
-    event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')
-    context_dict = {'events':event_list}
-    #for event in event_list:
-        #if event.capacity==0:
-              #  del context_dict[event]
-    print(request)
-    some_var=request.GET.getlist('checks')
+        for chosen in some_var:
+            events_list=request.user.userprofile.events
+            if chosen in events_list:
+                messages.warning(request,'''You are not allowed to sign for the same event twice!
+                If you have another pet you wish to bring , you need to create another account!
+                
+                ''')
+            else:
+                event_date=Event.objects.get(title=chosen).date
+                event_time=Event.objects.get(title=chosen).start
 
-    for chosen in some_var:
-        events_list=request.user.userprofile.events
-        if chosen in events_list:
-            messages.warning(request,'''You are not allowed to sign for the same event twice!
-            If you have another pet you wish to bring , you need to create another account!
-            
-            ''')
-        else:
-            event_date=Event.objects.get(title=chosen).date
-            event_time=Event.objects.get(title=chosen).start
+                events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+";"
+                request.user.userprofile.events=events_list
+                request.user.userprofile.save()
+                print( request.user.userprofile.events)
 
-            events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+";"
-            request.user.userprofile.events=events_list
-            request.user.userprofile.save()
-            print( request.user.userprofile.events)
-
-            for event in event_list:
-             if event.title==chosen:
-                    event.capacity-=1
-                    event.save()
-    return render(request,'events.html',context_dict)
+                for event in event_list:
+                 if event.title==chosen:
+                        event.capacity-=1
+                        event.save()
+        return render(request,'events.html',context_dict)
 
 def show_event(request,event_title):
     context_dict = {}
@@ -93,6 +94,7 @@ def restricted(request):
 
 
 @login_required
+@user_passes_test(lambda u: not u.is_superuser)
 @organizer_required
 def add_event(request):
 
@@ -162,6 +164,7 @@ def rating_exists(rating):
     return rating
 
 @login_required
+@user_passes_test(lambda u: not u.is_superuser)
 def view_ratings(request):
     context_dict={"organizers":[]}
     org_list = UserProfile.objects.filter(is_organizer=True)
@@ -170,6 +173,7 @@ def view_ratings(request):
     return render(request,'view-ratings.html',context_dict)
 
 @login_required
+@user_passes_test(lambda u: not u.is_superuser)
 @owner_required
 def ratings(request,organizer_str):
     owner_user=User.objects.get(username=request.user.username)
@@ -287,6 +291,7 @@ def rate_ajax(request, organizer_str):
     return JsonResponse(context_dict)
 
 @login_required
+@user_passes_test(lambda u: not u.is_superuser)
 @owner_required
 def add_rating(request):
     context_dict = {"Organizers": []}
