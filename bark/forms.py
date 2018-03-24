@@ -90,7 +90,7 @@ class OwnerForm(forms.ModelForm):
 
     class Meta:
         model=UserProfile
-        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events')
+        fields = ('description', 'profile_picture', 'dog_picture', 'dog_name','is_owner','events','secret_question')
         widgets = {'events': forms.HiddenInput(attrs={'id':'e'})}
 
 class OrganizerForm(forms.ModelForm):
@@ -102,14 +102,26 @@ class OrganizerForm(forms.ModelForm):
     class Meta:
         # is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
-        exclude=('dog_name','dog_picture','user','is_owner','avgrating','events')
+        exclude=('dog_name','dog_picture','user','is_owner','avgrating','events',)
 
 class ResetForm(forms.ModelForm):
-    confirm_password = forms.CharField(widget=forms.PasswordInput())
-    secret_question=forms.CharField(label="What is your first pet's name?")
+    username=forms.CharField(widget=forms.TextInput,required=True)
+    secret_question = forms.CharField(label="What is your first pet's name?",required=True)
+    password=forms.CharField(widget=forms.PasswordInput(),required=True)
+    confirm_password = forms.CharField(widget=forms.PasswordInput(),required=True)
+
     class Meta:
-        model=User
-        fields=('username','password','confirm_password')
+        model=UserProfile
+        fields=('secret_question',)
+
+    def clean(self):
+        cleaned_data = super(ResetForm, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError(
+                "password and confirm_password does not match")
 class addRatingForm(forms.ModelForm):
     # #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
     # #CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]

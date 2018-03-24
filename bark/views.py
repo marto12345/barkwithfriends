@@ -23,6 +23,10 @@ from django.http import JsonResponse
 from datetime import datetime
 from django.contrib.auth.password_validation import MinimumLengthValidator
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import update_session_auth_hash
+
+
 
 def index(request):
 
@@ -441,8 +445,22 @@ def register_organizer(request):
 def reset_password(request):
     reset_pass={}
     if request.method=='POST':
-        reset_pass=ResetForm(request.POST,instance=request.user)
-        print(reset_pass.username)
+        username = request.POST.get('username')
+        user=User.objects.get(username=username)
+        print(user)
+        reset_pass=ResetForm(request.POST)
+        if reset_pass.is_valid():
+
+
+            if(UserProfile.objects.get(user=user).secret_question==reset_pass.cleaned_data["secret_question"]):
+                print("yes")
+                password = reset_pass.cleaned_data['password']
+                print(password)
+                user.password=make_password(password)
+                print(user)
+                user.save()
+                print(user.password)
+            return redirect('login')
 
     return render(request, 'reset-password.html',{'reset_pass':reset_pass })
 
