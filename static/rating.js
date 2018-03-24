@@ -9,7 +9,8 @@ function load_bars() {
         starsCount[i] = document.getElementById(i).innerHTML;
         sum += starsCount[i] * i;
     }
-    count = document.getElementById("count").innerHTML;
+    count = document.getElementById("reviews").innerHTML;
+    console.log(count);
 
 //starsCount[mul]+=1;
 //count++;
@@ -19,7 +20,7 @@ function load_bars() {
     for (i = 1; i < 6; i++) {
         var classname = classnames[i];
         var el = document.getElementsByClassName(classname)[0];
-        var y = starsCount[i] / count * 100;
+        var y =( starsCount[i] / count) * 100;
         el.style.width = String(y) + "%";
     }
     var number = (sum / count).toFixed(2);
