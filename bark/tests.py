@@ -60,6 +60,29 @@ class LoginTests(TestCase):
         response = client.get(reverse('events'))
         self.assertEqual(response.status_code,200)
 
+    def test_organizer_sees_add_event(self):
+        organizer = add_user("testorganizer","marto12345@abv.bg","parola","Martin","Dimitrov")
+        organizer.save()
+        Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
+        client.login(username="testorganizer",password="parola")
+        response = client.get(reverse('add-event'))
+        self.assertEqual(response.status_code,200)
+
+    def test_add_user(self):
+        user = add_user("testuser","marto12345@abv.bg","parola","Martin","Dimitrov")
+        user.save()
+        TrialUser = add_userprofile(user,"123","default/person.jpg","default/dog.jpg","Pink",True,False)
+        self.assertEqual(user.username=='testuser',True)
+
+    def test_admin_tries_to_see_add_event(self):
+        User.objects.get_or_create(username="trialadmin", is_staff=True)
+        user = User.objects.get(username="trialadmin")
+        user.save()
+        response = self.client.get(reverse('add-event'))
+        self.assertRedirects(response,reverse('login')+"?next=/add-event",status_code=302,target_status_code=200)
+        
+
+
 class TemplateTests(TestCase):
     def test_base_template_exists(self):
         path_to_base = settings.TEMPLATE_DIR + '/base.html'
@@ -68,7 +91,6 @@ class TemplateTests(TestCase):
     def test_link_to_index_in_base_template(self):
         response = self.client.get(reverse('index'))
         self.assertIn(reverse('index'), response.content.decode('ascii'))
-
 
     def test_index_displays_no_events_message(self):
         response = self.client.get(reverse('index'))
@@ -88,3 +110,5 @@ class ModelTests(TestCase):
         self.assertEquals(len(events_in_database), 1)
         only_event_in_database = events_in_database[0]
         self.assertEquals(only_event_in_database, event)
+
+    
