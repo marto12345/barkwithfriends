@@ -493,7 +493,8 @@ def update_profile(request):
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile = profile_form.save(commit=False)
-                profile.profile_picture = request.FILES.get('profile_picture')
+                picture = profile.profile_picture
+                profile.profile_picture = request.FILES.get('profile_picture',picture)
                 profile.save()
                 profile_form.save()
                 print('Your profile was successfully updated!')

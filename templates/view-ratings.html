@@ -15,7 +15,7 @@ View Ratings
     <div class="card-columns">
       {% for organizer in organizers %}
         <div class="card mb-3">
-          {% if user.userprofile.profile_picture %}
+          {% if organizer.profile_picture %}
             <img class="card-img-top img-fluid w-100" src="{{ organizer.profile_picture.url }}" alt="{{organizer.username}}"/>
           {% endif %}
           <div class="card-body">
