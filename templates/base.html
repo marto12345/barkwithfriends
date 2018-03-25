@@ -16,7 +16,7 @@
     <link href="{% static 'base.css' %}" rel="stylesheet">
 
     <!--Browser Tab Logo-->
-    <link rel="icon" type="image/png" href="media/logo/logodoggoicon.png"/>
+    <link rel="icon" type="image/png" href="{{MEDIA_URL}}logo/logodoggoicon.png"/>
 
    {% block head_block %}
    {% endblock %}
@@ -33,7 +33,7 @@
 <body class="fixed-nav bg-dark" id="page-top">
     <!--Side Bar Links-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a href="{% url 'index' %}" class="pull-left"><img src="media/logo/logodoggoicon.png"></a>
+        <a href="{% url 'index' %}" class="pull-left"><img src="{{MEDIA_URL}}logo/logodoggoicon.png"></a>
         <a class="navbar-brand" href="{% url 'index' %}">Bark with Friends</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
