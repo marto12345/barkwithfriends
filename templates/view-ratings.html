@@ -23,24 +23,19 @@ View Ratings
            <hr class="my-0">
            <div class="card-body py-2 small"><span class="bigger">Average rating: {{ organizer.avgrating }}</span></div>
         </div>
-<!--
+
         <hr class="my-0">
         <div class="card-body small bg-faded">
 <h6><span class="bigger"><u>Comments:</u></span></h6>
-
-VIKI DOBAVQAI TUK!!
-------------------------
 <div id="comments">
   {% if organizer.org_comments %}
     {% for comment in organizer.org_comments %}
       {{comment}}
     {% endfor %}
   {% endif %}
-------------------------
 
 </div>
         </div>
--->
       </div>
     {% endfor %}
   {% endif %}
