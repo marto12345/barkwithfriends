@@ -18,10 +18,6 @@
     <!--Browser Tab Logo-->
     <link rel="icon" type="image/png" href="media/logo/logodoggoicon.png"/>
 
-{#   <link rel="stylesheet" type="text/css" href="{% static 'topbar.css' %}">#}
-{#   <link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}">#}
-{#   <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">#}
-
    {% block head_block %}
    {% endblock %}
 
@@ -159,59 +155,6 @@
           </div>
         </div>
     </div>
-
-
-{##}
-{#    <div class="topnav">#}
-{#        {% if user.is_authenticated and not user.is_superuser %}#}
-{#            <a href="{% url 'logout' %}">Log out</a>#}
-{#            <a href = "{% url 'update-profile' %}">My Account</a>#}
-{#        {% else %}#}
-{#            {%if user.is_superuser%}#}
-{#                <a href="{% url 'logout' %}">Log out</a>#}
-{#            {% else%}#}
-{#                <a href="{% url 'login' %}">Log in</a>#}
-{#                <a href="{% url 'register' %}">Register</a>#}
-{#            {% endif %}#}
-{#        {% endif %}#}
-{#        <span> Bark with Friends </span>#}
-{#    </div>#}
-{##}
-{##}
-{##}
-{#    <div class="sidenav">#}
-{#        <a href = "{% url 'index' %}">Home</a><br>#}
-{#        <a href = "{% url 'about' %}">About us</a><br>#}
-{#        <a href = "{% url 'food-menu' %}">Food menu</a><br>#}
-{#        <a href = "{% url 'contact' %}">Contact us</a><br>#}
-{##}
-{#        {% if user.is_authenticated %}#}
-{#            {% if user.is_superuser %}#}
-{#            {% else %}#}
-{##}
-{##}
-{#                {%  if user.userprofile.is_owner %}#}
-{##}
-{#                <a href = "{% url 'events' %}">Events</a><br>#}
-{#                <a href = "{% url 'add-rating' %}">Add ratings</a><br>#}
-{##}
-{#                {% endif %}#}
-{#                {%  if user.userprofile.is_organizer %}#}
-{#                    <a href = "{% url 'add-event' %}">Add An Event</a><br>#}
-{#                    <a href = "{% url 'view_ratings' %}">Ratings</a><br>#}
-{##}
-{#                {% endif %}#}
-{#            {% endif %}#}
-{#	{% endif %}#}
-{#    </div>#}
-{##}
-{##}
-{#    <div class= "main">#}
-{##}
-{#        {% block body_block %}#}
-{#        {% endblock %}#}
-{##}
-{#    </div>#}
 
 </body>
 </html>
