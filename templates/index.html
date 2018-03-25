@@ -5,10 +5,9 @@ Home
 {% endblock %}
 
 {% block body_block %}
-
     <div class="row">
         <div class="col-lg-12">
-            <div class="mb-0 mt-4" align="center"><h1>Welcome to BarkWithFriends{% if user.is_authenticated %}, {{ user.username }}{% endif %}!!</h1>
+            <div class="mb-0 mt-4" align="center"><h1>Welcome to BarkWithFriends{% if user.is_authenticated %}, <span class="bigger">{{ user.username }}</span>{% endif %}!!</h1>
 	    <p>Here you can participate in a themed party along with your puppy.</p></div>
             <hr class="mt-2">
     </div>
@@ -53,22 +52,22 @@ Home
       {% if events %}
         <div class="card-columns">
         {% for event in events %}
-            <div class="card mb-3">
+            <div class="card mb-3" align="center">
                 {% if event.event_picture %}
                     <img class="card-img-top img-fluid w-100" src="{{event.event_picture.url}}" alt="">
                 {% endif %}
               <div class="card-body">
-                <h6 class="card-title mb-1"><font color="#0c66f0"><h4><b>{{ event.title }}</b></h4></font></h6>
-                <p class="card-text small"><font color="#0c6cf6"><h5>Theme: <i>{{ event.theme }}</i></h5></font></p>
+                <h6 class="card-title mb-1"><font color="#0c66f0"><h4><b><span class="bigger">{{ event.title }}</span></b></h4></font></h6>
+                <p class="card-text small"><font color="#0c6cf6"><h5>Theme: <i><span class="bigger">{{ event.theme }}</span></i></h5></font></p>
+                <font color="#4673ff">Places available: <i><span class="bigger">{{ event.capacity }}</span></i></font>
               </div>
               <hr class="my-0">
-              <div class="card-body py-2 small"><h6>Date: <u>{{ event.date }}</u></h6></div>
-              <hr class="my-0">
-              <div class="card-body small bg-faded"><h7>
-                 Start time: {{ event.start }}
-                 End time: {{ event.end }}
-              </h7></div>
-              <div class="card-footer small text-muted">Organzied by: {{ event.organizerusername }}</div>
+              <div class="card-body py-2 small">
+        <h6>Date: <span class="bigger">{{ event.date }}</span></h6>
+        Start time: <span class="bigger">{{ event.start }}</span>
+        End time: <span class="bigger">{{ event.end }}</span>
+</div>
+              <div class="card-footer small text-muted">Organzied by: <span class="bigger">{{ event.organizerusername }}</span></div>
             </div>
         {% endfor %}
         {% else %}
@@ -76,5 +75,5 @@ Home
       {% endif %}
         </div>
     </div>
-
 {% endblock %}
+

@@ -13,12 +13,19 @@ function alertfunction() {
     timeend.setHours((parseInt(temp[0]) - 1 + 24) % 24);
     timeend.setMinutes(parseInt(temp[1]));
 
+    var diff = (timeend.getTime() - timestart.getTime()) / 1000;
+    diff /= 60;
+    diff = Math.abs(Math.round(diff));
+
     if (timeend < timestart) {
         alert('INVALID TIMES CHOSEN! Start time should be earlier than end time!');
         document.getElementById("subm").disabled = true;
     }
-    else{
-        document.getElementById("subm").disabled=false;
+    else if (diff < 120) {
+        alert("INVALID TIME DURATION!Your event needs to be at least 2 hours long for us to organize it! ")
+    }
+    else {
+        document.getElementById("subm").disabled = false;
     }
 
 }

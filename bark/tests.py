@@ -2,6 +2,8 @@ from django.test import TestCase, Client
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.urlresolvers import reverse
 from django.test.utils import setup_test_environment
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 import os
 from django.contrib.auth.models import User
 from bark.forms import UserForm,OwnerForm,OrganizerForm
@@ -80,8 +82,14 @@ class LoginTests(TestCase):
         user.save()
         response = self.client.get(reverse('add-event'))
         self.assertRedirects(response,reverse('login')+"?next=/add-event",status_code=302,target_status_code=200)
-        
 
+    def test_admin_tries_to_see_events(self):
+        User.objects.get_or_create(username="trialadmin", is_staff=True)
+        user = User.objects.get(username="trialadmin")
+        user.save()
+        response = self.client.get(reverse('events'))
+        self.assertRedirects(response,reverse('login')+"?next=/events",status_code=302,target_status_code=200)
+        
 
 class TemplateTests(TestCase):
     def test_base_template_exists(self):
@@ -111,4 +119,16 @@ class ModelTests(TestCase):
         only_event_in_database = events_in_database[0]
         self.assertEquals(only_event_in_database, event)
 
+    def test_create_an_event_with_overlarge_capacity(self):
+        event = Event(title="Pon De Replay",capacity=27,date="2018-03-29",start="17:30:00",end="20:00:00",organizerusername="Kylie")
+        with self.assertRaises(ValidationError):
+            if event.full_clean():
+                event.save()
+        self.assertEqual(Event.objects.filter(title="Pon De Replay").count(),0)
     
+    def test_create_an_event_with_negative_capacity(self):
+        event = Event(title="Pon De Replay",capacity=-20,date="2018-03-29",start="17:30:00",end="20:00:00",organizerusername="Kylie")
+        with self.assertRaises(ValidationError):
+            if event.full_clean():
+                event.save()
+        self.assertEqual(Event.objects.filter(title="Pon De Replay").count(),0)

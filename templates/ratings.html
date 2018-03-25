@@ -4,9 +4,9 @@
 {% block head_block %}
     <link rel="stylesheet" href="{% static 'rating_style.css' %}">
     <script src="{% static 'rating.js' %}" type="text/javascript"> </script>
-     <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-     <script src="{% static 'ajax_rating.js' %}" type="text/javascript"> </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="{% static 'ajax_rating.js' %}" type="text/javascript"> </script>
 {% endblock %}
 
 {% block title_block %}
@@ -16,7 +16,7 @@ Add Rating
 {% block body_block %}
 <div class="container blarr">
   <div class="card card-login mx-auto mt-5">
-   <div class="card-header" align="center"><h4>Please rate: {{ organizer_user }}</h4></div> 
+   <div class="card-header" align="center"><h1>Please rate: <i>{{ organizer_user }}</i></h1></div> 
     <div class="card-body">
     <form id="addRatingForm">
         {% csrf_token %}
@@ -114,16 +114,13 @@ Add Rating
 	<br>
 	<br>
 <hr class="mt-2">
-<h4 align="center">Comments:</h4>
-<hr class="mt-2">
-<div id="comments">
-        {% if comments %}
-        {% for comment in comments %}
-           <div align="center">
-               {{comment}}
-           </div>
-        {% endfor %}
-        {% endif %}
+<h4 align="center"><span class="bigger"><u>Comments:</u></span></h4>
+<div id="comments" align="center">
+  {% if comments %}
+    {% for comment in comments %}
+      {{comment}}
+    {% endfor %}
+  {% endif %}
 </div>
 </body>
 </div>

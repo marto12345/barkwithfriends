@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-
 {% block head_block %}
    <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
 
@@ -17,6 +16,10 @@
     $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2M +0D" });
   } );
   </script>
+{% endblock %}
+
+{% block title_block %}
+Add Event
 {% endblock %}
 
 {% block body_block %}
@@ -56,8 +59,7 @@
                     {{ form.start }}
                     <label for="End time">End time:</label>
                     {{ form.end }}
-					<p><font color="#ff9900">Required: Please ensure that you click this button.</font></p><input type="button" id="b" value="Check if times are valid" onclick="go()" >
-
+					<p><font color="#ff9900">Required: Please ensure that you click this button.</font></p><input type="button" id="b" value="Check if times are valid" onclick="go()">
                     <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script>
                     <script type="text/javascript">
                         function go()
@@ -67,6 +69,7 @@
                     </script>
                      {{ form.organizerusername.as_hidden }}
                     </div>
+                    </br>
                     </div>
                     <div class="col-md-6">
                     <div class="container">

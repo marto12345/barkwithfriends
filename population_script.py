@@ -12,9 +12,9 @@ def add_user(username,email,password,first,last):
     user.save()
     return user
 
-def add_userprofile(user,description,profile_picture,dog_picture,dog_name,is_organizer,is_owner):
+def add_userprofile(user,description,profile_picture,dog_picture,dog_name,is_organizer,is_owner,avgrating,events,secret_question):
     userprofile = UserProfile.objects.get_or_create(user=user,description=description,
-                                                    profile_picture=profile_picture,dog_picture=dog_picture,dog_name=dog_name,is_organizer=is_organizer,is_owner=is_owner)[0]
+                                                    profile_picture=profile_picture,dog_picture=dog_picture,dog_name=dog_name,is_organizer=is_organizer,is_owner=is_owner,avgrating=avgrating,events=events,secret_question=secret_question)[0]
     userprofile.save()
     return userprofile
 
@@ -25,9 +25,9 @@ def populate():
     organizer.save()
     johnsmith = add_user("JohnSmith", "marto1662345@abv.bg", "parola", "Martinka", "Dimitrovv")
     johnsmith.save()
-    Owner = add_userprofile(owner,"123","default/person.jpg","default/dog.jpg","Fifo",False,True)
-    Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
-    JohnSmith=add_userprofile(johnsmith,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
+    Owner = add_userprofile(owner,"123","default/person.jpg","default/dog.jpg","Fifo",False,True,0.0,"","kon")
+    Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False,0.0,"","kon")
+    JohnSmith=add_userprofile(johnsmith,"123","default/person.jpg","default/dog.jpg","Fifo",True,False,0.0,"","kon")
    # Owner.save()
     #Organizer.save()
     

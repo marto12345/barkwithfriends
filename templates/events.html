@@ -8,39 +8,62 @@ Events
 {% block body_block %}
 <form action={% url 'events' %}
 {% if events %}
-	<p>In this page you can choose an event to participate in.</p>
-	{% for event in events %}
-        {% if event.capacity > 0 %}
-		<input type="checkbox" value="{{ event.title }}" name="checks">
-		<p><b>{{ event.title }}</b> -- Organized by {{ event.organizerusername }}</p>
-            This event has a topic : <b>{{ event.theme }}</b>
-            It will take place on <b>{{ event.date }}</b>.
-            <br>
-            It will start at <b>{{ event.start }}</b>
-		    and is expected to finsih at <b>{{ event.end }}.</b></p>
-		    The current number of availabel place is :<b>{{ event.capacity }}</b></p>
-
-         Menu for the event :</p>
-
-                 Starter:  {{ event.starter }}<br>
-
-                 Main course:  {{ event.main }}<br>
-
-                 Dessert:  {{ event.dessert }}<br>
-
-                 Drink:  {{ event.drink }}<br>
-
-                 Food for the dogs: {{ event.dog_food }}
-            <br>
-        {% endif %}
-	{% endfor %}
     {% if messages %}
   <ul class="messages">
     {% for message in messages %}
       <li class="{{ message.tags }}">{{ message }}</li>
     {% endfor %}
   </ul>
-{% endif %}
+    {% endif %}
+<div class="row">
+        <div class="col-lg-12">
+            <div class="mb-0 mt-4" align="center"><h2>Sign for Events</h2></div>
+            <hr class="mt-2">
+<p align="center">In this page you can choose an event to participate in.</p>
+        </div>
+<div class="card-columns">
+	{% for event in events %}
+
+        {% if event.capacity > 0 %}
+<div class="card mb-3" align="center">
+                {% if event.event_picture %}
+                    <img class="card-img-top img-fluid w-100" src="{{event.event_picture.url}}" alt="">
+                {% endif %}
+<div class="card-body">
+<input type="checkbox" value="{{ event.title }}" name="checks">
+                <h6 class="card-title mb-1"><font color="#0c66f0"><h4><b><span class="bigger">{{ event.title }}</span></b></h4></font></h6>
+                <p class="card-text small"><font color="#0c6cf6"><h5>Theme: <i><span class="bigger">{{ event.theme }}</span></i></h5></font></p>
+                <font color="#4673ff">Places available: <i><span class="bigger">{{ event.capacity }}</span></i></font>
+              </div>
+<hr class="my-0">
+<div class="card-body py-2 small">
+<font color="">
+        <h6>Date: <span class="bigger">{{ event.date }}</span></h6>
+        Start time: <span class="bigger">{{ event.start }}</span>
+        End time: <span class="bigger">{{ event.end }}</span>
+</font>
+</div>
+<hr class="my-0">
+<div class="card-body small bg-faded">
+<font color="">
+                <h5><u>Menu for the event :</u></h5>
+<h6>
+                 Starter: <span class="bigger">{{ event.starter }}</span><br>
+                 Main course: <span class="bigger">{{ event.main }}</span><br>
+                 Dessert: <span class="bigger">{{ event.dessert }}</span><br>
+                 Drink: <span class="bigger">{{ event.drink }}</span><br>
+                 Food for the dogs: <span class="bigger">{{ event.dog_food }}
+            <br>
+</h6>
+</font>
+</div>
+              <div class="card-footer small text-muted">Organzied by: <span class="bigger">{{ event.organizerusername }}<span></div>
+            </div>
+        {% endif %}
+	{% endfor %}
+    </div>
+    </div>
+
     <input type="submit" value="submit" >
 
 
@@ -50,3 +73,4 @@ Events
 {% endif %}
 </form>
 {% endblock %}
+

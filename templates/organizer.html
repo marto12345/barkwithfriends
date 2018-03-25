@@ -12,7 +12,7 @@ Register As An Event Organizer
       {% if user.is_authenticated %}
         <h2>You have already registered!</h2>
       {% else %}
-        <div class="card-header" align="center"><h4>Register for BarkWithFriends</h4S></div>
+        <div class="card-header" align="center"><h1>Register for BarkWithFriends</h1></div>
         {% if registered %}
           <div align="center">
             <strong>Thank you for registering!</strong></br>
@@ -44,40 +44,4 @@ Register As An Event Organizer
   </div>
 </div>
 {% endblock %}
-
-
-<!--
-    {% if user.is_authenticated %}
-        <h2>You have already registered!</h2>
-    {% else %}
-        <h1>Register for BarkWithFriends</h1>
-        {% if registered %}
-            <strong>Thank you for registering!</strong>
-            <a href = "{% url 'login' %}">Log in now</a><br>
-            <a href="{% url 'index' %}">Return to the homepage.</a><br />
-        {% else %}
-            <strong>register here!</strong><br />
-            <form id="orgform" method="post" action="{% url 'register_organizer' %}"
-                  enctype="multipart/form-data">
-
-                {% csrf_token %}
-
- <!-- Display each form ->
-                {{ user_form.as_p }}
-                {{ profile_form.as_p }}
-                 {% if messages %}
-                  <ul class="messages">
-                    {% for message in messages %}
-                      <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
-
- <!-- Provide a button to click to submit the form. ->
-                <input type="submit" name="submit" value="Register" />
-            </form>
-        {% endif %}
-    {% endif %}
--->
-
 
