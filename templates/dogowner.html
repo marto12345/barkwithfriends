@@ -8,6 +8,13 @@ Register As Dog Owner
 {% block body_block %}
 <div class="container blarr">
   <div class="card card-login mx-auto mt-5">
+      {% if messages %}
+                  <ul class="messages">
+                    {% for message in messages %}
+                      <li class="{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
       {% if user.is_authenticated %}
         <h2>You have already registered!</h2>
       {% else %}
@@ -27,13 +34,7 @@ Register As Dog Owner
                 {{ user_form.as_p }}
                 {{ profile_form.as_p }}
 
-                {% if messages %}
-                  <ul class="messages">
-                    {% for message in messages %}
-                      <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
+
 
  <!-- Provide a button to click to submit the form. -->
                   <input type="submit" name="submit" value="Register" />

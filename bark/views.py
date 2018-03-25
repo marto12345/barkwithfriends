@@ -1,13 +1,12 @@
-from bark.forms import addEventForm,UserForm,addRatingForm,UserUpdateForm,ResetForm
+from bark.forms import addEventForm,UserForm,addRatingForm,UserUpdateForm,ResetForm,OwnerForm,OrganizerForm
 from django.shortcuts import render
 from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.http import HttpResponse
-from bark.forms import OwnerForm,OrganizerForm
 from django.contrib.auth import authenticate,login
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -16,116 +15,99 @@ from bark.decorators import owner_required,organizer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 from django.contrib import messages
-from datetime import datetime, timedelta, time
-from datetime import date
+from datetime import datetime, timedelta, time,date
 from django.db.models import Q
-from django.http import JsonResponse
-from datetime import datetime
 from django.contrib.auth.password_validation import MinimumLengthValidator
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import update_session_auth_hash
 
+#gets rid for all previous events and returns the first 10 upcoming
+def show_upcoming_events():
+    today = date.today()  # get today`s date
+    return Event.objects.filter(Q(date__gte=today)).order_by('date')[:10]  # display closest 10 events
 
-
+#The index view: upcoming events ordered by closest date first
 def index(request):
-
-    today =date.today()
-    event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')[:10]
-    context_dict = {'events': event_list}
-
+    event_list=show_upcoming_events()
+    context_dict = {'events': event_list} #put these in a context dict
     return render(request,'index.html', context_dict,)
 
+#about view:entirely based on template file
 def about(request):
     return render(request,'about.html')
 
+#food menu view:entirely based on template file
 def food_menu(request):
     return render(request,'food-menu.xml')
 
+#contact us view: entirely based on template file
 def contact(request):
     return render(request,'contact.html')
 
+
+#events form view : visible for owners only (i.e. neither for organizer nor for admin user)
 @login_required
 @user_passes_test(lambda u: not u.is_superuser)
 @owner_required
-
 def events(request):
-
-        #today = datetime.now().date()
-        #event_list = Event.objects.order_by('date')
-        today =date.today()
-        event_list = Event.objects.filter(Q(date__gte=today)).order_by('date')
+        event_list = show_upcoming_events()
         context_dict = {'events':event_list}
-        #for event in event_list:
-            #if event.capacity==0:
-                  #  del context_dict[event]
-        print(request)
-        some_var=request.GET.getlist('checks')
-
-        for chosen in some_var:
+        checked_ev=request.GET.getlist('checks')#get all events selected by owner
+        for chosen in checked_ev:
+            #store these in a list
             events_list=request.user.userprofile.events
+            #if user has already signed for this one display:
             if chosen in events_list:
                 messages.warning(request,'''You are not allowed to sign for the same event twice!
                 If you have another pet you wish to bring , you need to create another account!
-                
                 ''')
             else:
+                #get the event and date
                 event_date=Event.objects.get(title=chosen).date
                 event_time=Event.objects.get(title=chosen).start
-
+                #format these nicely and append to events char field of user
                 events_list+=("%s"%event_date)+":"+"---"+chosen+"---Start:"+("%s"%(event_time))+";"
+                #update user`s events field and save
                 request.user.userprofile.events=events_list
                 request.user.userprofile.save()
-                print( request.user.userprofile.events)
-
+                #for every chosen event decrease event capacity
                 for event in event_list:
                  if event.title==chosen:
                         event.capacity-=1
                         event.save()
         return render(request,'events.html',context_dict)
 
-def show_event(request,event_title):
-    context_dict = {}
-    try:
-        event = Event.objects.get(title=event_title)
-        context_dict['event'] = event
-    except Event.DoesNotExist:context_dict['event'] = None
-    return render(request, 'bark/add-event.html', context_dict)
-
+#restricted view used when user is trying to access a restricted for them page
 @login_required
 def restricted(request):
     return render(request,'restricted.html')
 
-
+#add event view: can only be accessed by organizer ( not admin and not owner)
 @login_required
 @user_passes_test(lambda u: not u.is_superuser)
 @organizer_required
 def add_event(request):
-
-
+    #use the addEventForm:
     form = addEventForm()
-
-    # A HTTP POST?
+    #get the request from user into the form:
     if request.method == 'POST':
-
         form = addEventForm(request.POST)
 
     # Have we been provided with a valid form?
-
-
-
-        if form.is_valid(): # Save the new category to the database.
+        if form.is_valid():
+            #get the organizer first and last time to display in events and home
             org = request.user.first_name +" "+ request.user.last_name
             form.organizerusername=org
 
-            #event_list = Event.objects.filter(request.POST.get('date'))
+            #get the selected date for event in right format:
             string_input_with_date=str(request.POST.get('date'))
-            past = datetime.strptime(string_input_with_date, "%m/%d/%Y")
+            taken = datetime.strptime(string_input_with_date, "%m/%d/%Y")
 
-
-            if Event.objects.filter(date=past.date()):
+           #check if it is already taken and if so display an error message
+            if Event.objects.filter(date=taken.date()):
                 messages.error(request, "This date is taken! Please choose another date and refill and recheck your event start and end times")
-
+            #if everything is ok , save the event
             else:
                 event= form.save(commit=True)
                 e = Event.objects.get(title=event.title)
@@ -133,22 +115,17 @@ def add_event(request):
                 e.event_picture=pic
                 e.organizerusername=org
                 e.save()
-
-                print(e.dessert)
-
+                #after a succesfully added event, go back to index page
                 return redirect('index')
-
         else:
             print(form.errors)
 
     return render(request,'add-event.html', {'form': form})
 
-
+#calculates the number of ratings and frequnecy of giving votes for each organizer
 def calculate_rating(username):
 
     rating_freq = {1:0, 2:0, 3:0, 4:0, 5:0}
-    #print('smqtam')
-    #print(rates[1])
     reviews_num=0
     try:
         for rating in Rating.objects.filter(organizername=username):
@@ -159,6 +136,7 @@ def calculate_rating(username):
 
     return rating_freq,reviews_num
 
+#checks whether a rating already exists
 def rating_exists(rating):
     owner=rating.ownername
     org=rating.organizername
@@ -167,6 +145,7 @@ def rating_exists(rating):
             return r
     return rating
 
+#the view ratings page can be seen by everyone except for admin user (who can actually edit these in the admin page)
 @login_required
 @user_passes_test(lambda u: not u.is_superuser)
 def view_ratings(request):
@@ -176,20 +155,15 @@ def view_ratings(request):
 
     return render(request,'view-ratings.html',context_dict)
 
+#ratings view: accessed only by owners
 @login_required
 @user_passes_test(lambda u: not u.is_superuser)
 @owner_required
 def ratings(request,organizer_str):
     owner_user=User.objects.get(username=request.user.username)
     owner = UserProfile.objects.get(user=owner_user)
-    #print("orgvjhbhbjhbjh")
-  # print(owner)
     context_dict = {'rates': {}, 'form': {},'organizer_user':organizer_str,'owner_user':owner,"reviews":0}
 
-   # print(organizer)
-    #print(type(organizer))
-    #name = request.POST.get('organizername')
-    # form = addRatingForm(request.GET)
     organizer_user = User.objects.get(username=organizer_str)
     organizer = UserProfile.objects.get(user= organizer_user)
     comments=[]
@@ -197,43 +171,12 @@ def ratings(request,organizer_str):
         comments.append(r.comment)
     context_dict['comments']=comments;
     context_dict['avg']=organizer.avgrating
-  # print("organizer")
-    #print(organizer)
 
-    #print(type(name))
-    # form.organizername=name
-    # context_dict['form'] = form
     rates,reviews = calculate_rating(organizer)
     context_dict["reviews"]=reviews
     context_dict['rates'] = rates
-  #for k,v in rates.items():
-       #print(k, v)
     context_dict['organizer_user']=organizer
-    '''
-    if request.method == 'POST':
-        # print('ohhhh')
-        #print(request.POST)
-        form = addRatingForm(request.POST)
-        context_dict['form'] = form
-        if form.is_valid():
-            rating = form.save(commit=False)
-            rating.ownername = owner
-            rating.organizername=organizer
-            rating = rating_exists(rating)
-            rating.starvalue=form.cleaned_data['starvalue']
-            rating.comment=form.cleaned_data['comment']
-            rating.save()
 
-            #return HttpResponse("Successfully added a rating!");
-            #return index(request)
-            return render(request, 'ratings.html', context_dict)
-
-        else:
-            print(form.errors)
-    else:
-        form = addRatingForm()
-        context_dict['form'] = form
-'''
     return render(request,'ratings.html',context_dict)
 
 def rate_ajax(request, organizer_str):
@@ -251,29 +194,17 @@ def rate_ajax(request, organizer_str):
     context_dict['avg'] = organizer.avgrating
     print('avg1')
     print(organizer.avgrating)
-    #starValue = 42;
-    #print (request.GET)
-    #rating = request.GET['star_value']
 
-    # form = addRatingForm(request.GET)
-    # print ('form %s ' % form)
-    #
-    # rating = form.save(commit=False)
-    # print ('rating %s' % rating)
-
-    # c = Rating(starvalue=request.GET['star_value'], comment=request.GET['comment'], ownername=owner, organizername=organizer)
     c = Rating()
     starvalue=request.GET['star_value']
     comment=request.GET['comment']
-    #c.starvalue = request.POST['star_value']
-    #c.comment = request.POST['comment']
+
     c.starvalue=starvalue
     c.comment=comment
     c.ownername = owner
     c.organizername = organizer
     c = rating_exists(c)
-    #c.starvalue = request.POST['star_value']
-    #c.comment = request.POST['comment']
+
     c.starvalue = starvalue
     c.comment = comment
     c.save()
@@ -303,57 +234,29 @@ def add_rating(request):
         org_list = UserProfile.objects.filter(is_organizer=True)
         context_dict["Organizers"] = org_list
 
-    # for org in org_list:
-    #   print("hop")
-    #  print(org)
-    # print(type(org))
-
-    # context_dict={}
-
-    # org_list = UserProfile.objects.filter(is_organizer=True)
-
     return render(request, 'add-rating.html', context_dict)
 
-'''
-@login_required
-@owner_required
-def add_rating(request):
-    context_dict = {"Organizers": []}
-    if request.method == 'GET':
-          org_list = UserProfile.objects.filter(is_organizer=True)
-          context_dict["Organizers"] = org_list
-    
-   # for org in org_list:
-    #   print("hop")
-     #  print(org)
-       #print(type(org))
 
-    #context_dict={}
-
-    #org_list = UserProfile.objects.filter(is_organizer=True)
-
-
-
-    return render(request,'add-rating.html',context_dict)
-'''
-
-
+#register view from which register as owner and register as organizer will be accessible form
 def register(request):
     return render(request,'register.html')
 
-
+#login view
 def user_login(request):
     if request.method == 'POST':
+        #get the username and password from form and authenticate the user
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        #print (user.userprofile.is_owner)
+        #as long as the account is still active , log the user in
         if user:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Your account is disabled.")
+
+               return HttpResponse("Your account is disabled.")
+        #otherwise details provided are invalid:
         else:
             return render(request, 'invalidlogin.html')
     else:
@@ -368,30 +271,26 @@ def user_logout(request):
     logout(request) # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('index'))
 
-
+#register as owner view
 def register_owner(request):
-        registered = False
+        registered = False #indicates whether user has already registered
         if request.method == 'POST':
-
+            #create the user form and user profile form
             user_form = UserForm(request.POST)
             profile_form = OwnerForm(request.POST)
 
-            #print (profile_form.is_valid())
-            #print ("asd" + str(dir(profile_form)))
-            #print (profile_form.profile_picture)
-
             if user_form.is_valid() and profile_form.is_valid():
-                #profile_form.is_owner = True
+                #ensure password is at least 6 char long
                 if len(request.POST.get('password'))<6:
                     messages.error(request,"Password too short.Needs to be at least 6 characters long")
                 else:
+                    #set the user`s password and save
                     user = user_form.save()
-
                     user.set_password(user.password)
                     user.save()
                     profile = profile_form.save(commit=False)
-                   # print (profile.is_owner)
                     profile.user = user
+                    #if user has chosen to upload pictures manage these:
                     if 'profile_picture' in request.FILES:
                         profile.profile_picture = request.FILES['profile_picture']
                     if 'dog_picture' in request.FILES:
@@ -439,8 +338,7 @@ def register_organizer(request):
                   {'user_form': user_form, 'profile_form': profile_form,
                    'registered': registered})
 
-#def foo(is_organiser)
-#    return Owener if is_organiser else Oth
+
 
 def reset_password(request):
     reset_pass={}
@@ -449,9 +347,8 @@ def reset_password(request):
         user=User.objects.get(username=username)
         print(user)
         reset_pass=ResetForm(request.POST)
+
         if reset_pass.is_valid():
-
-
             if(UserProfile.objects.get(user=user).secret_question==reset_pass.cleaned_data["secret_question"]):
                 print("yes")
                 password = reset_pass.cleaned_data['password']
@@ -460,8 +357,11 @@ def reset_password(request):
                 print(user)
                 user.save()
                 print(user.password)
-            return redirect('login')
-
+                return redirect('login')
+            else:
+                messages.error(request,"You have not answeted a valid answer for the secret question!")
+    else:
+         messages.error(request,"Something went wrong! Try again,please.")
     return render(request, 'reset-password.html',{'reset_pass':reset_pass })
 
 def invalid_login(request):

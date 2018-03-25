@@ -100,7 +100,6 @@ class OrganizerForm(forms.ModelForm):
     events = forms.CharField(widget=forms.HiddenInput(), initial='', required=False)
 #
     class Meta:
-        # is_organizer = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
         model = UserProfile
         exclude=('dog_name','dog_picture','user','is_owner','avgrating','events',)
 
@@ -123,24 +122,8 @@ class ResetForm(forms.ModelForm):
             raise forms.ValidationError(
                 "password and confirm_password does not match")
 class addRatingForm(forms.ModelForm):
-    # #frequency=forms.Field(widget=forms.HiddenInput(),initial=True)
-    # #CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
-    # starvalue = forms.IntegerField(widget=forms.HiddenInput())
-    # comment = forms.CharField()
-    # #organizername=forms.CharField().disabled
-    #
-    # # organizername = forms.CharField(widget=forms.HiddenInput())
-    # ownername=forms.CharField(widget=forms.HiddenInput())
-
-    # organizername = forms.ModelMultipleChoiceField(queryset=UserProfile.objects.filter(is_organizer=True))
-    # ownername = forms.ModelMultipleChoiceField(queryset=UserProfile.objects.filter(is_owner=True))
-    # def __init__(self, *args, **kwargs):
-    #     super(addRatingForm, self).__init__(*args, **kwargs)
-    #     self.initial['ownername'] = ownername
-    #comment=forms.CharField(initial='')
     class Meta:
         model = Rating
-        # fields = { 'organizername','starvalue','comment'}
         fields = {'starvalue','comment'}
 
 
