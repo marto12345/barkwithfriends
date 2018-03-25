@@ -7,9 +7,9 @@ Login
 
 {% block body_block %}
 <body class="bg-dark">
-  <div class="container bla">
+  <div class="container blar">
     <div class="card card-login mx-auto mt-5">
-      <div class="card-header" align="center"><h4>Login to BarkWithFriends</h4></div>
+      <div class="card-header" align="center"><h1>Login to BarkWithFriends</h1></div>
       {% if user.is_authenticated %}
           <h2>You have already logged in!</h2>
       {% else %}
@@ -27,8 +27,7 @@ Login
           <input type="submit" value="Login" />
         </form>
         <div class="text-center">
-          <a class="d-block small mt-3" href = "{% url 'reset_password' %}">Forgot Password?</a>
-        </div>
+          <a class="d-block small mt-3" href = "{% url 'reset_password' %}">Forgot Password?</a></div>
       </div>
      {% endif %}
     </div>

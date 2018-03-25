@@ -1,0 +1,12 @@
+input[type=checkbox]{
+  visibility: hidden;
+}
+
+label[for="profile_picture-clear_id"]{
+  visibility: hidden;
+}
+
+label[for="dog_picture-clear_id"]{
+  visibility: hidden;
+}
+
