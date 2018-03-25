@@ -31,8 +31,8 @@ View Ratings
 VIKI DOBAVQAI TUK!!
 ------------------------
 <div id="comments">
-  {% if comments %}
-    {% for comment in comments %}
+  {% if organizer.org_comments %}
+    {% for comment in organizer.org_comments %}
       {{comment}}
     {% endfor %}
   {% endif %}
