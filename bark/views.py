@@ -317,24 +317,24 @@ def register_owner(request):
                       {'user_form': user_form, 'profile_form': profile_form,
                        'registered': registered})
 
-
+#register as organizer
 def register_organizer(request):
-    registered = False
+    registered = False #indicates whether user is already registered
     if request.method == 'POST':
-
+        #get the forms
         user_form = UserForm(request.POST)
         profile_form = OrganizerForm(request.POST)
-
+        #check if valid
         if user_form.is_valid() and profile_form.is_valid():
+            #ensure password is at least 6 char long
             if len(request.POST.get('password')) < 6:
                 messages.error(request, "Password too short.Needs to be at least 6 characters long")
-            # profile_form.is_owner = True
             else:
+                # set the user`s password and save
                 user = user_form.save()
                 user.set_password(user.password)
                 user.save()
                 profile = profile_form.save(commit=False)
-                # print (profile.is_owner)
                 profile.user = user
                 if 'profile_picture' in request.FILES:
                     profile.profile_picture = request.FILES['profile_picture']
@@ -350,40 +350,43 @@ def register_organizer(request):
                    'registered': registered})
 
 
-
+#reset password view
 def reset_password(request):
-    reset_pass={}
+    reset_pass={}#initialise dict
     if request.method=='POST':
-        username = request.POST.get('username')
-        user=User.objects.get(username=username)
-        print(user)
-        reset_pass=ResetForm(request.POST)
+        username = request.POST.get('username') #get the username from the request
+        if(User.objects.filter(username=username).exists()): #first,make sure the user exists
+            user=User.objects.get(username=username)
+            reset_pass=ResetForm(request.POST)
 
-        if reset_pass.is_valid():
-            if(UserProfile.objects.get(user=user).secret_question==reset_pass.cleaned_data["secret_question"]):
-                print("yes")
-                password = reset_pass.cleaned_data['password']
-                print(password)
-                user.password=make_password(password)
-                print(user)
-                user.save()
-                print(user.password)
-                return redirect('login')
+            if reset_pass.is_valid():
+                if(UserProfile.objects.get(user=user)):#check if the user has a userpofile
+                    if(UserProfile.objects.get(user=user).secret_question==reset_pass.cleaned_data["secret_question"]):
+                        #make the entered password as the new one
+                        password = reset_pass.cleaned_data['password']
+                        user.password=make_password(password)
+                        user.save()
+                        return redirect('login')
+                    else:
+                        messages.error(request,"You have not answeted a valid answer for the secret question!")
             else:
-                messages.error(request,"You have not answeted a valid answer for the secret question!")
+                 messages.error(request,"Something went wrong! Try again,please.")
+        else:
+            messages.error(request,"Unexisting user!")
     else:
-         messages.error(request,"Something went wrong! Try again,please.")
+        reset_pass= ResetForm()
     return render(request, 'reset-password.html',{'reset_pass':reset_pass })
 
+#invalid login view
 def invalid_login(request):
     return render('invalidlogin.html')
 
-
+#update profile view : user needs to be logged in
 @login_required
-
 def update_profile(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
+        #check whether user is an owner
         if request.user.userprofile.is_owner:
             profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
@@ -391,16 +394,14 @@ def update_profile(request):
                 profile = profile_form.save(commit=False)
                 picture = profile.profile_picture
                 profile.profile_picture = request.FILES.get('profile_picture', picture)
-
                 dog_picture = profile.dog_picture
                 profile.dog_picture = request.FILES.get('dog_picture', dog_picture)
                 profile.save()
                 profile_form.save()
-                print('Your profile was successfully updated!')
             return redirect('update-profile')
+        #and if the user is an organizer:
         elif request.user.userprofile.is_organizer:
             profile_form = OrganizerForm(request.POST, request.FILES, instance=request.user.userprofile)
-            #profile = profile_form.save(commit=False)
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
                 profile = profile_form.save(commit=False)
@@ -408,7 +409,7 @@ def update_profile(request):
                 profile.profile_picture = request.FILES.get('profile_picture',picture)
                 profile.save()
                 profile_form.save()
-                print('Your profile was successfully updated!')
+
             return redirect('update-profile')
 
         else:

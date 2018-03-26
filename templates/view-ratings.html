@@ -28,11 +28,11 @@ View Ratings
         <div class="card-body small bg-faded">
 <h6><span class="bigger"><u>Comments:</u></span></h6>
 <div id="comments">
-  {% if organizer.org_comments %}
-    {% for comment in organizer.org_comments %}
-      {{comment}}
-    {% endfor %}
-  {% endif %}
+      {% if organizer.org_comments%}
+            {% for comment in organizer.org_comments %}
+                {{comment}}
+            {% endfor %}
+      {% endif %}
 
 </div>
         </div>
