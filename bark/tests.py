@@ -11,7 +11,7 @@ from bark.models import UserProfile, FoodMenu, Event
 from django.conf import settings
 client = Client()
 def create_user():
-    # Create a user
+    # Create a custom test user
     user = User.objects.get_or_create(username="testuser", password="test1234",
                                       first_name="Test", last_name="User", email="testuser@testuser.com")[0]
     user.set_password(user.password)
@@ -32,19 +32,25 @@ def add_userprofile(user,description,profile_picture,dog_picture,dog_name,is_org
 
     return user, user_profile
 
+def create_admin():
+    User.objects.get_or_create(username="trialadmin", is_staff=True)
+    user = User.objects.get(username="trialadmin")
+    user.save()
+
 
 # Create your tests here.
 class LoginTests(TestCase):
     def test_login_redirects_to_index(self):
         create_user()
         try:
-            response = self.client.post(reverse('login)'),{'username': 'testuser', 'password': 'test1234'})
+            #attempt to login
+            response = self.client.post(reverse('login'),{'username': 'testuser', 'password': 'test1234'})
         except:
             try:
                 response = self.client.post(reverse('bark:login'), {'username': 'testuser', 'password': 'test1234'})
             except:
                 return False
-        self.assertedRedirects(response,reverse('index'))
+        self.assertRedirects(response,reverse('index'))
 
     def test_index_loads(self):
         response = client.get(reverse('index'))
@@ -55,38 +61,40 @@ class LoginTests(TestCase):
         self.assertRedirects(response,reverse('login')+"?next=/events",status_code=302,target_status_code=200)
 
     def test_owner_sees_events(self):
+        #create owner
         owner = add_user("testowner","marto12345@abv.bg","parola","Martin","Dimitrov")
         owner.save()
         Owner = add_userprofile(owner,"123","default/person.jpg","default/dog.jpg","Fifo",False,True)
+        #login
         client.login(username="testowner",password="parola")
         response = client.get(reverse('events'))
         self.assertEqual(response.status_code,200)
 
     def test_organizer_sees_add_event(self):
+        #create organizer
         organizer = add_user("testorganizer","marto12345@abv.bg","parola","Martin","Dimitrov")
         organizer.save()
         Organizer = add_userprofile(organizer,"123","default/person.jpg","default/dog.jpg","Fifo",True,False)
+        #login
         client.login(username="testorganizer",password="parola")
         response = client.get(reverse('add-event'))
         self.assertEqual(response.status_code,200)
 
     def test_add_user(self):
+        #check if a user's username is saved properly
         user = add_user("testuser","marto12345@abv.bg","parola","Martin","Dimitrov")
         user.save()
         TrialUser = add_userprofile(user,"123","default/person.jpg","default/dog.jpg","Pink",True,False)
         self.assertEqual(user.username=='testuser',True)
 
     def test_admin_tries_to_see_add_event(self):
-        User.objects.get_or_create(username="trialadmin", is_staff=True)
-        user = User.objects.get(username="trialadmin")
-        user.save()
+        #createadmin account
+        create_admin()
         response = self.client.get(reverse('add-event'))
         self.assertRedirects(response,reverse('login')+"?next=/add-event",status_code=302,target_status_code=200)
 
     def test_admin_tries_to_see_events(self):
-        User.objects.get_or_create(username="trialadmin", is_staff=True)
-        user = User.objects.get(username="trialadmin")
-        user.save()
+        create_admin()
         response = self.client.get(reverse('events'))
         self.assertRedirects(response,reverse('login')+"?next=/events",status_code=302,target_status_code=200)
         
@@ -101,10 +109,12 @@ class TemplateTests(TestCase):
         self.assertIn(reverse('index'), response.content.decode('ascii'))
 
     def test_index_displays_no_events_message(self):
+        #check if a proper message is displayed
         response = self.client.get(reverse('index'))
         self.assertIn("There are no events present.".lower(), response.content.decode('ascii').lower())
 
     def test_contact_page_using_template(self):
+        #check if base template is recognised
         response = self.client.get(reverse('contact'))
         self.assertTemplateUsed(response,'base.html')
 
@@ -112,7 +122,6 @@ class ModelTests(TestCase):
     def test_create_a_new_event(self):
         event = Event(title="Joanne",capacity=30,date="2018-03-29",start="17:30:00",end="20:00:00",organizerusername="Lady Gaga")
         event.save()
-
         # Check event is in database
         events_in_database = Event.objects.all()
         self.assertEquals(len(events_in_database), 1)
@@ -120,6 +129,7 @@ class ModelTests(TestCase):
         self.assertEquals(only_event_in_database, event)
 
     def test_create_an_event_with_overlarge_capacity(self):
+        #check if an event with huge capacity is not added
         event = Event(title="Pon De Replay",capacity=27,date="2018-03-29",start="17:30:00",end="20:00:00",organizerusername="Kylie")
         with self.assertRaises(ValidationError):
             if event.full_clean():
@@ -127,6 +137,7 @@ class ModelTests(TestCase):
         self.assertEqual(Event.objects.filter(title="Pon De Replay").count(),0)
     
     def test_create_an_event_with_negative_capacity(self):
+        #check if an event with negative capacity is not added
         event = Event(title="Pon De Replay",capacity=-20,date="2018-03-29",start="17:30:00",end="20:00:00",organizerusername="Kylie")
         with self.assertRaises(ValidationError):
             if event.full_clean():
