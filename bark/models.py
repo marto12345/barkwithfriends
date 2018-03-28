@@ -87,7 +87,6 @@ class Rating(models.Model):
         avg=round(sum/num,2)
 
         self.organizername.avgrating = avg
-        print(self.organizername.avgrating)
         self.organizername.save()
 
 

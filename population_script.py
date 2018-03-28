@@ -65,16 +65,14 @@ def populate():
               "comment":"Had a wonderful time",
               "ownername":Owner,
               "organizername":Organizer
-             # "ownername_id":Owner.id,
-              #"organizename_id":Organizer.id
+
 
     },
              {"starvalue":"2",
               "comment": "Found a dog hair from organizer's dog in my food. ",
               "ownername": Owner,
               "organizername": JohnSmith,
-             # "ownername_id": Owner.id,
-              #"organizename_id": JohnSmith.id
+
 
     }
 
@@ -88,7 +86,7 @@ def populate():
 
     for rating in ratings:
         c = add_rating(rating["starvalue"],rating["comment"],rating["ownername"],rating["organizername"])
-                      # rating["organizername_id"],rating["ownername_id"])
+
 
 
 
@@ -113,13 +111,11 @@ def add_event(title,theme,capacity,date,start,end,organizerusername,starter,main
 
 def add_rating(starvalue,comment,ownername,organizername):
     c=Rating.objects.get_or_create(starvalue=starvalue,comment=comment,ownername=ownername,organizername=organizername)[0]
-                                   #organizername_id=organizernameid,ownername_id=ownernameid)[0]
+
     c.starvalue=starvalue
     c.comment=comment
     c.ownername=ownername
     c.organizername=organizername
-    #c.organizername_id =organizernameid
-    #c.ownername_id=ownernameid
     c.save()
     return c
 
