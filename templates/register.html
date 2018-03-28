@@ -1,26 +1,26 @@
 {% extends 'base.html' %}
 
 {% block title_block %}
-Register
+    Register
 {% endblock %}
 
 {% block body_block %}
-</br>
-<div align="center">
-    {% if user.is_authenticated %}
-        <h2>You have already registered!</h2>
-    {% else %}
-        <h1>Register for free here!</h1>
-        <h2>Choose one of the options below:</h2>
-</div>
-<hr class="mt-2">
-<div class="card-body">
-    <form action="/dogowner">
-        <input type="submit" value="Dog owner" />
-    </form>
-    <form action="/organizer">
-        <input type="submit" value="Event organizer" />
-    </form>
-</div>
-    {% endif %}
+    </br>
+    <div align="center">
+        {% if user.is_authenticated %}
+            <h2>You have already registered!</h2>
+        {% else %}
+            <h1>Register for free here!</h1>
+            <h2>Choose one of the options below:</h2>
+            </div>
+            <hr class="mt-2">
+            <div class="card-body">
+                <form action="/dogowner">
+                    <input type="submit" value="Dog owner" />
+                </form>
+                <form action="/organizer">
+                    <input type="submit" value="Event organizer" />
+                </form>
+            </div>
+        {% endif %}
 {% endblock %}

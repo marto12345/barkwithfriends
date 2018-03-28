@@ -3,45 +3,45 @@
 <html lang="en">
 
 {% block title_block %}
-Register As An Event Organizer
+    Register As An Event Organizer
 {% endblock %}
 
 {% block body_block %}
-<div class="container blarr">
-  <div class="card card-login mx-auto mt-5">
-      {% if user.is_authenticated %}
-        <h2>You have already registered!</h2>
-      {% else %}
-        <div class="card-header" align="center"><h1>Register for BarkWithFriends</h1></div>
-        {% if registered %}
-          <div align="center">
-            <strong>Thank you for registering!</strong></br>
-            <a href = "{% url 'login' %}">Log in now</a></br>
-            <a href="{% url 'index' %}">Return to the homepage.</a></br>
-          </div>
+    <div class="container blarr">
+    <div class="card card-login mx-auto mt-5">
+        {% if user.is_authenticated %}
+            <h2>You have already registered!</h2>
         {% else %}
-          <div class="card-body">
-            <form id="orgform" method="post" action="{% url 'register_organizer' %}" enctype="multipart/form-data">
-              {% csrf_token %}
+            <div class="card-header" align="center"><h1>Register for BarkWithFriends</h1></div>
+            {% if registered %}
+                <div align="center">
+                    <strong>Thank you for registering!</strong></br>
+                    <a href = "{% url 'login' %}">Log in now</a></br>
+                    <a href="{% url 'index' %}">Return to the homepage.</a></br>
+                </div>
+            {% else %}
+                <div class="card-body">
+                <form id="orgform" method="post" action="{% url 'register_organizer' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-<!-- Display each form -->
-                {{ user_form.as_p }}
-                {{ profile_form.as_p }}
+                    <!-- Display each form -->
+                    {{ user_form.as_p }}
+                    {{ profile_form.as_p }}
 
-                {% if messages %}
-                  <ul class="messages">
-                    {% for message in messages %}
-                      <li class="{{ message.tags }}">{{ message }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
 
- <!-- Provide a button to click to submit the form. -->
-                  <input type="submit" name="submit" value="Register" />
-              </form>
+                    <!-- Provide a button to click to submit the form. -->
+                    <input type="submit" name="submit" value="Register" />
+                </form>
+            {% endif %}
         {% endif %}
-      {% endif %}
-  </div>
-</div>
+        </div>
+    </div>
 {% endblock %}
 

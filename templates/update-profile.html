@@ -7,61 +7,63 @@
 {% endblock %}
 
 {% block title_block %}
-My Account
+    My Account
 {% endblock %}
 
 {% block body_block %}
-<div class="container blarr">
-  <div class="card card-login mx-auto mt-5">
-    <div class="card-header" align="center"><h1>My Account</h1></div>
+    <div class="container blarr">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header" align="center"><h1>My Account</h1></div>
 
-    {% if user.userprofile.profile_picture  %}
-        <div align="center"><h1>Username: {{user.username}}</h1><img src="{{ user.userprofile.profile_picture.url }}" width="300"  alt="{{user.username}}"/></div>
-    {% endif %}
+            {% if user.userprofile.profile_picture  %}
+                <div align="center"><h1>Username: {{user.username}}</h1><img src="{{ user.userprofile.profile_picture.url }}" width="300"  alt="{{user.username}}"/></div>
+            {% endif %}
 
-    {% if user.userprofile.is_owner %}
-        {% if user.userprofile.dog_picture  %}
-           <div align="center"><h2>This is your lovely doggo: {{user.userprofile.dog_name}}</h2><img src="{{user.userprofile.dog_picture.url }}" width="300"/></div>
-        {% endif %}
-    {% endif %}
-  <div class="card-body">
-    <form method="post" enctype="multipart/form-data">
-        <br>
-        {% csrf_token %}
-        {{ user_form.username.as_hidden }}
-        <label for="First_Name">First Name:</label> {{ user_form.first_name }}
-        <br>
-        <label for="Last_Name">Last Name:</label> {{ user_form.last_name }}
-        <br>
-        <label for="Email">Email:</label> {{ user_form.email }}
+            {% if user.userprofile.is_owner %}
+                {% if user.userprofile.dog_picture  %}
+                    <div align="center"><h2>This is your lovely doggo: {{user.userprofile.dog_name}}</h2><img src="{{user.userprofile.dog_picture.url }}" width="300"/></div>
+                {% endif %}
+            {% endif %}
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <br>
+                    {% csrf_token %}
+                    {{ user_form.username.as_hidden }}
+                    <label for="First_Name">First Name:</label> {{ user_form.first_name }}
+                    <br>
+                    <label for="Last_Name">Last Name:</label> {{ user_form.last_name }}
+                    <br>
+                    <label for="Email">Email:</label> {{ user_form.email }}
 
-        {{ user_form.password.as_hidden }}
+                    {{ user_form.password.as_hidden }}
 
-        {{ profile_form.as_p }}
+                    {{ profile_form.as_p }}
 
-        {% if user.userprofile.is_owner %}
-            <script type="text/javascript" src="{% static 'userevents.js' %}"></script>
-            <script type="text/javascript">
-                function go()
-                {
-                    getevents();
-                }
-            </script>
-            <br>
-            <input type="button" id="b" value="Show me my events" onclick="go()" >
+                    {% if user.userprofile.is_owner %}
+                        <!--Show owner`s events-->
+                        <script type="text/javascript" src="{% static 'userevents.js' %}"></script>
+                        <script type="text/javascript">
 
-            <div id="div1">
-            <p id="p1">These are your events.</p>
-        {% endif %}
-        <input type="submit" value="Save changes">
-    <script type="text/javascript">
+                            function go()
+                            {
+                                getevents();
+                            }
+                        </script>
+                        <br>
+                        <input type="button" id="b" value="Show me my events" onclick="go()" >
 
-            $('label[for=id_secret_question],input#id_secret_question').hide();
-        </script>
+                        <div id="div1">
+                        <p id="p1">These are your events.</p>
+                    {% endif %}
+                    <input type="submit" value="Save changes">
+                    <script type="text/javascript">
+
+                        $('label[for=id_secret_question],input#id_secret_question').hide();
+                    </script>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
-  </div>
- </div>
-</div>
+    </div>
 {% endblock %}
 

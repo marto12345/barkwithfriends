@@ -2,92 +2,93 @@
 {% load staticfiles %}
 
 {% block head_block %}
-   <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'eventstyle.css' %}">
 
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <!--<title>jQuery UI Datepicker - Restrict date range</title>-->
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--jQuery UI Datepicker - Restrict date range to only future dates-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   <script>
-  $( function() {
-    $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2M +0D" });
-  } );
-  </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#datepicker" ).datepicker({ minDate: 0, maxDate: "+2M +0D" });
+        } );
+    </script>
 {% endblock %}
 
 {% block title_block %}
-Add Event
+    Add Event
 {% endblock %}
 
 {% block body_block %}
-<div class="container blarr">
-  <div class="card card-register mx-auto mt-5">
-      <div class="card-header" align="center"><h1>Add an Event</h1></div>
+    <div class="container blarr">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header" align="center"><h1>Add an Event</h1></div>
             <div>
                 {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                         {% endfor %}
                     </ul>
-                    {% endif %}
+                {% endif %}
             </div>
             <div class="card-body">
                 <form id="category_form" method="post" action={% url 'add-event' %} enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <div class="form-group">
-                   <div class="form-row">
-                    <div class="col-md-6">
-                    <div class="container">
-                    <label for="etitle">Event title:</label>
-                    {{ form.title }}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="container">
+                                    <label for="etitle">Event title:</label>
+                                    {{ form.title }}
 
-                    <br>
+                                    <br>
 
-                    <label for="theme">Theme:</label>
-                    {{ form.theme }}
+                                    <label for="theme">Theme:</label>
+                                    {{ form.theme }}
 
-                    <label for="Date">Event Date:</label>
-                    {{ form.date }}
-                     <label for="Capacity">Capacity (Note max:25 people,25 dogs):</label>
-                    {{ form.capacity}}
-                    <br>
-                    <label for="Start time">Start time:</label>
-                    {{ form.start }}
-                    <label for="End time">End time:</label>
-                    {{ form.end }}
-					<p><font color="#ff9900">Required: Please ensure that you click this button.</font></p><input type="button" id="b" value="Check if times are valid" onclick="go()">
-                    <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script>
-                    <script type="text/javascript">
-                        function go()
-                        {
-                           alertfunction();
-                        }
-                    </script>
-                     {{ form.organizerusername.as_hidden }}
-                    </div>
-                    </br>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="container">
-                    <h4>Choose menu for your event</h4></div>
-                    Starter:{{ form.starter }}
-                    Main course:{{ form.main }}
-                    Dessert:{{ form.dessert }}
-                    Drink:{{ form.drink}}
-                    Dog food:{{ form.dog_food }}
-                    Event picture:{{ form.event_picture }}
-                    <input type="submit" value="Submit" id="subm"  disabled="True">
-                    </div>
-                    </div>
+                                    <label for="Date">Event Date:</label>
+                                    {{ form.date }}
+                                    <label for="Capacity">Capacity (Note max:25 people,25 dogs):</label>
+                                    {{ form.capacity}}
+                                    <br>
+                                    <label for="Start time">Start time:</label>
+                                    {{ form.start }}
+                                    <label for="End time">End time:</label>
+                                    {{ form.end }}
+                                    <p><font color="#ff9900">Required: Please ensure that you click this button.</font></p><input type="button" id="b" value="Check if times are valid" onclick="go()">
+                                    <script type="text/javascript" src="{% static 'startendtime1.js' %}"></script>
+                                    <!--execute startendtime1.js to put restrictions on start and end time-->
+                                    <script type="text/javascript">
+                                        function go()
+                                        {
+                                            alertfunction();
+                                        }
+                                    </script>
+                                    {{ form.organizerusername.as_hidden }}
+                                </div>
+                                </br>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="container">
+                                    <h4>Choose menu for your event</h4></div>
+                                Starter:{{ form.starter }}
+                                Main course:{{ form.main }}
+                                Dessert:{{ form.dessert }}
+                                Drink:{{ form.drink}}
+                                Dog food:{{ form.dog_food }}
+                                Event picture:{{ form.event_picture }}
+                                <input type="submit" value="Submit" id="subm"  disabled="True">
+                            </div>
+                        </div>
                 </form>
-               </div>
-              </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 {% endblock %}
 

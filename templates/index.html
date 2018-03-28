@@ -1,47 +1,46 @@
 {% extends 'base.html' %}
 
 {% block title_block %}
-Home
+    Home
 {% endblock %}
 
 {% block body_block %}
     <div class="row">
         <div class="col-lg-12">
             <div class="mb-0 mt-4" align="center"><h1>Welcome to BarkWithFriends{% if user.is_authenticated %}, <span class="bigger">{{ user.username }}</span>{% endif %}!!</h1>
-	    <p>Here you can participate in a themed party along with your puppy.</p></div>
+                <p>Here you can participate in a themed party along with your puppy.</p></div>
             <hr class="mt-2">
+        </div>
     </div>
-</div>
 
-  <!-- <div class="container-fluid"> -->
     <div class="row">
-      <div class="card-columns">
-        <div class="card mb-3">
-            <img class="card-img-top img-fluid w-100" src="https://media.timeout.com/images/103935991/630/472/image.jpg">
-            <div class="card-footer small text-muted">Picture:<a href="https://www.timeout.com/hong-kong/restaurants/on-dog-dog-cafe"/>Timeout</a></div>
-        </div>
-        <div class="card mb-3">
-            <img class="card-img-top img-fluid w-100" src="https://heylookitsbrooke.files.wordpress.com/2012/06/img_2820.jpg">
-            <div class="card-footer small text-muted">Picture: <a href="https://heylookitsbrooke.wordpress.com/2012/06/13/dog-cafe"/>heylookitsbrooke</a></div>
-        </div>
-        <div class="card mb-3">
-            <img class="card-img-top img-fluid w-100" src="https://a1.cdn.japantravel.com/photo/27739-142904/1000/miyagi-withdog-dog-cafe-in-sendai-142904.jpg">
-            <div class="card-footer small text-muted">Picture: <a href="https://en.japantravel.com/miyagi/withdog-dog-cafe-in-sendai/27739"/>JapanTravel</a></div>
-        </div>
+        <div class="card-columns">
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="https://media.timeout.com/images/103935991/630/472/image.jpg">
+                <div class="card-footer small text-muted">Picture:<a href="https://www.timeout.com/hong-kong/restaurants/on-dog-dog-cafe"/>Timeout</a></div>
+            </div>
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="https://heylookitsbrooke.files.wordpress.com/2012/06/img_2820.jpg">
+                <div class="card-footer small text-muted">Picture: <a href="https://heylookitsbrooke.wordpress.com/2012/06/13/dog-cafe"/>heylookitsbrooke</a></div>
+            </div>
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="https://a1.cdn.japantravel.com/photo/27739-142904/1000/miyagi-withdog-dog-cafe-in-sendai-142904.jpg">
+                <div class="card-footer small text-muted">Picture: <a href="https://en.japantravel.com/miyagi/withdog-dog-cafe-in-sendai/27739"/>JapanTravel</a></div>
+            </div>
 
-       <div class="card mb-3">
-            <img class="card-img-top img-fluid w-100" src="https://www.10mag.com/directory/wp-content/sabai/File/files/l_f60de2a92457d1571f346cead188ff5d.jpg">
-            <div class="card-footer small text-muted">Picture:<a href="https://www.10mag.com/directory/restaurants/listing/bau-house-dog-cafe-mapo-gu-seoul"/>10magdirectory</a></div>
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="https://www.10mag.com/directory/wp-content/sabai/File/files/l_f60de2a92457d1571f346cead188ff5d.jpg">
+                <div class="card-footer small text-muted">Picture:<a href="https://www.10mag.com/directory/restaurants/listing/bau-house-dog-cafe-mapo-gu-seoul"/>10magdirectory</a></div>
+            </div>
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="https://imagesvc.timeincapp.com/v3/mm/image?url=http%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2F1492534935%2Fpug-cafe-guildford-dog-PUG0417.jpg%3Fitok%3D5AFnXA3T&w=700&q=85">
+                <div class="card-footer small text-muted">Picture:<a href="http://www.travelandleisure.com/food-drink/restaurants/pug-cafe-popup-surrey-england"/>TRAVEL+LEISURE</a></div>
+            </div>
+            <div class="card mb-3">
+                <img class="card-img-top img-fluid w-100" src="http://78.media.tumblr.com/6222109fc4247e8530567f86b3362920/tumblr_nim47gV0ld1sye5y2o1_1280.jpg">
+                <div class="card-footer small text-muted">Picture:<a href="http://blog.bettyhuang.net/post/108888032841/bauhaus-dog-cafe-hongdae-seoul-korea"/>Blog of Betty</a></div>
+            </div>
         </div>
-        <div class="card mb-3">
-            <img class="card-img-top img-fluid w-100" src="https://imagesvc.timeincapp.com/v3/mm/image?url=http%3A%2F%2Fcdn-image.travelandleisure.com%2Fsites%2Fdefault%2Ffiles%2Fstyles%2F1600x1000%2Fpublic%2F1492534935%2Fpug-cafe-guildford-dog-PUG0417.jpg%3Fitok%3D5AFnXA3T&w=700&q=85">
-            <div class="card-footer small text-muted">Picture:<a href="http://www.travelandleisure.com/food-drink/restaurants/pug-cafe-popup-surrey-england"/>TRAVEL+LEISURE</a></div>
-        </div>
-        <div class="card mb-3">
-            <img class="card-img-top img-fluid w-100" src="http://78.media.tumblr.com/6222109fc4247e8530567f86b3362920/tumblr_nim47gV0ld1sye5y2o1_1280.jpg">
-            <div class="card-footer small text-muted">Picture:<a href="http://blog.bettyhuang.net/post/108888032841/bauhaus-dog-cafe-hongdae-seoul-korea"/>Blog of Betty</a></div>
-        </div>
-      </div>
     </div>
     <!--</div>-->
     <div class="row">
@@ -49,30 +48,30 @@ Home
             <div class="mb-0 mt-4" align="center"><h2>Upcoming Events</h2></div>
             <hr class="mt-2">
         </div>
-      {% if events %}
-        <div class="card-columns">
-        {% for event in events %}
-            <div class="card mb-3" align="center">
-                {% if event.event_picture %}
-                    <img class="card-img-top img-fluid w-100" src="{{event.event_picture.url}}" alt="">
-                {% endif %}
-              <div class="card-body">
-                <h6 class="card-title mb-1"><font color="#0c66f0"><h4><b><span class="bigger">{{ event.title }}</span></b></h4></font></h6>
-                <p class="card-text small"><font color="#0c6cf6"><h5>Theme: <i><span class="bigger">{{ event.theme }}</span></i></h5></font></p>
-                <font color="#4673ff">Places available: <i><span class="bigger">{{ event.capacity }}</span></i></font>
-              </div>
-              <hr class="my-0">
-              <div class="card-body py-2 small">
-        <h6>Date: <span class="bigger">{{ event.date }}</span></h6>
-        Start time: <span class="bigger">{{ event.start }}</span>
-        End time: <span class="bigger">{{ event.end }}</span>
-</div>
-              <div class="card-footer small text-muted">Organzied by: <span class="bigger">{{ event.organizerusername }}</span></div>
-            </div>
-        {% endfor %}
+        {% if events %}
+            <div class="card-columns">
+            {% for event in events %}
+                <div class="card mb-3" align="center">
+                    {% if event.event_picture %}
+                        <img class="card-img-top img-fluid w-100" src="{{event.event_picture.url}}" alt="">
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title mb-1"><font color="#0c66f0"><h4><b><span class="bigger">{{ event.title }}</span></b></h4></font></h6>
+                        <p class="card-text small"><font color="#0c6cf6"><h5>Theme: <i><span class="bigger">{{ event.theme }}</span></i></h5></font></p>
+                        <font color="#4673ff">Places available: <i><span class="bigger">{{ event.capacity }}</span></i></font>
+                    </div>
+                    <hr class="my-0">
+                    <div class="card-body py-2 small">
+                        <h6>Date: <span class="bigger">{{ event.date }}</span></h6>
+                        Start time: <span class="bigger">{{ event.start }}</span>
+                        End time: <span class="bigger">{{ event.end }}</span>
+                    </div>
+                    <div class="card-footer small text-muted">Organzied by: <span class="bigger">{{ event.organizerusername }}</span></div>
+                </div>
+            {% endfor %}
         {% else %}
-          <strong>There are no events present.</strong>
-      {% endif %}
+            <strong>There are no events present.</strong>
+        {% endif %}
         </div>
     </div>
 {% endblock %}
