@@ -156,18 +156,22 @@ def view_ratings(request):
 @user_passes_test(lambda u: not u.is_superuser)
 @owner_required
 def ratings(request,organizer_str):
+    #get the user object from the request and change it to a userprofile object
     owner_user=User.objects.get(username=request.user.username)
     owner = UserProfile.objects.get(user=owner_user)
+    #initilise context dictionary
     context_dict = {'rates': {}, 'form': {},'organizer_user':organizer_str,'owner_user':owner,"reviews":0}
 
+    #get organizer user object by using the name appended to the url
     organizer_user = User.objects.get(username=organizer_str)
     organizer = UserProfile.objects.get(user= organizer_user)
+    #create a list with the last 5 comments for the organizer
     comments=[]
     for r in Rating.objects.filter(organizername=organizer)[:5]:
         comments.append(r.comment)
     context_dict['comments']=comments;
     context_dict['avg']=organizer.avgrating
-
+    #calculate rating frequencies and number of reviews
     rates,reviews = calculate_rating(organizer)
     context_dict["reviews"]=reviews
     context_dict['rates'] = rates
@@ -175,6 +179,10 @@ def ratings(request,organizer_str):
 
     return render(request,'ratings.html',context_dict)
 
+#use ajax to update ratings page
+@login_required
+@user_passes_test(lambda u: not u.is_superuser)
+@owner_required
 def rate_ajax(request, organizer_str):
 
     owner_user=User.objects.get(username=request.user.username)
@@ -186,33 +194,28 @@ def rate_ajax(request, organizer_str):
     organizer = UserProfile.objects.get(user=organizer_user)
 
     context_dict['avg'] = organizer.avgrating
-    print('avg1')
-    print(organizer.avgrating)
 
+    #create a new rating object and set the starvalue and comment from the request
     c = Rating()
     starvalue=request.GET['star_value']
     comment=request.GET['comment']
-
     c.starvalue=starvalue
     c.comment=comment
     c.ownername = owner
     c.organizername = organizer
-    c = rating_exists(c)
-
+    c = rating_exists(c) #check if object exists
+    #set starvalue and comment in case we got an old object
     c.starvalue = starvalue
     c.comment = comment
     c.save()
     context_dict['avg'] = c.organizername.avgrating
-    print ('obj %s' % c)
-    print('avg2')
-    print(organizer.avgrating)
-    comments = []
+    comments = [] #get the last 5 comments
     for r in Rating.objects.filter(organizername=organizer)[:5]:
         comments.append(r.comment)
     context_dict['comments'] = comments;
 
     context_dict['star_value'] = c.starvalue;
-    rates, reviews = calculate_rating(organizer)
+    rates, reviews = calculate_rating(organizer)#recalculate ratings
     context_dict["reviews"] = reviews
     context_dict['rates'] = rates
 

@@ -13,7 +13,6 @@ function sendAjax(uri) {
             alert("Please fill out the comment field.")
             return
         }
-        //console.log(comment);
         var star_value =  document.getElementById("starvalue").innerHTML;
         if(star_value==''){
             alert("Please give a star rating.")
@@ -21,14 +20,12 @@ function sendAjax(uri) {
         }
 
         $.get(uri+'/rate', {'comment': comment, 'star_value': star_value}, function (data) {
-        //console.log("data: " + data);
-        //console.log(data);
         var avg = data['avg'];
         var reviews=data['reviews'];
-        //var starsCount= {1:0, 2:0, 3:0, 4:0, 5:0};
+
         for (i = 1; i < 6; i++) {
             document.getElementById(i).innerHTML = data['rates'][i];
-            // avg = 5;
+
         }
         document.getElementById('avg').innerHTML = avg;
         document.getElementById('reviews').innerHTML = reviews;
@@ -44,11 +41,11 @@ function sendAjax(uri) {
               comment_div.appendChild(node);
             }
 
-        //console.log(document.getElementById('avg'));
+
         load_bars();
         document.getElementById('avg').innerHTML = avg;
 
-        // document.getElementById("count").innerHTML+=1;
+
 
 
    });

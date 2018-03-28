@@ -12,11 +12,7 @@ function load_bars() {
     count = document.getElementById("reviews").innerHTML;
     console.log(count);
 
-//starsCount[mul]+=1;
-//count++;
-//sum+=mul;
-// var numberR=document.getElementById(String(mul));
-// numberR.innerHTML=starsCount[mul];
+
     for (i = 1; i < 6; i++) {
         var classname = classnames[i];
         var el = document.getElementsByClassName(classname)[0];
@@ -25,15 +21,4 @@ function load_bars() {
     }
     var number = (sum / count).toFixed(2);
 }
-//document.getElementById("avg").innerHTML=String(number)+" average based on "+String(count)+" reviews";
-//document.getElementById("starvalue").val(mul);
 
-
-/*
-$("button").click(function(){
-    $.ajax({url: "ratings", success: function(result){
-        $("#div1").html(result);
-    }});
-});*/
-
-// $.get("/ratings/)
