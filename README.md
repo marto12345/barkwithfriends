@@ -13,6 +13,11 @@ Viktoria Nankova 2248917n
 Martin Dimitrov marto12345
 Kristina Kuzeva 2238422K & krisi6012
 
+The following users are created after running the population script
+User : owner, password : parola, Secret question: kon
+User : organizer, password : parola, Secret question: kon
+User : JohnSmith, password : parola, Secret question: kon
+
 The following external resources have been used :
 https://www.w3schools.com/howto/howto_css_user_rating.asp
 https://jsfiddle.net/leaverou/CGP87/
@@ -22,3 +27,4 @@ https://getbootstrap.com/
 https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 https://www.w3schools.com
 https://startbootstrap.com/
+Tango With Django Book
