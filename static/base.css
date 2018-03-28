@@ -1,3 +1,5 @@
+/*technical look of pages - side bar, top bar, main field, positioning,
+  screen adjustments, dropdown menu, responsive design*/
 html {
   position: relative;
   min-height: 100%;
@@ -254,6 +256,9 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   }
 }
 
+/*specific helper classes*/
+
+/*bootstrap cards specific site adjustments*/
 .card-body-icon {
   position: absolute;
   z-index: 0;
@@ -283,10 +288,12 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   }
 }
 
+/*add padding to left*/
 .somaba {
   padding-left: 40px;
 }
 
+/*center image field*/
 .center {
     display: block;
     margin-left: auto;
@@ -294,6 +301,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
     width: 50%;
 }
 
+/*style buttons*/
 input[type=text], select {
   display: block;
   width: 100%;
@@ -339,6 +347,7 @@ input[type=submit]:hover{
     box-shadow: 0 0 0 .2rem rgba(0,123,255,.5);
 }
 
+/*style label*/
 .stylelabel{
   margin-bottom: 0rem;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
@@ -363,6 +372,7 @@ label.ss{
     box-sizing: border-box;
 }
 
+/*adjust box size*/
 .bla{
   max-width: 30rem;
 }
@@ -388,6 +398,7 @@ label.ss{
   padding-left: 10px;
 }
 
+/*make font bigger*/
 .bigger{
   font-size:115%;
 }

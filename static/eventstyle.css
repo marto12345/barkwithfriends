@@ -1,3 +1,4 @@
+/*style buttons and text input*/
 input[type=text], select {
     width: 100%;
     padding: 12px 20px;
@@ -22,7 +23,3 @@ input[type=button] {
 input[type=button]:hover {
     background-color: #7FFFD4;
 }
-
-div {
-}
-

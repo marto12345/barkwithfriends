@@ -1,45 +1,50 @@
 {% extends 'base.html' %}
 
 {% block title_block %}
-    About
+About
 {% endblock %}
 
 {% block body_block %}
-    <div class="col-lg-12">
-        <div class="mb-0 mt-4" align="center"><h2>About us</h2></div>
-        <hr class="mt-2">
-    </div>
-    <div align="center">
-        <p><h4><i>Bark with friends</i> is a cafe where dog owners can gather with other dog owners and their dogs and communicate with each other.
-        We offer different types of themed events for all breeds of dogs. There is a wide range of different foods and drinks for every taste.</h4></p>
-        <hr class="mt-2">
-    </div>
+<!--Style title-->
+<div class="col-lg-12">
+    <div class="mb-0 mt-4" align="center"><h2>About us</h2></div>
+    <hr class="mt-2">
+</div>
 
-    <div class="row">
-        <div class="card-deck">
-            <div class="card mb-3">
-                <img class="card-img-top img-fluid w-100" src="media/logo/logodoggo.png">
-                <div class="card-footer small text-muted">Picture: <a href="https://www.pinterest.com/pin/355643701793600212/"/>Pinterest</a></div>
-            </div>
-            <div class="card mb-3">
-                <img class="card-img-top img-fluid w-100" src="https://metrouk2.files.wordpress.com/2016/03/coffee-and-canines.jpg?w=748&h=749&crop=1">
-                <div class="card-footer small text-muted">Picture: <a href="http://metro.co.uk/2016/03/28/theres-now-a-dog-cafe-where-youll-be-able-to-adopt-a-pup-alongside-your-latte-5779779/"/>Metro</a></div>
-            </div>
-            <div class="card mb-3">
-                <img class="card-img-top img-fluid w-100" src="http://barkpost.com/wp-content/uploads/2014/03/dog-cute-coffee-morning-yawn-cafe-1360695881.jpg">
-                <div class="card-footer small text-muted">Picture: <a href="https://barkpost.com/these-pups-are-definitely-ready-for-spring-break/"/>BarkPost</a></div>
-            </div>
+<!--Informative WebSite Text-->
+<div align="center">
+    <p><h4><i>Bark with friends</i> is a cafe where dog owners can gather with other dog owners and their dogs and communicate with each other.
+    We offer different types of themed events for all breeds of dogs. There is a wide range of different foods and drinks for every taste.</h4></p>
+    <hr class="mt-2">
+</div>
+
+<!--Photos in responsive bootstrap cards-->
+<div class="row">
+    <!--Card View Type-->
+    <div class="card-deck">
+        <!--Photo 1-->
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid w-100" src="media/logo/logodoggo.png">
+            <div class="card-footer small text-muted">Picture: <a href="https://www.pinterest.com/pin/355643701793600212/"/>Pinterest</a></div>
+        </div>
+        <!--Photo 2-->
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid w-100" src="https://metrouk2.files.wordpress.com/2016/03/coffee-and-canines.jpg?w=748&h=749&crop=1">
+            <div class="card-footer small text-muted">Picture: <a href="http://metro.co.uk/2016/03/28/theres-now-a-dog-cafe-where-youll-be-able-to-adopt-a-pup-alongside-your-latte-5779779/"/>Metro</a></div>
+        </div>
+        <!--Photo 3-->
+        <div class="card mb-3">
+            <img class="card-img-top img-fluid w-100" src="http://barkpost.com/wp-content/uploads/2014/03/dog-cute-coffee-morning-yawn-cafe-1360695881.jpg">
+            <div class="card-footer small text-muted">Picture: <a href="https://barkpost.com/these-pups-are-definitely-ready-for-spring-break/"/>BarkPost</a></div>
         </div>
     </div>
+</div>
 
-    <footer>
-        <ol class="breadcrumb" align="center">
-            <blockquote>Happiness is a warm puppy.
-                <cite>Charles Schulz</cite>
-        </ol>
-    </footer>
-
-    </div>
-
+<!--Quote, styled-->
+<footer>
+    <ol class="breadcrumb">
+        <blockquote>Happiness is a warm puppy.</blockquote>
+        <cite>Charles Schulz</cite>
+    </ol>
+</footer>
 {% endblock %}
-

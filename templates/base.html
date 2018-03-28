@@ -29,7 +29,7 @@
 </head>
 
 
-
+<!--Initialize navigation bars - side and top-->
 <body class="fixed-nav bg-dark" id="page-top">
     <!--Side Bar Links-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -39,9 +39,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!--Initialize Dropdown menu-->
         <div class="collapse navbar-collapse" id="navbarResponsive">
 
-<hr class="mt-2">
+            <!--Devision Line-->
+            <hr class="mt-2">
 
             <!--Side Bar Links-->
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
@@ -73,6 +75,7 @@
                     </a>
                 </li>
 
+                <!--Restricted Links-->
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
                     {% else %}
@@ -114,6 +117,7 @@
             <!--Top Bar Links-->
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated and not user.is_superuser %}
+                <!--Logged In-->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">
                             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -124,12 +128,14 @@
                             <i class="fa fa-fw fa-user"></i>My Account</a>
                     </li>
                 {% else %}
-                    {%if user.is_superuser%}
+                    {% if user.is_superuser %}
+                    <!--Superuser-->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">
                                 <i class="fa fa-fw fa-sign-out"></i>Logout</a>
                         </li>
                     {% else%}
+                    <!--Logged Out-->
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">
                                 <i class="fa fa-fw fa-sign-in"></i>Log in</a>
@@ -142,11 +148,10 @@
                     {% endif %}
                 {% endif %}
             </ul>
-
         </div>
     </nav>
 
-    <!--Main-->
+    <!--Other pages content comes here-->
     <div class="content-wrapper">
         <div class="container-fluid">
           <div class="container">

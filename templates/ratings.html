@@ -2,11 +2,11 @@
 {% load staticfiles %}
 
 {% block head_block %}
-    <link rel="stylesheet" href="{% static 'rating_style.css' %}">
-    <script src="{% static 'rating.js' %}" type="text/javascript"> </script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-    <script src="{% static 'ajax_rating.js' %}" type="text/javascript"> </script>
+<link rel="stylesheet" href="{% static 'rating_style.css' %}">
+<script src="{% static 'rating.js' %}" type="text/javascript"> </script>
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+<script src="{% static 'ajax_rating.js' %}" type="text/javascript"> </script>
 {% endblock %}
 
 {% block title_block %}
@@ -14,118 +14,118 @@ Add Rating
 {% endblock %}
 
 {% block body_block %}
+<!--Container Size 40rem-->
 <div class="container blarr">
-  <div class="card card-login mx-auto mt-5">
-   <div class="card-header" align="center"><h1>Please rate: <i>{{ organizer_user }}</i></h1></div> 
-    <div class="card-body">
-    <form id="addRatingForm">
-        {% csrf_token %}
-
-        <div id="orgname">
-            <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
-            <div hidden id="org">{{ organizer_user }}</div>
-
-           Comment: <input type="text" id="comment" for="comment"> </input>
-{#        <span id="owner_name" value={{ owner_user}}>{{ owner_user }}</span>#}
-
-            
+    <!--Form Title-->
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header" align="center"><h1>Please rate: <i>{{ organizer_user }}</i></h1></div>
+        <!--Form-->
+        <div class="card-body">
+            <form id="addRatingForm">
+                {% csrf_token %}
+                <!--Take organizer and user-->
+                <div id="orgname">
+                    <div hidden id="starvalue"  >{{ form.starvalue.as_hidden }}</div>
+                    <div hidden id="org">{{ organizer_user }}</div>
+                    <!--Comment input-->
+                    Comment: <input type="text" id="comment" for="comment"> </input>
+                </div>
+            </form>
+            <!--Star Ratings-->
+            <fieldset class="rating">
+                <input type="radio" onclick="fivestar(5)" id="star5" name="starvalue" value="5" /><label for="star5" title="Rocks!">&#9734</label>
+                <input type="radio" onclick="fivestar(4)" id="star4" name="starvalue" value="4" /><label for="star4" title="Pretty good">&#9734</label>
+                <input type="radio" onclick="fivestar(3)" id="star3" name="starvalue" value="3" /><label for="star3" title="Meh">&#9734</label>
+                <input type="radio" onclick="fivestar(2)" id="star2" name="starvalue" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
+                <input type="radio" onclick="fivestar(1)" id="star1" name="starvalue" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
+            </fieldset>
+            </br></br>
+            <!--Average rating-->
+            <span> Average rating for {{ organizer_user }} is <span id="avg" > {{ organizer_user.avgrating }} </span>
+                based on <span id="reviews" >{{ reviews }}</span> reviews. </p><br>
+                <!--Ratings Bars-->
+                <body onload="load_bars()">
+                <div class="row">
+                    <div class="side">
+                        <div>5 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-5"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div id="5">{{rates.5}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="side">
+                        <div>4 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-4"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div id="4">{{ rates.4 }}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="side">
+                        <div>3 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-3"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div id="3">{{ rates.3 }}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="side">
+                        <div>2 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-2"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div id="2">{{ rates.2 }}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="side">
+                        <div>1 star</div>
+                    </div>
+                    <div class="middle">
+                        <div class="bar-container">
+                            <div class="bar-1"></div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div id="1">{{ rates.1 }}</div>
+                    </div>
+                </div>
+                <input id="submit" type="button" value="Submit"  onclick='sendAjax("/ratings/{{organizer_user}}")'>
         </div>
-    </form>
-    {#  <span hidden id="count">{{ reviews }}</span> #}
-           <fieldset class="rating">
-            <input type="radio" onclick="fivestar(5)" id="star5" name="starvalue" value="5" /><label for="star5" title="Rocks!">&#9734</label>
-            <input type="radio" onclick="fivestar(4)" id="star4" name="starvalue" value="4" /><label for="star4" title="Pretty good">&#9734</label>
-            <input type="radio" onclick="fivestar(3)" id="star3" name="starvalue" value="3" /><label for="star3" title="Meh">&#9734</label>
-            <input type="radio" onclick="fivestar(2)" id="star2" name="starvalue" value="2" /><label for="star2" title="Kinda bad">&#9734</label>
-            <input type="radio" onclick="fivestar(1)" id="star1" name="starvalue" value="1" /><label for="star1" title="Sucks big time">&#9734</label>
-         </fieldset>
-	</br></br>
-    <span> Average rating for {{ organizer_user }} is <span id="avg" > {{ organizer_user.avgrating }} </span>
-        based on <span id="reviews" >{{ reviews }}</span> reviews. </p><br>
-    <body onload="load_bars()">
-<div class="row">
-  <div class="side">
-    <div>5 star</div>
-  </div>
-  <div class="middle">
-    <div class="bar-container">
-      <div class="bar-5"></div>
     </div>
-  </div>
-  <div class="right">
-    <div id="5">{{rates.5}}</div>
-  </div>
-</div>
-<div class="row">
-  <div class="side">
-    <div>4 star</div>
-  </div>
-  <div class="middle">
-    <div class="bar-container">
-      <div class="bar-4"></div>
-    </div>
-  </div>
-  <div class="right">
-    <div id="4">{{ rates.4 }}</div>
-  </div>
-</div>
-<div class="row">
-  <div class="side">
-    <div>3 star</div>
-  </div>
-  <div class="middle">
-    <div class="bar-container">
-      <div class="bar-3"></div>
-    </div>
-  </div>
-  <div class="right">
-    <div id="3">{{ rates.3 }}</div>
-  </div>
-</div>
-<div class="row">
-  <div class="side">
-    <div>2 star</div>
-  </div>
-  <div class="middle">
-    <div class="bar-container">
-      <div class="bar-2"></div>
-    </div>
-  </div>
-  <div class="right">
-    <div id="2">{{ rates.2 }}</div>
-  </div>
-</div>
-<div class="row">
-  <div class="side">
-    <div>1 star</div>
-  </div>
-  <div class="middle">
-    <div class="bar-container">
-      <div class="bar-1"></div>
-    </div>
-  </div>
-  <div class="right">
-    <div id="1">{{ rates.1 }}</div>
-  </div>
-</div>
-<input id="submit" type="button" value="Submit"  onclick='sendAjax("/ratings/{{organizer_user}}")'>
-</div>
-</div>
+    <br>
 	<br>
-	<br>
-<hr class="mt-2">
-<h4 align="center"><span class="bigger"><u>Comments:</u></span></h4>
-<div id="comments" align="center">
-  {% if comments %}
-    {% for comment in comments %}
-      {{comment}}
-    {% endfor %}
-  {% endif %}
-</div>
-</body>
-</div>
-</div>
-</br>
+    <hr class="mt-2">
+    <!--Show Comments-->
+    <h4 align="center"><span class="bigger"><u>Comments:</u></span></h4>
+    <div id="comments" align="center">
+        {% if comments %}
+            {% for comment in comments %}
+                {{comment}}
+            {% endfor %}
+        {% endif %}
+    </div>
+    </body>
 </div>
 {% endblock %}
 

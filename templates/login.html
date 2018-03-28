@@ -6,32 +6,32 @@
 {% endblock %}
 
 {% block body_block %}
-    <body class="bg-dark">
-    <div class="container blar">
-        <div class="card card-login mx-auto mt-5">
-            <div class="card-header" align="center"><h1>Login to BarkWithFriends</h1></div>
-            {% if user.is_authenticated %}
-                <h2>You have already logged in!</h2>
-            {% else %}
-                <div class="card-body">
-                    <form id="login_form" method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="exampleInputUsername1">Username</label>
-                            <input class="form-control" type="text" name="username" value="" size="50">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input class="form-control" type="password" name="password" value="" size="50">
-                        </div>
-                        <input type="submit" value="Login" />
-                    </form>
-                    <div class="text-center">
-                        <a class="d-block small mt-3" href = "{% url 'reset_password' %}">Forgot Password?</a></div>
+<!--From Container 40 rem-->
+<div class="container blar">
+    <!--Card Form-->
+    <div class="card card-login mx-auto mt-5">
+        <!--From Title-->
+        <div class="card-header" align="center"><h1>Login to BarkWithFriends</h1></div>
+        {% if user.is_authenticated %}
+            <h2>You have already logged in!</h2>
+        {% else %}
+        <div class="card-body">
+            <form id="login_form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputUsername1">Username</label>
+                    <input class="form-control" type="text" name="username" value="" size="50">
                 </div>
-            {% endif %}
-        </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input class="form-control" type="password" name="password" value="" size="50">
+                </div>
+                <input type="submit" value="Login" />
+            </form>
+            <div class="text-center">
+                <a class="d-block small mt-3" href = "{% url 'reset_password' %}">Forgot Password?</a></div>
+                </div>
+        {% endif %}
     </div>
+</div>
 {% endblock %}
-
-

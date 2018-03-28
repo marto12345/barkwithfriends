@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-
 {% block head_block %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script src="static/jquery.js"></script>
-    <script src="{% static 'fillorganizer.js' %}"></script>
+<script src="static/jquery.js"></script>
+<script src="{% static 'fillorganizer.js' %}"></script>
 {% endblock %}
 
 {% block title_block %}
@@ -16,6 +15,7 @@ Ratings
 
 {% block body_block %}
 <div class="row">
+  <!--Title-->
   <div class="col-lg-12">
     <div class="mb-0 mt-4" align="center"><h1>Add a Rating</h1></div>
       <hr class="mt-2">
@@ -23,12 +23,14 @@ Ratings
   </div>
   {% csrf_token %}
     {% if Organizers %}
+      <!--Initialize bootstrap cards view-->
       <div class="card-columns">
         {% for organizer in Organizers %}
           <div class="card mb-3" align="center">
             {% if organizer.profile_picture %}
               <img class="card-img-top img-fluid w-100" src="{{ organizer.profile_picture.url }}" alt="{{organizer.username}}"/>
             {% endif %}
+            <!--New card-->
             <div class="card-body">
               <form class={{organizer}} id={{organizer}} class="submit" action="/ratings/{{ organizer }}" method="get" >
                 <h6 class="card-title mb-1" class={{organizer}}><h4><b><i>{{ organizer }}</i></b></h4></h6>

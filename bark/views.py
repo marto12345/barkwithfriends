@@ -145,16 +145,9 @@ def rating_exists(rating):
 @login_required
 @user_passes_test(lambda u: not u.is_superuser)
 def view_ratings(request):
-    context_dict={"organizers":{}}
+    context_dict={"organizers":[]}
     org_list = UserProfile.objects.filter(is_organizer=True)
-    for org in org_list:
-        org_comments=[]
-        context_dict["organizers"][org]={"org_comments":[]}
-        for r in Rating.objects.filter(organizername=org)[:5]:
-            org_comments.append(r.comment)
-        context_dict["organizers"][org]["org_comments"]=org_comments
-
-    print(context_dict)
+    context_dict["organizers"]=org_list
 
     return render(request,'view-ratings.html',context_dict)
 
@@ -422,4 +415,3 @@ def update_profile(request):
         'user_form': user_form,
         'profile_form': profile_form
     })
-

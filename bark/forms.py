@@ -134,4 +134,3 @@ class addRatingForm(forms.ModelForm):
         model = Rating
         fields = {'starvalue','comment'}
 
-

@@ -1,11 +1,10 @@
+/*positioning*/
 .rating {
     float:left;
     position:absolute;
 }
 
-/* :not(:checked) is a filter, so that browsers that don�t support :checked don�t 
-   follow these rules. Every browser that supports :checked also supports :not(), so
-   it doesn�t make the test unnecessarily selective */
+/*changes upon click action - checked / unchecked*/
 .rating:not(:checked) > input {
     position:absolute;
     top:-9999px;
@@ -54,16 +53,10 @@
     top:2px;
     left:2px;
 }
-/*.row {*/
-/*    font-family: Arial;*/
-/*    margin:10px 10px ; /* Center website */
-/*    max-width:30%; /* Max width */
-/*    display:block;*/
-/*    top: 100px;*/
-/*}*/
 
+/*label styling*/
 /* Three column layout */
-.side {
+.side {/*= left*/
     margin: 10px 0px;
     float: left;
     width: 15%;
@@ -81,7 +74,6 @@
     margin:0px;
 }
 
-/* Place text to the right */
 .right {
     float:left;
     color: blue;
@@ -89,11 +81,6 @@
 }
 
 /* Clear floats after the columns */
-/*.row:after {*/
-/*    content: "";*/
-/*    display: table;*/
-/*    clear: both;*/
-/*}*/
 /* The bar container */
 .bar-container {
     width: 50%;
@@ -117,6 +104,7 @@
 
 }
 
+/*html classes specific alterations - styling*/
 button{
    float:right;
 }

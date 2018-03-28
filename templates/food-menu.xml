@@ -11,22 +11,24 @@ Food Menu
 {% endblock %}
 
 {% block body_block %}
+<!--Picture in Card-->
 <div class="col-lg-12">
+    <!--Title-->
     <div class="mb-0 mt-4" align="center"><h2>Food Menu</h2></div>
-     <hr class="mt-2">
+    <hr class="mt-2">
 </div>
-
-<body class="bg-dark">
-  <div class="container blam1">
+<!--Card-->
+<div class="container blam1">
     <div class="card card-login mx-auto mt-5">
-      <img src="media/logo/logo2small.png">
+        <img src="media/logo/logo2small.png">
     </div>
-  </div>
-</body>
+</div>
+<!--Ref: Centered, Padding left 40px-->
 <div class = "somaba" align="center">
     <p>Logo Made: <a href="https://www.logocrisp.com/logomaker"/>LogoCrisp</a></p>
 </div>
 
+<!--Menu Information-->
 <div align="center">
 <menu>
 <h1>For the owners</h1>

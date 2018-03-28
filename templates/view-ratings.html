@@ -6,38 +6,27 @@ View Ratings
 
 {% block body_block %}
 <div class="row">
-  <div class="col-lg-12">
-    <div class="mb-0 mt-4" align="center"><h2>These are the average ratings for all organizers</h2></div>
-      <hr class="mt-2">
+    <!--Title-->
+    <div class="col-lg-12">
+        <div class="mb-0 mt-4" align="center"><h2>These are the average ratings for all organizers</h2></div>
+        <hr class="mt-2">
     </div>
-  </div>
-  {% if organizers %}
-    <div class="card-columns">
-      {% for organizer in organizers %}
-        <div class="card mb-3" align="center">
-          {% if organizer.profile_picture %}
-            <img class="card-img-top img-fluid w-100" src="{{ organizer.profile_picture.url }}" alt="{{organizer.username}}"/>
-          {% endif %}
-          <div class="card-body">
-<h6 class="card-title mb-1" class={{organizer}}><h4><b><i>{{ organizer }}</i></b></h4></h6>
-           <hr class="my-0">
-           <div class="card-body py-2 small"><span class="bigger">Average rating: {{ organizer.avgrating }}</span></div>
-        </div>
-
-        <hr class="my-0">
-        <div class="card-body small bg-faded">
-<h6><span class="bigger"><u>Comments:</u></span></h6>
-<div id="comments">
-      {% if organizer.org_comments%}
-            {% for comment in organizer.org_comments %}
-                {{comment}}
-            {% endfor %}
-      {% endif %}
-
 </div>
-        </div>
-      </div>
-    {% endfor %}
-  {% endif %}
- </div>
+<!--Cards-->
+{% if organizers %}
+    <div class="card-columns">
+        {% for organizer in organizers %}
+            <div class="card mb-3" align="center">
+                {% if organizer.profile_picture %}
+                    <img class="card-img-top img-fluid w-100" src="{{ organizer.profile_picture.url }}" alt="{{organizer.username}}"/>
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title mb-1" class={{organizer}}><h4><b><i>{{ organizer }}</i></b></h4></h6>
+                    <hr class="my-0">
+                    <div class="card-body py-2 small"><span class="bigger">Average rating: {{ organizer.avgrating }}</span></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
