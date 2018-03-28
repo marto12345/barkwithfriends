@@ -2,15 +2,12 @@ from bark.forms import addEventForm,UserForm,addRatingForm,UserUpdateForm,ResetF
 from django.shortcuts import render
 from bark.models import Event,UserProfile,Rating
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
+from django.shortcuts import redirect,get_object_or_404
 from django.views.generic import CreateView
-from django.http import HttpResponse
 from django.contrib.auth import authenticate,login
 from django.http import HttpResponseRedirect, HttpResponse,JsonResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
 from bark.decorators import owner_required,organizer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
@@ -18,11 +15,10 @@ from django.contrib import messages
 from datetime import datetime, timedelta, time,date
 from django.db.models import Q
 from django.contrib.auth.password_validation import MinimumLengthValidator
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import update_session_auth_hash
 
-#gets rid for all previous events and returns the first 10 upcoming
+#gets rid of all previous events and returns the first 10 upcoming
 def show_upcoming_events():
     today = date.today()  # get today`s date
     return Event.objects.filter(Q(date__gte=today)).order_by('date')[:10]  # display closest 10 events
@@ -96,7 +92,7 @@ def add_event(request):
 
     # Have we been provided with a valid form?
         if form.is_valid():
-            #get the organizer first and last time to display in events and home
+            #get the organizer first and last name to display in events and home
             org = request.user.first_name +" "+ request.user.last_name
             form.organizerusername=org
 
@@ -157,12 +153,8 @@ def view_ratings(request):
         for r in Rating.objects.filter(organizername=org)[:5]:
             org_comments.append(r.comment)
         context_dict["organizers"][org]["org_comments"]=org_comments
-        #print(context_dict["organizers"][org])
-    print(context_dict)
-    #context_dict["organizers"]=org_list
-    #comments=[]
 
-    #context_dict['comments']=comments;
+    print(context_dict)
 
     return render(request,'view-ratings.html',context_dict)
 
@@ -196,8 +188,6 @@ def rate_ajax(request, organizer_str):
     owner = UserProfile.objects.get(user=owner_user)
 
     context_dict = {'rates': {}, 'form': {}, "reviews": 0}
-
-    print ('owner %s' % owner)
 
     organizer_user = User.objects.get(username=organizer_str)
     organizer = UserProfile.objects.get(user=organizer_user)
@@ -282,6 +272,16 @@ def user_logout(request):
     logout(request) # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('index'))
 
+#saves user and profile form, sets password
+def user_profile_save(user_form, profile_form):
+    user = user_form.save()
+    user.set_password(user.password)
+    user.save()
+    profile = profile_form.save(commit=False)
+    profile.user = user
+    return user, profile
+
+
 #register as owner view
 def register_owner(request):
         registered = False #indicates whether user has already registered
@@ -295,12 +295,8 @@ def register_owner(request):
                 if len(request.POST.get('password'))<6:
                     messages.error(request,"Password too short.Needs to be at least 6 characters long")
                 else:
-                    #set the user`s password and save
-                    user = user_form.save()
-                    user.set_password(user.password)
-                    user.save()
-                    profile = profile_form.save(commit=False)
-                    profile.user = user
+                    #set the user`s password and save (this happens within user_profile_save)
+                    uuser,profile=user_profile_save(user_form,profile_form)
                     #if user has chosen to upload pictures manage these:
                     if 'profile_picture' in request.FILES:
                         profile.profile_picture = request.FILES['profile_picture']
@@ -317,6 +313,8 @@ def register_owner(request):
                       {'user_form': user_form, 'profile_form': profile_form,
                        'registered': registered})
 
+
+
 #register as organizer
 def register_organizer(request):
     registered = False #indicates whether user is already registered
@@ -330,12 +328,8 @@ def register_organizer(request):
             if len(request.POST.get('password')) < 6:
                 messages.error(request, "Password too short.Needs to be at least 6 characters long")
             else:
-                # set the user`s password and save
-                user = user_form.save()
-                user.set_password(user.password)
-                user.save()
-                profile = profile_form.save(commit=False)
-                profile.user = user
+                # set the user`s password and save (this happens within user_profile_save)
+                user,profile=user_profile_save(user_form,profile_form)
                 if 'profile_picture' in request.FILES:
                     profile.profile_picture = request.FILES['profile_picture']
                 profile.save()
@@ -381,6 +375,18 @@ def reset_password(request):
 def invalid_login(request):
     return render('invalidlogin.html')
 
+#updates the user form and profile by saving them and getting the new profile pic
+def update_user_profile(user_form,profile_form,request):
+            user_form.save()
+            profile = profile_form.save(commit=False)
+            picture = profile.profile_picture
+            profile.profile_picture = request.FILES.get('profile_picture', picture)
+            return profile,picture
+
+#saves profile and profile form
+def save_profile(profile,profile_form):
+                profile.save()
+                profile_form.save()
 #update profile view : user needs to be logged in
 @login_required
 def update_profile(request):
@@ -390,25 +396,17 @@ def update_profile(request):
         if request.user.userprofile.is_owner:
             profile_form = OwnerForm(request.POST, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile = profile_form.save(commit=False)
-                picture = profile.profile_picture
-                profile.profile_picture = request.FILES.get('profile_picture', picture)
+                profile,picture=update_user_profile(user_form, profile_form, request)
                 dog_picture = profile.dog_picture
                 profile.dog_picture = request.FILES.get('dog_picture', dog_picture)
-                profile.save()
-                profile_form.save()
+                save_profile(profile, profile_form)
             return redirect('update-profile')
         #and if the user is an organizer:
         elif request.user.userprofile.is_organizer:
             profile_form = OrganizerForm(request.POST, request.FILES, instance=request.user.userprofile)
             if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile = profile_form.save(commit=False)
-                picture = profile.profile_picture
-                profile.profile_picture = request.FILES.get('profile_picture',picture)
-                profile.save()
-                profile_form.save()
+                profile, picture = update_user_profile(user_form, profile_form, request)
+                save_profile(profile, profile_form)
 
             return redirect('update-profile')
 
